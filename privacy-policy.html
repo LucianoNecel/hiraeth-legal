@@ -184,7 +184,8 @@
         El bot tiene habilitado el privilegio de <em>Message Content</em> de Discord. Procesa
         <strong>temporalmente</strong> los mensajes en los servidores donde está presente con los
         siguientes fines: conteo de XP, escaneo de automoderación (palabras prohibidas, invitaciones,
-        flood), análisis del contador comunitario y el canal de chatbot con prefijo <code>!</code>.
+        flood) y análisis del contador comunitario. La función opcional de chatbot con prefijo
+        <code>!</code> está <strong>temporalmente suspendida</strong> y no está procesando mensajes en este momento.
       </p>
       <p>
         Solo persiste lo que indica la tabla de la sección 3. <strong>No</strong> registra ni almacena el
@@ -203,9 +204,9 @@
         </thead>
         <tbody>
           <tr>
-            <td>Chatbot IA (conversaciones)</td>
-            <td>Texto literal del mensaje que el usuario envía con prefijo <code>!</code> en canales de chatbot, y las respuestas del modelo. Hasta 20 turnos de historial por usuario por servidor. El historial está acotado estrictamente por {servidor, usuario}; los historiales de distintos usuarios y distintos servidores nunca se mezclan.</td>
-            <td>Eliminación automática 30 días tras inactividad (TTL).</td>
+            <td>Chatbot IA (conversaciones) — <em>actualmente suspendido</em></td>
+            <td>La función de chatbot con prefijo <code>!</code> está temporalmente suspendida y no está procesando ni almacenando mensajes. Cuando se reactive, almacenará el texto literal del mensaje enviado con prefijo <code>!</code> en canales de chatbot y las respuestas del modelo, hasta 20 turnos de historial por usuario por servidor, acotado estrictamente por {servidor, usuario}; los historiales de distintos usuarios y distintos servidores nunca se mezclan.</td>
+            <td>Eliminación automática 30 días tras inactividad (TTL) — cuando la función esté activa.</td>
           </tr>
           <tr>
             <td>XP y niveles</td>
@@ -285,7 +286,7 @@
       <h2>4. Terceros</h2>
       <p>Flujos exactos de datos con terceros:</p>
       <ul>
-        <li><strong>Google Gemini (Google LLC):</strong> recibe el texto del mensaje del chatbot (≤1500 caracteres), hasta 20 turnos previos, el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibe IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional).</li>
+        <li><strong>Google Gemini (Google LLC):</strong> la función opcional de chatbot con prefijo <code>!</code> está <strong>temporalmente suspendida</strong> y no está procesando mensajes. Cuando se habilite en el futuro, se utilizará un proveedor de nivel pago (o equivalente) que no utiliza el contenido enviado para entrenar modelos. En ese caso, recibirá el texto del mensaje del chatbot (≤1500 caracteres), hasta 20 turnos previos, el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibirá IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional).</li>
         <li><strong>WeatherAPI:</strong> solo el nombre de la ciudad que escribió el usuario (comando de clima).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> solo el término de búsqueda escrito por el usuario.</li>
         <li><strong>dolarapi.com:</strong> ningún dato de usuario (cotizaciones públicas).</li>
@@ -406,8 +407,9 @@
       <h2>2. Message content intent</h2>
       <p>
         The bot has Discord's <em>Message Content</em> privilege enabled. It temporarily processes messages
-        in servers it is in for: XP counting, automod scanning (banned words, invites, flood), community
-        counter parsing, and the <code>!</code>-prefixed chatbot channel.
+        in servers it is in for: XP counting, automod scanning (banned words, invites, flood), and community
+        counter parsing. The optional <code>!</code>-prefixed chatbot feature is <strong>temporarily suspended</strong>
+        and is not processing messages at this time.
       </p>
       <p>
         It only persists what the table in section 3 lists. It does <strong>not</strong> log or store general chat.
@@ -425,9 +427,9 @@
         </thead>
         <tbody>
           <tr>
-            <td>AI Chatbot (conversations)</td>
-            <td>Verbatim message text the user sends with the <code>!</code> prefix in chatbot channels, plus model responses. Up to 20 turns of history per user per server. History is scoped strictly per {server, user}; histories of different users and different servers never mix.</td>
-            <td>Auto-deleted 30 days after inactivity (TTL).</td>
+            <td>AI Chatbot (conversations) — <em>currently suspended</em></td>
+            <td>The <code>!</code>-prefixed chatbot feature is temporarily suspended and is not processing or storing messages. When re-enabled, it will store the verbatim message text sent with the <code>!</code> prefix in chatbot channels plus model responses, up to 20 turns of history per user per server, scoped strictly per {server, user}; histories of different users and different servers never mix.</td>
+            <td>Auto-deleted 30 days after inactivity (TTL) — when the feature is active.</td>
           </tr>
           <tr>
             <td>XP and levels</td>
@@ -507,7 +509,7 @@
       <h2>4. Third parties</h2>
       <p>Exact data flows with third parties:</p>
       <ul>
-        <li><strong>Google Gemini (Google LLC):</strong> receives the chatbot message text (≤1500 chars), up to 20 previous turns, the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It does <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer).</li>
+        <li><strong>Google Gemini (Google LLC):</strong> the optional <code>!</code>-prefixed chatbot feature is <strong>temporarily suspended</strong> and is not processing messages. When re-enabled in the future, the provider will be a paid-tier (or equivalent) service that does not use submitted content for model training. In that case, it will receive the chatbot message text (≤1500 chars), up to 20 previous turns, the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It will <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer).</li>
         <li><strong>WeatherAPI:</strong> only the city name the user typed (weather lookup command).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> only the search term typed by the user.</li>
         <li><strong>dolarapi.com:</strong> no user data at all (public rates).</li>
