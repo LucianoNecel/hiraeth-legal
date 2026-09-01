@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hiraeth — Política de Privacidad / Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2328;
+      --muted: #57606a;
+      --accent: #4f6df5;
+      --border: #d0d7de;
+      --soft: #f6f8fa;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--soft);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+    .topbar-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 16px;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+      margin-right: auto;
+      color: var(--accent);
+    }
+    .topbar a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .topbar a:hover { background: #eaeef2; }
+    .topbar a.current {
+      font-weight: 700;
+      background: #e6edf3;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+    section { margin-bottom: 8px; }
+    h1 {
+      font-size: 26px;
+      margin: 0 0 4px;
+      color: var(--accent);
+    }
+    h2 {
+      font-size: 20px;
+      margin: 32px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      color: var(--accent);
+    }
+    h3 {
+      font-size: 16px;
+      margin: 22px 0 8px;
+    }
+    p { margin: 10px 0; }
+    ul { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; }
+    .controller {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 16px 0 8px;
+      font-size: 15px;
+    }
+    .controller strong { color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--soft);
+      font-weight: 700;
+      color: var(--accent);
+    }
+    tbody tr:nth-child(even) { background: #fbfcfd; }
+    .note {
+      border-left: 3px solid var(--accent);
+      background: var(--soft);
+      padding: 10px 14px;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+    code {
+      background: #eef1f4;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      padding-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    a.inline { color: var(--accent); }
+    hr.soft {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 36px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">Hiraeth</span>
+      <a class="current" href="#es" lang="es">Política de Privacidad</a>
+      <a class="current" href="#en" lang="en">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="#es">ES</a>
+      <a href="#en">EN</a>
+    </div>
+  </header>
+
+  <!-- ===================== ESPAÑOL ===================== -->
+  <main class="container">
+    <section id="es" lang="es">
+      <h1>Política de Privacidad de Hiraeth</h1>
+
+      <div class="controller">
+        <strong>Responsable del tratamiento:</strong> Hiraeth — proyecto desarrollado por Necel.
+        <strong>Contacto:</strong> neceldev@gmail.com.
+        <strong>Jurisdicción:</strong> República Argentina (Ley 25.326 de Protección de los Derechos de los Usuarios de Bancos de Datos).
+      </div>
+
+      <p>
+        Hiraeth es un bot de Discord gratuito. Esta política explica qué datos maneja el bot, qué
+        datos guarda, con qué terceros se comparten, durante cuánto tiempo y qué derechos tienes
+        bajo la ley argentina. No usamos cookies, ni analítica web, ni publicidad, ni vendemos datos.
+      </p>
+
+      <h2>1. Datos de identidad</h2>
+      <p>
+        El bot solo maneja <strong>identificadores de Discord</strong>: las "snowflakes" (identificadores
+        numéricos) de usuario, servidor, canal y mensaje, junto con nombres de usuario y URL de avatares
+        que muestra Discord. <strong>Nunca</strong> solicita ni almacena correo electrónico, teléfono,
+        dirección IP, domicilio físico o nombre real.
+      </p>
+      <p>
+        Los identificadores de usuario de Discord son <strong>pseudónimos</strong>. Si un usuario escribe a
+        <code>neceldev@gmail.com</code> (por ejemplo, para solicitar una supresión), su correo y el contenido
+        de ese mensaje se guardan en el buzón del operador <strong>únicamente</strong> para gestionar la solicitud.
+      </p>
+
+      <h2>2. Acceso al contenido de los mensajes</h2>
+      <p>
+        El bot tiene habilitado el privilegio de <em>Message Content</em> de Discord. Procesa
+        <strong>temporalmente</strong> los mensajes en los servidores donde está presente con los
+        siguientes fines: conteo de XP, escaneo de automoderación (palabras prohibidas, invitaciones,
+        flood), análisis del contador comunitario y el canal de chatbot con prefijo <code>!</code>.
+      </p>
+      <p>
+        Solo persiste lo que indica la tabla de la sección 3. <strong>No</strong> registra ni almacena el
+        chat general.
+      </p>
+
+      <h2>3. Qué se almacena</h2>
+      <p>La siguiente tabla refleja los datos guardados por cada modelo de MongoDB del bot:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Dato almacenado</th>
+            <th>Retención</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Chatbot IA (conversaciones)</td>
+            <td>Texto literal del mensaje que el usuario envía con prefijo <code>!</code> en canales de chatbot, y las respuestas del modelo. Hasta 20 turnos de historial por usuario por servidor. El historial está acotado estrictamente por {servidor, usuario}; los historiales de distintos usuarios y distintos servidores nunca se mezclan.</td>
+            <td>Eliminación automática 30 días tras inactividad (TTL).</td>
+          </tr>
+          <tr>
+            <td>XP y niveles</td>
+            <td>ID de usuario, ID de servidor, cantidad de XP, nivel y marca de tiempo del último XP. No se almacena contenido de mensajes.</td>
+            <td>Indefinida.</td>
+          </tr>
+          <tr>
+            <td>Economía virtual</td>
+            <td>ID de usuario global (no por servidor), saldo de monedas, totales ganados/gastados, inventario de objetos y marcas de tiempo de reclamo diario/trabajo.</td>
+            <td>Indefinida.</td>
+          </tr>
+          <tr>
+            <td>Cumpleaños</td>
+            <td>ID de usuario, ID de servidor, día, mes y año opcional (el año permite derivar la edad).</td>
+            <td>Eliminado vía <code>/birthday delete</code> (usuario) o <code>/birthday delete-user</code> (admin); si no, indefinida.</td>
+          </tr>
+          <tr>
+            <td>Advertencias (moderación)</td>
+            <td>ID de usuario, ID de servidor, motivo de texto libre escrito por moderadores o auto-generado por automod (los motivos de automod incluyen la única palabra prohibida coincidente — nunca el mensaje completo), fecha.</td>
+            <td>Decaimiento configurable por servidor (<code>warningDecayDays</code>); si está deshabilitado, indefinida.</td>
+          </tr>
+          <tr>
+            <td>Encuestas</td>
+            <td>ID del autor, texto libre de pregunta y opciones, y qué ID de usuario votó qué.</td>
+            <td>Las encuestas cerradas se auto-eliminan 7 días después (TTL).</td>
+          </tr>
+          <tr>
+            <td>Recordatorios</td>
+            <td>ID de usuario, ID de servidor/canal, texto de recordatorio escrito por el usuario (máx. 500 caracteres).</td>
+            <td>Eliminado inmediatamente tras la entrega (TTL ~5 min tras la hora programada). Se entrega por DM o, si falla, en el canal.</td>
+          </tr>
+          <tr>
+            <td>Tareas personales (to-do)</td>
+            <td>ID de usuario + contenido de tarea de texto libre.</td>
+            <td>
+              <strong>Matiz que divulgamos con honestidad:</strong> las tareas son de ámbito de usuario a través de <strong>TODOS</strong> los servidores (creadas en un servidor, visibles en otro). No hay borrado masivo accesible al usuario más allá de la eliminación por tarea en la interfaz; si no, indefinida.
+            </td>
+          </tr>
+          <tr>
+            <td>Contador comunitario</td>
+            <td>ID de usuario, el número contado y marca de tiempo de cada conteo (historial indefinido); los contadores de fallo por usuario se auto-eliminan tras 90 días.</td>
+            <td>Historial indefinido; contadores de fallo: auto-eliminación a los 90 días.</td>
+          </tr>
+          <tr>
+            <td>Noches de cine (película)</td>
+            <td>Título/fecha/hora/sinopsis de trama (texto libre, autor del usuario), tag de Discord del proponente, URL de avatar e ID, IDs de votantes y puntuaciones.</td>
+            <td>Indefinida.</td>
+          </tr>
+          <tr>
+            <td>Partidas de juegos (Wordle/Battleship/Sea of Words/Tres en línea/Buscaminas/Mecanografía)</td>
+            <td>IDs de usuario, estadísticas numéricas y estado de sesión activa (datos de tablero/intento). Las sesiones caducan automáticamente y se limpian al reiniciar. No hay contenido de mensajes.</td>
+            <td>Mientras dura la sesión; estadísticas indefinidas.</td>
+          </tr>
+          <tr>
+            <td>Acciones moderadas programadas (ban/mute temporales)</td>
+            <td>ID de usuario, ID de moderador, motivo de texto libre (máx. 512), marcas de tiempo de ejecución.</td>
+            <td>Eliminado en cuanto se ejecuta.</td>
+          </tr>
+          <tr>
+            <td>Configuración del servidor (creada por admin)</td>
+            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel. Creado/eliminado por administradores del servidor.</td>
+            <td>Indefinida mientras esté configurada.</td>
+          </tr>
+          <tr>
+            <td>Base de conocimiento del servidor (Q&amp;A de admin, máx. 50 entradas/servidor)</td>
+            <td>Preguntas y respuestas almacenadas indefinidamente hasta eliminarse con <code>/knowledge remove</code>. Se envían al proveedor de IA como contexto.</td>
+            <td>Indefinida hasta su eliminación.</td>
+          </tr>
+          <tr>
+            <td>Mensajes anónimos (<code>/anonimo</code>)</td>
+            <td>El mensaje se publica sin autor visible en el canal, pero el tag y el ID del autor se registran en un canal de registro del servidor visible para los moderadores.</td>
+            <td>Mientras el canal de registro lo retenga (hasta que el servidor lo elimine).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>4. Terceros</h2>
+      <p>Flujos exactos de datos con terceros:</p>
+      <ul>
+        <li><strong>Google Gemini (Google LLC):</strong> recibe el texto del mensaje del chatbot (≤1500 caracteres), hasta 20 turnos previos, el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibe IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional).</li>
+        <li><strong>WeatherAPI:</strong> solo el nombre de la ciudad que escribió el usuario (comando de clima).</li>
+        <li><strong>YouTube Data API v3 (Google):</strong> solo el término de búsqueda escrito por el usuario.</li>
+        <li><strong>dolarapi.com:</strong> ningún dato de usuario (cotizaciones públicas).</li>
+        <li><strong>Discord (Discord Inc.):</strong> plataforma que aloja inherentemente todos los IDs/contenidos.</li>
+        <li><strong>Base de datos:</strong> MongoDB utilizada por el bot; el acceso está restringido al operador. Sin cookies, sin analítica web, sin publicidad, sin venta de datos.</li>
+      </ul>
+      <p class="note">
+        Ninguna clave de API se expone nunca a los usuarios.
+      </p>
+
+      <h2>5. Resumen de retención</h2>
+      <p>
+        Los TTL automáticos figuran en la tabla anterior. XP, economía, estadísticas de juegos, historial
+        del contador, cumpleaños, datos de películas y configuración/conocimiento del servidor persisten
+        de forma indefinida hasta que se eliminan mediante los mecanismos listados o por solicitud de supresión.
+      </p>
+      <p>
+        Los datos <strong>no</strong> se borran automáticamente cuando un usuario sale de un servidor ni
+        cuando el bot se retira de un servidor. Las solicitudes de supresión son el medio por el cual los
+        usuarios cierran esa brecha. Lo señalamos con honestidad.
+      </p>
+
+      <h2>6. Tus derechos (Ley argentina 25.326)</h2>
+      <p>
+        Conforme a la <strong>Ley 25.326</strong>:
+      </p>
+      <ul>
+        <li>Art. 14 — derecho de <strong>acceso, rectificación, actualización y supresión</strong> de datos (habeas data).</li>
+        <li>Art. 16 — la gestión de datos de <strong>menores</strong> requiere la intervención de su representante legal bajo la ley argentina.</li>
+        <li>Derecho a presentar una denuncia ante la <strong>Agencia de Acceso a la Información Pública (AAIP)</strong>.</li>
+      </ul>
+      <h3>Cómo ejercerlos</h3>
+      <p>
+        Escribe a <code>neceldev@gmail.com</code> incluyendo tu <strong>ID de usuario de Discord</strong>
+        (activa el Modo Desarrollador → clic derecho en ti → Copiar ID) y, para datos por servidor, el
+        <strong>nombre del servidor</strong>. El operador puede pedir confirmar razonablemente que la
+        solicitud proviene del dueño de la cuenta. Tiempo de respuesta objetivo: <strong>dentro de los 30 días</strong>.
+      </p>
+      <p>Existen comandos de auto-servicio para:</p>
+      <ul>
+        <li>Cumpleaños: <code>/birthday delete</code></li>
+        <li>Recordatorios: <code>/remind cancel</code></li>
+        <li>Tareas: eliminación por tarea</li>
+        <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
+      </ul>
+      <p class="note">
+        Los registros de moderación vinculados a la administración del servidor son responsabilidad de los
+        administradores de ese servidor; los usuarios deben contactar al personal del servidor para esos
+        casos (el desarrollador no adjudica moderaciones).
+      </p>
+
+      <h2>7. Postura de seguridad</h2>
+      <p>
+        El acceso a la base de datos está restringido al operador. Las llamadas externas usan HTTPS.
+        Ninguna clave secreta se expone a los usuarios. No hacemos afirmaciones adicionales más allá de
+        estas medidas.
+      </p>
+
+      <h2>8. Cambios a esta política</h2>
+      <p>
+        Si cambiamos esta política, actualizaremos la fecha de vigencia en esta misma página. Te recomendamos
+        revisarla periódicamente.
+      </p>
+
+      <h2>9. Enlaces</h2>
+      <p>
+        Consulta también los <a class="inline" href="terms-of-service.html">Términos del Servicio</a>.
+      </p>
+
+      <h2>10. Contacto</h2>
+      <p>
+        Responsable: Hiraeth — proyecto desarrollado por Necel. Correo: <code>neceldev@gmail.com</code>.
+      </p>
+
+      <footer>
+        Última actualización / Last updated: 2026-09-01 — Versión 1.0<br />
+        Contacto: neceldev@gmail.com
+      </footer>
+    </section>
+
+    <hr class="soft" />
+
+    <!-- ===================== ENGLISH ===================== -->
+    <section id="en" lang="en">
+      <h1>Hiraeth Privacy Policy</h1>
+
+      <div class="controller">
+        <strong>Data controller:</strong> Hiraeth — a project developed by Necel.
+        <strong>Contact:</strong> neceldev@gmail.com.
+        <strong>Jurisdiction:</strong> Argentine Republic (Law 25.326 on the Protection of the Rights of Database Users).
+      </div>
+
+      <p>
+        Hiraeth is a free Discord bot. This policy explains what data the bot handles, what data it stores,
+        which third parties it shares data with, for how long, and what rights you have under Argentine law.
+        We do not use cookies, web analytics, advertising, or sell data.
+      </p>
+
+      <h2>1. Identity data</h2>
+      <p>
+        The bot only handles <strong>Discord identifiers</strong>: user, guild, channel, and message ID
+        snowflakes, along with usernames and avatar URLs shown by Discord. It <strong>never</strong> asks for
+        or stores email, phone number, IP address, physical address, or real names.
+      </p>
+      <p>
+        Discord user IDs are <strong>pseudonymous</strong>. If a user writes to <code>neceldev@gmail.com</code>
+        (for example, to request deletion), their email and the message content are stored in the operator's
+        mailbox <strong>solely</strong> to handle the request.
+      </p>
+
+      <h2>2. Message content intent</h2>
+      <p>
+        The bot has Discord's <em>Message Content</em> privilege enabled. It temporarily processes messages
+        in servers it is in for: XP counting, automod scanning (banned words, invites, flood), community
+        counter parsing, and the <code>!</code>-prefixed chatbot channel.
+      </p>
+      <p>
+        It only persists what the table in section 3 lists. It does <strong>not</strong> log or store general chat.
+      </p>
+
+      <h2>3. What is stored</h2>
+      <p>The following table reflects the data stored by each of the bot's MongoDB models:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Stored data</th>
+            <th>Retention</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI Chatbot (conversations)</td>
+            <td>Verbatim message text the user sends with the <code>!</code> prefix in chatbot channels, plus model responses. Up to 20 turns of history per user per server. History is scoped strictly per {server, user}; histories of different users and different servers never mix.</td>
+            <td>Auto-deleted 30 days after inactivity (TTL).</td>
+          </tr>
+          <tr>
+            <td>XP and levels</td>
+            <td>User ID, guild ID, XP amount, level, and last-XP timestamp. No message content stored.</td>
+            <td>Indefinite.</td>
+          </tr>
+          <tr>
+            <td>Virtual economy</td>
+            <td>Global user ID (not per-guild), coin balance, totals earned/spent, item inventory, and daily/work claim timestamps.</td>
+            <td>Indefinite.</td>
+          </tr>
+          <tr>
+            <td>Birthdays</td>
+            <td>User ID, guild ID, day, month, and optional year (the year enables age derivation).</td>
+            <td>Deleted via <code>/birthday delete</code> (user) or <code>/birthday delete-user</code> (admin); otherwise indefinite.</td>
+          </tr>
+          <tr>
+            <td>Warnings (moderation)</td>
+            <td>User ID, guild ID, free-text reason written by moderators or auto-generated by automod (automod reasons include the single banned word matched — never the full message), date.</td>
+            <td>Per-guild configurable decay (<code>warningDecayDays</code>); if disabled, indefinite.</td>
+          </tr>
+          <tr>
+            <td>Polls</td>
+            <td>Author ID, question and option free text, and which user ID voted what.</td>
+            <td>Closed polls auto-delete 7 days later (TTL).</td>
+          </tr>
+          <tr>
+            <td>Reminders</td>
+            <td>User ID, guild/channel IDs, user-written reminder text (max 500 chars).</td>
+            <td>Deleted immediately after delivery (TTL ~5 min after scheduled time). Delivered via DM or channel fallback.</td>
+          </tr>
+          <tr>
+            <td>Personal tasks (to-do)</td>
+            <td>User ID + free-text task content.</td>
+            <td>
+              <strong>Honest disclosure nuance:</strong> tasks are user-scoped across <strong>ALL</strong> servers (created in one server, visible in another). There is no user-facing bulk delete beyond per-task UI deletion; otherwise indefinite.
+            </td>
+          </tr>
+          <tr>
+            <td>Community counter</td>
+            <td>User ID, the number counted and timestamp of each count (indefinite history); failure counters per user auto-delete after 90 days.</td>
+            <td>Indefinite history; failure counters: auto-delete after 90 days.</td>
+          </tr>
+          <tr>
+            <td>Movie nights (film)</td>
+            <td>Proposal title/date/time/plot synopsis (free text, user-authored), proposer's Discord tag, avatar URL and ID, voter IDs and scores.</td>
+            <td>Indefinite.</td>
+          </tr>
+          <tr>
+            <td>Game sessions (Wordle/Battleship/Sea of Words/Tic-Tac-Toe/Minesweeper/Typing)</td>
+            <td>User IDs, numeric stats, and active session state (board/guess data). Sessions auto-expire and are cleaned on restart. No message content.</td>
+            <td>While the session lasts; stats indefinite.</td>
+          </tr>
+          <tr>
+            <td>Scheduled moderation actions (temp ban/mute)</td>
+            <td>User ID, moderator ID, free-text reason (max 512), execution timestamps.</td>
+            <td>Deleted as soon as executed.</td>
+          </tr>
+          <tr>
+            <td>Server configuration (admin-authored)</td>
+            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards. Created/removed by server admins.</td>
+            <td>Indefinite while configured.</td>
+          </tr>
+          <tr>
+            <td>Server knowledge base (admin Q&amp;A, max 50 entries/guild)</td>
+            <td>Stored indefinitely until removed with <code>/knowledge remove</code>. Sent to the AI provider as context.</td>
+            <td>Indefinite until removal.</td>
+          </tr>
+          <tr>
+            <td>Anonymous messages (<code>/anonimo</code>)</td>
+            <td>The message is posted without a visible author in the channel, but the author's tag and ID are logged to a server log channel visible to moderators.</td>
+            <td>While the log channel retains it (until the server removes it).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>4. Third parties</h2>
+      <p>Exact data flows with third parties:</p>
+      <ul>
+        <li><strong>Google Gemini (Google LLC):</strong> receives the chatbot message text (≤1500 chars), up to 20 previous turns, the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It does <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer).</li>
+        <li><strong>WeatherAPI:</strong> only the city name the user typed (weather lookup command).</li>
+        <li><strong>YouTube Data API v3 (Google):</strong> only the search term typed by the user.</li>
+        <li><strong>dolarapi.com:</strong> no user data at all (public rates).</li>
+        <li><strong>Discord (Discord Inc.):</strong> the platform inherently hosting all IDs/content.</li>
+        <li><strong>Database:</strong> MongoDB used by the bot; access restricted to the operator. No cookies, no web analytics, no advertising, no selling of data.</li>
+      </ul>
+      <p class="note">
+        No API keys are ever exposed to users.
+      </p>
+
+      <h2>5. Retention summary</h2>
+      <p>
+        Automated TTLs are listed in the table above. XP, economy, game stats, counter history, birthdays,
+        movie data, and guild config/knowledge persist indefinitely until removed via the listed mechanisms
+        or by a deletion request.
+      </p>
+      <p>
+        Data is <strong>not</strong> automatically erased when a user leaves a server or when the bot is
+        removed from a guild. Deletion requests are how users close that gap. We state this honestly.
+      </p>
+
+      <h2>6. Your rights (Argentine Law 25.326)</h2>
+      <p>
+        Under <strong>Law 25.326</strong>:
+      </p>
+      <ul>
+        <li>Art. 14 — right of <strong>access, rectification, update, and suppression</strong> of data (habeas data).</li>
+        <li>Art. 16 — handling of <strong>minors'</strong> data requires legal-representative involvement under Argentine law.</li>
+        <li>Right to file with the <strong>Agencia de Acceso a la Información Pública (AAIP)</strong>.</li>
+      </ul>
+      <h3>How to exercise them</h3>
+      <p>
+        Email <code>neceldev@gmail.com</code> including your <strong>Discord user ID</strong> (enable Developer
+        Mode → right-click yourself → Copy ID) and, for server-scoped data, the <strong>guild name</strong>.
+        The operator may ask to reasonably confirm the request comes from the account owner. Target response
+        time: <strong>within 30 days</strong>.
+      </p>
+      <p>Self-service commands exist for:</p>
+      <ul>
+        <li>Birthdays: <code>/birthday delete</code></li>
+        <li>Reminders: <code>/remind cancel</code></li>
+        <li>Tasks: per-task delete</li>
+        <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
+      </ul>
+      <p class="note">
+        Moderation records tied to server administration remain the server admins' responsibility; users
+        should contact server staff for those (the developer does not adjudicate moderation).
+      </p>
+
+      <h2>7. Security posture</h2>
+      <p>
+        Database access is restricted to the operator. External calls use HTTPS. No secret keys are exposed
+        to users. We make no claims beyond these measures.
+      </p>
+
+      <h2>8. Changes to this policy</h2>
+      <p>
+        If we change this policy, we will update the effective date on this page. We recommend reviewing it periodically.
+      </p>
+
+      <h2>9. Links</h2>
+      <p>
+        Also see the <a class="inline" href="terms-of-service.html">Terms of Service</a>.
+      </p>
+
+      <h2>10. Contact</h2>
+      <p>
+        Controller: Hiraeth — a project developed by Necel. Email: <code>neceldev@gmail.com</code>.
+      </p>
+
+      <footer>
+        Última actualización / Last updated: 2026-09-01 — Versión 1.0<br />
+        Contact: neceldev@gmail.com
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
