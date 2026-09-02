@@ -304,9 +304,15 @@
         de forma indefinida hasta que se eliminan mediante los mecanismos listados o por solicitud de supresión.
       </p>
       <p>
-        Los datos <strong>no</strong> se borran automáticamente cuando un usuario sale de un servidor ni
-        cuando el bot se retira de un servidor. Las solicitudes de supresión son el medio por el cual los
-        usuarios cierran esa brecha. Lo señalamos con honestidad.
+        Los datos <strong>no</strong> se borran automáticamente cuando un usuario sale de un servidor.
+        Las solicitudes de supresión son el medio por el cual los usuarios cierran esa brecha.
+        Lo señalamos con honestidad.
+      </p>
+      <p>
+        Tras la retirada del bot de un servidor, los registros de conversaciones de IA y los datos de
+        cumpleaños de ese servidor se eliminan de forma inmediata. Los agregados de juegos y moderación
+        pueden conservarse por si el bot vuelve a ser invitado; cualquier persona puede solicitar la
+        supresión de todos sus datos en cualquier momento mediante <code>/data</code>.
       </p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -339,6 +345,12 @@
         <li>Tareas: eliminación por tarea</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
       </ul>
+      <p>
+        Los usuarios pueden ejercer su derecho de acceso y supresión directamente mediante el comando
+        <code>/data</code> en cualquier servidor donde Hiraeth esté presente. <code>/data export</code>
+        proporciona una copia legible por máquina de todos los datos personales almacenados;
+        <code>/data delete</code> los elimina de forma permanente.
+      </p>
       <p class="note">
         Los registros de moderación vinculados a la administración del servidor son responsabilidad de los
         administradores de ese servidor; los usuarios deben contactar al personal del servidor para esos
@@ -369,7 +381,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-01 — Versión 1.1<br />
+        Última actualización / Last updated: 2026-09-01 — Versión 1.2<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -527,8 +539,13 @@
         or by a deletion request.
       </p>
       <p>
-        Data is <strong>not</strong> automatically erased when a user leaves a server or when the bot is
-        removed from a guild. Deletion requests are how users close that gap. We state this honestly.
+        Data is <strong>not</strong> automatically erased when a user leaves a server.
+        Deletion requests are how users close that gap. We state this honestly.
+      </p>
+      <p>
+        On bot removal from a server, AI conversation logs and birthday data for that server are deleted
+        promptly. Game and moderation aggregates may be retained in case the bot is re-invited; individuals
+        can request erasure of all their data at any time via <code>/data</code>.
       </p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -561,6 +578,11 @@
         <li>Tasks: per-task delete</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
       </ul>
+      <p>
+        Users can exercise their right of access and deletion directly via the <code>/data</code> command
+        in any server where Hiraeth is present. <code>/data export</code> provides a machine-readable copy
+        of all stored personal data; <code>/data delete</code> permanently removes it.
+      </p>
       <p class="note">
         Moderation records tied to server administration remain the server admins' responsibility; users
         should contact server staff for those (the developer does not adjudicate moderation).
@@ -588,7 +610,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-01 — Versión 1.1<br />
+        Última actualización / Last updated: 2026-09-01 — Versión 1.2<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
