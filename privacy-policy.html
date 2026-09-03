@@ -206,12 +206,12 @@
           <tr>
             <td>Chatbot IA (conversaciones) — <em>actualmente suspendido</em></td>
             <td>La función de chatbot con prefijo <code>!</code> está temporalmente suspendida y no está procesando ni almacenando mensajes. Cuando se reactive, almacenará el texto literal del mensaje enviado con prefijo <code>!</code> en canales de chatbot y las respuestas del modelo, hasta 20 turnos de historial por usuario por servidor, acotado estrictamente por {servidor, usuario}; los historiales de distintos usuarios y distintos servidores nunca se mezclan.</td>
-            <td>Eliminación automática 30 días tras inactividad (TTL) — cuando la función esté activa.</td>
+            <td>Eliminación automática 30 días tras inactividad (TTL) — cuando la función esté activa. También se eliminan de forma inmediata cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>XP y niveles</td>
             <td>ID de usuario, ID de servidor, cantidad de XP, nivel y marca de tiempo del último XP. No se almacena contenido de mensajes.</td>
-            <td>Indefinida.</td>
+            <td>Indefinida mientras el bot esté en ese servidor; eliminada automáticamente cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Economía virtual</td>
@@ -221,22 +221,22 @@
           <tr>
             <td>Cumpleaños</td>
             <td>ID de usuario, ID de servidor, día, mes y año opcional (el año permite derivar la edad).</td>
-            <td>Eliminado vía <code>/birthday delete</code> (usuario) o <code>/birthday delete-user</code> (admin); si no, indefinida.</td>
+            <td>Eliminado vía <code>/birthday delete</code> (usuario) o <code>/birthday delete-user</code> (admin), o automáticamente cuando el bot es retirado del servidor; si no, indefinida.</td>
           </tr>
           <tr>
             <td>Advertencias (moderación)</td>
             <td>ID de usuario, ID de servidor, motivo de texto libre escrito por moderadores o auto-generado por automod (los motivos de automod incluyen la única palabra prohibida coincidente — nunca el mensaje completo), fecha.</td>
-            <td>Decaimiento configurable por servidor (<code>warningDecayDays</code>); si está deshabilitado, indefinida.</td>
+            <td>Decaimiento configurable por servidor (<code>warningDecayDays</code>); si está deshabilitado, indefinida. Las advertencias registradas se eliminan además cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Encuestas</td>
             <td>ID del autor, texto libre de pregunta y opciones, y qué ID de usuario votó qué.</td>
-            <td>Las encuestas cerradas se auto-eliminan 7 días después (TTL).</td>
+            <td>Las encuestas cerradas se auto-eliminan 7 días después (TTL); todas las encuestas del servidor se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Recordatorios</td>
             <td>ID de usuario, ID de servidor/canal, texto de recordatorio escrito por el usuario (máx. 500 caracteres).</td>
-            <td>Eliminado inmediatamente tras la entrega (TTL ~5 min tras la hora programada). Se entrega por DM o, si falla, en el canal.</td>
+            <td>Eliminado inmediatamente tras la entrega (TTL ~5 min tras la hora programada). Se entrega por DM o, si falla, en el canal. Los recordatorios pendientes se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Tareas personales (to-do)</td>
@@ -248,22 +248,22 @@
           <tr>
             <td>Contador comunitario</td>
             <td>ID de usuario, el número contado y marca de tiempo de cada conteo (historial indefinido); los contadores de fallo por usuario se auto-eliminan tras 90 días.</td>
-            <td>Historial indefinido; contadores de fallo: auto-eliminación a los 90 días.</td>
+            <td>Historial indefinido; contadores de fallo: auto-eliminación a los 90 días. El historial de conteos y los registros de fallo de ese servidor se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Noches de cine (película)</td>
             <td>Título/fecha/hora/sinopsis de trama (texto libre, autor del usuario), tag de Discord del proponente, URL de avatar e ID, IDs de votantes y puntuaciones.</td>
-            <td>Indefinida.</td>
+            <td>Indefinida mientras el bot esté en ese servidor; las propuestas y votos de ese servidor se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Partidas de juegos (Wordle/Battleship/Sea of Words/Tres en línea/Buscaminas/Mecanografía)</td>
             <td>IDs de usuario, estadísticas numéricas y estado de sesión activa (datos de tablero/intento). Las sesiones caducan automáticamente y se limpian al reiniciar. No hay contenido de mensajes.</td>
-            <td>Mientras dura la sesión; estadísticas indefinidas.</td>
+            <td>Mientras dura la sesión; estadísticas indefinidas. Las sesiones de juego activas de un servidor se cierran automáticamente cuando el bot es retirado de ese servidor; las estadísticas de juego están vinculadas a la cuenta del usuario (no por servidor) y no se borran con esa purga.</td>
           </tr>
           <tr>
             <td>Acciones moderadas programadas (ban/mute temporales)</td>
             <td>ID de usuario, ID de moderador, motivo de texto libre (máx. 512), marcas de tiempo de ejecución.</td>
-            <td>Eliminado en cuanto se ejecuta.</td>
+            <td>Eliminado en cuanto se ejecuta. Las acciones pendientes se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Configuración del servidor (creada por admin)</td>
@@ -273,7 +273,7 @@
           <tr>
             <td>Base de conocimiento del servidor (Q&amp;A de admin, máx. 50 entradas/servidor)</td>
             <td>Preguntas y respuestas almacenadas indefinidamente hasta eliminarse con <code>/knowledge remove</code>. Se envían al proveedor de IA como contexto.</td>
-            <td>Indefinida hasta su eliminación.</td>
+            <td>Indefinida hasta su eliminación con <code>/knowledge remove</code> o hasta que el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Mensajes anónimos (<code>/anonimo</code>)</td>
@@ -299,9 +299,11 @@
 
       <h2>5. Resumen de retención</h2>
       <p>
-        Los TTL automáticos figuran en la tabla anterior. XP, economía, estadísticas de juegos, historial
-        del contador, cumpleaños, datos de películas y configuración/conocimiento del servidor persisten
-        de forma indefinida hasta que se eliminan mediante los mecanismos listados o por solicitud de supresión.
+        Los TTL automáticos figuran en la tabla anterior. La economía virtual, las estadísticas de juegos y
+        las tareas personales están vinculadas a la cuenta de cada usuario a través de todos los servidores y
+        persisten de forma indefinida hasta que se eliminan mediante los mecanismos listados o por solicitud de
+        supresión. Los datos de ámbito de servidor, en cambio, se purgan automáticamente cuando el bot es
+        retirado de ese servidor (ver más abajo).
       </p>
       <p>
         Los datos <strong>no</strong> se borran automáticamente cuando un usuario sale de un servidor.
@@ -309,10 +311,20 @@
         Lo señalamos con honestidad.
       </p>
       <p>
-        Tras la retirada del bot de un servidor, los registros de conversaciones de IA y los datos de
-        cumpleaños de ese servidor se eliminan de forma inmediata. Los agregados de juegos y moderación
-        pueden conservarse por si el bot vuelve a ser invitado; cualquier persona puede solicitar la
-        supresión de todos sus datos en cualquier momento mediante <code>/data</code>.
+        Cuando Hiraeth es retirado de un servidor, se purgan automáticamente los datos almacenados de ese
+        servidor: las advertencias de moderación y las acciones moderadas programadas pendientes, las entradas
+        de la base de conocimiento Q&amp;A del servidor, las encuestas, los recordatorios pendientes, el
+        historial de conteos y los registros de fallo del contador comunitario, los registros de XP, las
+        propuestas y votos de noches de película, las conversaciones del chatbot de IA y los datos de
+        cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
+        mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
+        categoría no impide el borrado de las demás. Los datos vinculados a la cuenta de cada usuario a través
+        de todos los servidores —la economía virtual, las estadísticas de juegos y las tareas personales— no
+        dependen de un solo servidor y no se eliminan con esta purga; la configuración del servidor creada por
+        administradores también se conserva por si el bot vuelve a ser invitado. Cualquier persona puede seguir
+        eliminando o solicitando la supresión de todos sus datos en cualquier momento mediante
+        <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
+        los 30 días).
       </p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -381,7 +393,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-01 — Versión 1.2<br />
+        Última actualización / Last updated: 2026-09-02 — Versión 1.3<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -441,12 +453,12 @@
           <tr>
             <td>AI Chatbot (conversations) — <em>currently suspended</em></td>
             <td>The <code>!</code>-prefixed chatbot feature is temporarily suspended and is not processing or storing messages. When re-enabled, it will store the verbatim message text sent with the <code>!</code> prefix in chatbot channels plus model responses, up to 20 turns of history per user per server, scoped strictly per {server, user}; histories of different users and different servers never mix.</td>
-            <td>Auto-deleted 30 days after inactivity (TTL) — when the feature is active.</td>
+            <td>Auto-deleted 30 days after inactivity (TTL) — when the feature is active. Also deleted promptly when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>XP and levels</td>
             <td>User ID, guild ID, XP amount, level, and last-XP timestamp. No message content stored.</td>
-            <td>Indefinite.</td>
+            <td>Indefinite while the bot is in that server; automatically deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Virtual economy</td>
@@ -456,22 +468,22 @@
           <tr>
             <td>Birthdays</td>
             <td>User ID, guild ID, day, month, and optional year (the year enables age derivation).</td>
-            <td>Deleted via <code>/birthday delete</code> (user) or <code>/birthday delete-user</code> (admin); otherwise indefinite.</td>
+            <td>Deleted via <code>/birthday delete</code> (user) or <code>/birthday delete-user</code> (admin), or automatically when the bot is removed from the server; otherwise indefinite.</td>
           </tr>
           <tr>
             <td>Warnings (moderation)</td>
             <td>User ID, guild ID, free-text reason written by moderators or auto-generated by automod (automod reasons include the single banned word matched — never the full message), date.</td>
-            <td>Per-guild configurable decay (<code>warningDecayDays</code>); if disabled, indefinite.</td>
+            <td>Per-guild configurable decay (<code>warningDecayDays</code>); if disabled, indefinite. Recorded warnings are additionally deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Polls</td>
             <td>Author ID, question and option free text, and which user ID voted what.</td>
-            <td>Closed polls auto-delete 7 days later (TTL).</td>
+            <td>Closed polls auto-delete 7 days later (TTL); all of the server's polls are deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Reminders</td>
             <td>User ID, guild/channel IDs, user-written reminder text (max 500 chars).</td>
-            <td>Deleted immediately after delivery (TTL ~5 min after scheduled time). Delivered via DM or channel fallback.</td>
+            <td>Deleted immediately after delivery (TTL ~5 min after scheduled time). Delivered via DM or channel fallback. Pending reminders are deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Personal tasks (to-do)</td>
@@ -483,22 +495,22 @@
           <tr>
             <td>Community counter</td>
             <td>User ID, the number counted and timestamp of each count (indefinite history); failure counters per user auto-delete after 90 days.</td>
-            <td>Indefinite history; failure counters: auto-delete after 90 days.</td>
+            <td>Indefinite history; failure counters: auto-delete after 90 days. That server's count history and failure records are deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Movie nights (film)</td>
             <td>Proposal title/date/time/plot synopsis (free text, user-authored), proposer's Discord tag, avatar URL and ID, voter IDs and scores.</td>
-            <td>Indefinite.</td>
+            <td>Indefinite while the bot is in that server; that server's proposals and votes are deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Game sessions (Wordle/Battleship/Sea of Words/Tic-Tac-Toe/Minesweeper/Typing)</td>
             <td>User IDs, numeric stats, and active session state (board/guess data). Sessions auto-expire and are cleaned on restart. No message content.</td>
-            <td>While the session lasts; stats indefinite.</td>
+            <td>While the session lasts; stats indefinite. A server's active game sessions are automatically ended when the bot is removed from that server; game stats are tied to the user's account (not per-server) and are not deleted by that purge.</td>
           </tr>
           <tr>
             <td>Scheduled moderation actions (temp ban/mute)</td>
             <td>User ID, moderator ID, free-text reason (max 512), execution timestamps.</td>
-            <td>Deleted as soon as executed.</td>
+            <td>Deleted as soon as executed. Pending actions are deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Server configuration (admin-authored)</td>
@@ -508,7 +520,7 @@
           <tr>
             <td>Server knowledge base (admin Q&amp;A, max 50 entries/guild)</td>
             <td>Stored indefinitely until removed with <code>/knowledge remove</code>. Sent to the AI provider as context.</td>
-            <td>Indefinite until removal.</td>
+            <td>Indefinite until removed via <code>/knowledge remove</code> or until the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Anonymous messages (<code>/anonimo</code>)</td>
@@ -534,18 +546,27 @@
 
       <h2>5. Retention summary</h2>
       <p>
-        Automated TTLs are listed in the table above. XP, economy, game stats, counter history, birthdays,
-        movie data, and guild config/knowledge persist indefinitely until removed via the listed mechanisms
-        or by a deletion request.
+        Automated TTLs are listed in the table above. The virtual economy, game statistics, and personal tasks
+        are tied to each user's account across all servers and persist indefinitely until removed via the
+        listed mechanisms or by a deletion request. Server-scoped data, in turn, is purged automatically when
+        the bot is removed from a server (see below).
       </p>
       <p>
         Data is <strong>not</strong> automatically erased when a user leaves a server.
         Deletion requests are how users close that gap. We state this honestly.
       </p>
       <p>
-        On bot removal from a server, AI conversation logs and birthday data for that server are deleted
-        promptly. Game and moderation aggregates may be retained in case the bot is re-invited; individuals
-        can request erasure of all their data at any time via <code>/data</code>.
+        When Hiraeth is removed from a server, the data stored for that server is purged automatically:
+        moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
+        entries, polls, pending reminders, community counter count history and failure records, XP records,
+        movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
+        that server are automatically ended. The purge is best-effort and runs independently per data
+        category, so a failure in one category does not prevent the others from being deleted. Data tied to a
+        user's account across all servers — the virtual economy, game statistics, and personal tasks — is not
+        bound to a single server and is not removed by this purge; server configuration created by admins is
+        also retained in case the bot is re-invited. Anyone can still delete or request erasure of all of
+        their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
+        response time: within 30 days).
       </p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -610,7 +631,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-01 — Versión 1.2<br />
+        Última actualización / Last updated: 2026-09-02 — Versión 1.3<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
