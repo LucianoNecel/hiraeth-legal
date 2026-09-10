@@ -243,6 +243,18 @@
         <p>
           <span class="num">7.2.</span> Podés solicitar la eliminación de tus datos escribiendo a <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a> o, de forma autoservida, mediante el comando <code>/data</code>.
         </p>
+        <p>
+          <span class="num">7.3.</span> Conservación del contador comunitario: el historial se auto-elimina 180 días tras cada conteo; los contadores de fallo por usuario se auto-eliminan tras 90 días.
+        </p>
+        <p>
+          <span class="num">7.4.</span> Advertencias de moderación: la lista se limita a las 500 entradas más recientes por servidor; las entradas antiguas se podan automáticamente a medida que se añaden nuevas.
+        </p>
+        <p>
+          <span class="num">7.5.</span> Recordatorios: se conservan hasta 24 horas tras la hora programada para permitir reintentos de entrega (primero por mensaje directo, y si falla, en el canal original); una vez entregado, el documento se elimina de inmediato. Si sigue sin entregarse, un índice TTL lo purga automáticamente 24 horas después de la hora programada. Los recordatorios pendientes también se eliminan cuando el bot es retirado del servidor.
+        </p>
+        <p>
+          <span class="num">7.6.</span> Acciones de moderación programadas: las acciones moderadas programadas (desbaneo automático de bans temporales) se eliminan en cuanto se ejecutan (el registro se elimina mediante un índice TTL en el momento en que se marca su marca de tiempo de ejecución). Si un desbaneo programado no puede completarse en un plazo de 30 días desde su hora de ejecución — por ejemplo, porque el servidor no es accesible —, se abandona sin ejecutarse: el registro se elimina, no se reintenta más, y el usuario sigue baneado hasta que un moderador actúe. Las acciones pendientes también se eliminan cuando el bot es retirado del servidor.
+        </p>
       </div>
 
       <div class="article">
@@ -431,6 +443,18 @@
         <p>
           <span class="num">7.2.</span> You may request deletion of your data by emailing <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a> or, via self-service, using the <code>/data</code> command.
         </p>
+        <p>
+          <span class="num">7.3.</span> Community-counter retention: the history auto-deletes 180 days after each count; failure counters per user auto-delete after 90 days.
+        </p>
+        <p>
+          <span class="num">7.4.</span> Moderation warnings: the warning list is capped at the 500 most recent entries per server; older entries are automatically pruned as new warnings are added.
+        </p>
+        <p>
+          <span class="num">7.5.</span> Reminders: kept for up to 24 hours after the scheduled time so delivery can be retried (DM first, then the original channel as fallback); once delivered, the document is removed immediately. If still undelivered, a TTL index auto-purges it 24 hours after the scheduled time. Pending reminders are also deleted when the bot is removed from the server.
+        </p>
+        <p>
+          <span class="num">7.6.</span> Scheduled moderation actions: scheduled moderation actions (auto-unban of temporary bans) are deleted as soon as executed (the record is removed by a TTL index the moment its execution timestamp is set). If a scheduled unban cannot be completed within 30 days of its execution time — for example, because the guild is unreachable — it is abandoned without executing: the record is deleted, no further retries occur, and the user stays banned until a moderator acts. Pending actions are also deleted when the bot is removed from the server.
+        </p>
       </div>
 
       <div class="article">
@@ -509,7 +533,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-09-01 — Versión 1.2</p>
+      <p>Última actualización / Last updated: 2026-09-09 — Versión 1.3</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
