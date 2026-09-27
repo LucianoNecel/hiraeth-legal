@@ -266,6 +266,11 @@
             <td>Mientras dura la sesión; estadísticas indefinidas. Las sesiones de juego activas de un servidor se cierran automáticamente cuando el bot es retirado de ese servidor; las estadísticas de juego están vinculadas a la cuenta del usuario (no por servidor) y no se borran con esa purga.</td>
           </tr>
           <tr>
+            <td>Estadísticas de trivia (<code>/trivia</code>)</td>
+            <td>ID de usuario y estadísticas numéricas (respuestas correctas, partidas jugadas, racha actual, mejor racha y fecha del último juego). No se almacena contenido de mensajes ni texto de las preguntas o respuestas.</td>
+            <td>Indefinida mientras exista la cuenta. Las estadísticas están vinculadas a la cuenta del usuario (no por servidor) y se eliminan con <code>/data delete</code>.</td>
+          </tr>
+          <tr>
             <td>Acciones moderadas programadas (desbaneo automático de bans temporales)</td>
             <td>ID de usuario, ID de moderador, motivo de texto libre (máx. 512), marcas de tiempo de ejecución.</td>
             <td>Eliminado en cuanto se ejecuta (el registro se elimina mediante un índice TTL en el momento en que se marca su marca de tiempo de ejecución). Si un desbaneo programado no puede completarse en un plazo de 30 días desde su hora de ejecución — por ejemplo, porque el servidor no es accesible—, se abandona sin ejecutarse: el registro se elimina, no se reintenta más, y el usuario sigue baneado hasta que un moderador actúe. Las acciones pendientes también se eliminan cuando el bot es retirado del servidor.</td>
@@ -294,6 +299,7 @@
         <li><strong>Google Gemini (Google LLC):</strong> la función opcional de chatbot con prefijo <code>!</code> está <strong>temporalmente suspendida</strong> y no está procesando mensajes. Cuando se habilite en el futuro, se utilizará un proveedor de nivel pago (o equivalente) que no utiliza el contenido enviado para entrenar modelos. En ese caso, recibirá el texto del mensaje del chatbot (≤1500 caracteres), hasta 20 turnos previos, el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibirá IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional).</li>
         <li><strong>WeatherAPI:</strong> solo el nombre de la ciudad que escribió el usuario (comando de clima).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> solo el término de búsqueda escrito por el usuario.</li>
+        <li><strong>Open Trivia DB (opentdb.com):</strong> el comando <code>/trivia</code> obtiene las preguntas de opentdb.com. No se envía ningún dato de usuario: la solicitud solo incluye la categoría y la dificultad elegidas. Las preguntas se publican bajo licencia CC BY-SA 4.0.</li>
         <li><strong>dolarapi.com:</strong> ningún dato de usuario (cotizaciones públicas).</li>
         <li><strong>Discord (Discord Inc.):</strong> plataforma que aloja inherentemente todos los IDs/contenidos.</li>
         <li><strong>Base de datos:</strong> MongoDB utilizada por el bot; el acceso está restringido al operador. Sin cookies, sin analítica web, sin publicidad, sin venta de datos.</li>
@@ -360,6 +366,7 @@
         <li>Cumpleaños: <code>/birthday delete</code></li>
         <li>Recordatorios: <code>/remind cancel</code></li>
         <li>Estado AFK: se elimina automáticamente con tu próximo mensaje, o con <code>/data delete</code></li>
+        <li>Estadísticas de trivia: <code>/data delete</code></li>
         <li>Tareas: eliminación por tarea</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
       </ul>
@@ -399,7 +406,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.5<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.6<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -519,6 +526,11 @@
             <td>While the session lasts; stats indefinite. A server's active game sessions are automatically ended when the bot is removed from that server; game stats are tied to the user's account (not per-server) and are not deleted by that purge.</td>
           </tr>
           <tr>
+            <td>Trivia stats (<code>/trivia</code>)</td>
+            <td>User ID and numeric stats (correct answers, games played, current streak, best streak, and last-played date). No message content and no question or answer text is stored.</td>
+            <td>Indefinite while the account exists. Stats are tied to the user's account (not per-server) and are removed with <code>/data delete</code>.</td>
+          </tr>
+          <tr>
             <td>Scheduled moderation actions (auto-unban of temporary bans)</td>
             <td>User ID, moderator ID, free-text reason (max 512), execution timestamps.</td>
             <td>Deleted as soon as executed (the record is removed by a TTL index the moment its execution timestamp is set). If a scheduled unban cannot be completed within 30 days of its execution time — for example, because the guild is unreachable — it is abandoned without executing: the record is deleted, no further retries occur, and the user stays banned until a moderator acts. Pending actions are also deleted when the bot is removed from the server.</td>
@@ -547,6 +559,7 @@
         <li><strong>Google Gemini (Google LLC):</strong> the optional <code>!</code>-prefixed chatbot feature is <strong>temporarily suspended</strong> and is not processing messages. When re-enabled in the future, the provider will be a paid-tier (or equivalent) service that does not use submitted content for model training. In that case, it will receive the chatbot message text (≤1500 chars), up to 20 previous turns, the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It will <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer).</li>
         <li><strong>WeatherAPI:</strong> only the city name the user typed (weather lookup command).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> only the search term typed by the user.</li>
+        <li><strong>Open Trivia DB (opentdb.com):</strong> the <code>/trivia</code> command fetches its questions from opentdb.com. No user data is sent: the request only includes the selected category and difficulty. Questions are published under the CC BY-SA 4.0 license.</li>
         <li><strong>dolarapi.com:</strong> no user data at all (public rates).</li>
         <li><strong>Discord (Discord Inc.):</strong> the platform inherently hosting all IDs/content.</li>
         <li><strong>Database:</strong> MongoDB used by the bot; access restricted to the operator. No cookies, no web analytics, no advertising, no selling of data.</li>
@@ -608,6 +621,7 @@
         <li>Birthdays: <code>/birthday delete</code></li>
         <li>Reminders: <code>/remind cancel</code></li>
         <li>AFK status: cleared automatically by your next message, or with <code>/data delete</code></li>
+        <li>Trivia stats: <code>/data delete</code></li>
         <li>Tasks: per-task delete</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
       </ul>
@@ -643,7 +657,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.5<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.6<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
