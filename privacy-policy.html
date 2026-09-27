@@ -235,8 +235,8 @@
           </tr>
           <tr>
             <td>Recordatorios</td>
-            <td>ID de usuario, ID de servidor/canal, texto de recordatorio escrito por el usuario (máx. 500 caracteres).</td>
-            <td>Conservado hasta 24 horas tras la hora programada para permitir reintentos de entrega (primero por DM, y si falla, en el canal original); una vez entregado, el documento se elimina de inmediato. Si sigue sin entregarse, un índice TTL lo purga automáticamente 24 horas después de la hora programada. Los recordatorios pendientes también se eliminan cuando el bot es retirado del servidor.</td>
+            <td>ID de usuario, ID de servidor/canal, texto de recordatorio escrito por el usuario (máx. 500 caracteres), y el tipo de recurrencia (diaria/semanal) cuando el recordatorio es recurrente.</td>
+            <td>Conservado hasta 24 horas tras la hora programada para permitir reintentos de entrega (primero por DM, y si falla, en el canal original); una vez entregado, el documento se elimina de inmediato. Si sigue sin entregarse, un índice TTL lo purga automáticamente 24 horas después de la hora programada. Los recordatorios recurrentes (diarios/semanales) se conservan hasta que el usuario los cancele (<code>/remind cancel</code>) o el bot sea retirado del servidor; si un recordatorio recurrente no logra entregarse durante 24 horas, se purga automáticamente. Los recordatorios pendientes también se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Tareas personales (to-do)</td>
@@ -393,7 +393,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-08 — Versión 1.3<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.4<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -482,8 +482,8 @@
           </tr>
           <tr>
             <td>Reminders</td>
-            <td>User ID, guild/channel IDs, user-written reminder text (max 500 chars).</td>
-            <td>Kept for up to 24 hours after the scheduled time so delivery can be retried (DM first, then the original channel as fallback); once delivered, the document is removed immediately. If still undelivered, a TTL index auto-purges it 24 hours after the scheduled time. Pending reminders are also deleted when the bot is removed from the server.</td>
+            <td>User ID, guild/channel IDs, user-written reminder text (max 500 chars), and the recurrence type (daily/weekly) when the reminder is recurring.</td>
+            <td>Kept for up to 24 hours after the scheduled time so delivery can be retried (DM first, then the original channel as fallback); once delivered, the document is removed immediately. If still undelivered, a TTL index auto-purges it 24 hours after the scheduled time. Recurring reminders (daily/weekly) are kept until the user cancels them (<code>/remind cancel</code>) or the bot is removed from the server; if a recurring reminder cannot be delivered for 24 hours, it is auto-purged. Pending reminders are also deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Personal tasks (to-do)</td>
@@ -631,7 +631,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-08 — Versión 1.3<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.4<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
