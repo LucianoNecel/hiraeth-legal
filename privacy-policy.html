@@ -239,6 +239,11 @@
             <td>Conservado hasta 24 horas tras la hora programada para permitir reintentos de entrega (primero por DM, y si falla, en el canal original); una vez entregado, el documento se elimina de inmediato. Si sigue sin entregarse, un índice TTL lo purga automáticamente 24 horas después de la hora programada. Los recordatorios recurrentes (diarios/semanales) se conservan hasta que el usuario los cancele (<code>/remind cancel</code>) o el bot sea retirado del servidor; si un recordatorio recurrente no logra entregarse durante 24 horas, se purga automáticamente. Los recordatorios pendientes también se eliminan cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
+            <td>Estado AFK</td>
+            <td>ID de usuario, ID de servidor y, si el usuario lo indica, un motivo de texto libre (máx. 200 caracteres). No se almacena contenido de mensajes.</td>
+            <td>Se elimina de inmediato cuando el usuario vuelve a escribir en ese servidor, o cuando ejecuta <code>/data delete</code>; en caso contrario un índice TTL lo purga automáticamente 30 días después de haberse fijado. Los estados AFK de un servidor también se eliminan cuando el bot es retirado de ese servidor.</td>
+          </tr>
+          <tr>
             <td>Tareas personales (to-do)</td>
             <td>ID de usuario + contenido de tarea de texto libre.</td>
             <td>
@@ -267,7 +272,7 @@
           </tr>
           <tr>
             <td>Configuración del servidor (creada por admin)</td>
-            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel. Creado/eliminado por administradores del servidor.</td>
+            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, y el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>). Creado/eliminado por administradores del servidor.</td>
             <td>Indefinida mientras esté configurada.</td>
           </tr>
           <tr>
@@ -354,6 +359,7 @@
       <ul>
         <li>Cumpleaños: <code>/birthday delete</code></li>
         <li>Recordatorios: <code>/remind cancel</code></li>
+        <li>Estado AFK: se elimina automáticamente con tu próximo mensaje, o con <code>/data delete</code></li>
         <li>Tareas: eliminación por tarea</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
       </ul>
@@ -393,7 +399,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.4<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.5<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -486,6 +492,11 @@
             <td>Kept for up to 24 hours after the scheduled time so delivery can be retried (DM first, then the original channel as fallback); once delivered, the document is removed immediately. If still undelivered, a TTL index auto-purges it 24 hours after the scheduled time. Recurring reminders (daily/weekly) are kept until the user cancels them (<code>/remind cancel</code>) or the bot is removed from the server; if a recurring reminder cannot be delivered for 24 hours, it is auto-purged. Pending reminders are also deleted when the bot is removed from the server.</td>
           </tr>
           <tr>
+            <td>AFK status</td>
+            <td>User ID, guild ID and, when the user provides one, a free-text reason (max 200 chars). No message content is stored.</td>
+            <td>Deleted immediately when the user sends another message in that server, or when they run <code>/data delete</code>; otherwise a TTL index auto-purges it 30 days after it was set. A server's AFK statuses are also deleted when the bot is removed from that server.</td>
+          </tr>
+          <tr>
             <td>Personal tasks (to-do)</td>
             <td>User ID + free-text task content.</td>
             <td>
@@ -514,7 +525,7 @@
           </tr>
           <tr>
             <td>Server configuration (admin-authored)</td>
-            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards. Created/removed by server admins.</td>
+            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, and the role automatically assigned to new members (<code>/autorole</code>). Created/removed by server admins.</td>
             <td>Indefinite while configured.</td>
           </tr>
           <tr>
@@ -596,6 +607,7 @@
       <ul>
         <li>Birthdays: <code>/birthday delete</code></li>
         <li>Reminders: <code>/remind cancel</code></li>
+        <li>AFK status: cleared automatically by your next message, or with <code>/data delete</code></li>
         <li>Tasks: per-task delete</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
       </ul>
@@ -631,7 +643,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.4<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.5<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
