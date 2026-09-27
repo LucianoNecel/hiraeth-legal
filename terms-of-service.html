@@ -178,6 +178,7 @@
           <li>Una economía puramente virtual (monedas obtenidas por uso diario, trabajo y juegos; tienda, inventarios, intercambios entre usuarios, un volteo de moneda <code>/bet</code> y objetos que se pueden abrir).</li>
           <li>XP, niveles y tarjetas de rango.</li>
           <li>Encuestas, recordatorios (por mensaje directo o canal), cumpleaños, listas de tareas, contador comunitario, propuestas de noche de película.</li>
+          <li>Sorteos (<code>/giveaway</code>): el anfitrión publica un premio en texto libre y los usuarios se inscriben con un botón; el bot sortea ganadores al vencer el plazo. Hiraeth no entrega el premio ni lo garantiza.</li>
           <li>Consultas de clima, dólar, YouTube y hora.</li>
           <li>Mensajes anónimos (<code>/anonimo</code>, cuya autoría es visible para los moderadores del servidor mediante un canal de registro).</li>
           <li>Herramientas de moderación para el personal del servidor (baneo, expulsión, silencio temporal y advertencia con motivo; cierre de canal, modo lento, automoderación con palabras prohibidas definidas por el administrador, configuración del servidor y una base de conocimientos de preguntas y respuestas para el chatbot de IA).</li>
@@ -260,6 +261,9 @@
         </p>
         <p>
           <span class="num">7.8.</span> Wordle diario: el resultado diario (si se resolvió, número de intentos, duración y puntuación, junto con los IDs de usuario, servidor, canal e hilo privado) se conserva de forma indefinida mientras exista la cuenta; no se almacena el contenido de los mensajes ni las palabras intentadas. Se elimina con <code>/data delete</code> y no se purga cuando el bot es retirado del servidor.
+        </p>
+        <p>
+          <span class="num">7.9.</span> Sorteos: el documento de un sorteo (IDs de usuario del anfitrión y de los participantes, IDs de servidor, canal y mensaje, el premio como texto libre escrito por el anfitrión, el ID del rol requerido si se configuró, y marcas de tiempo de finalización, cierre y sorteo) se purga automáticamente 7 días después del cierre mediante un índice TTL. Los participantes pueden retirar su participación antes del cierre; <code>/data delete</code> retira el ID del usuario de las listas de participantes y ganadores y anonimiza el ID del anfitrión, conservando el registro del servidor. El premio lo entrega el anfitrión, no Hiraeth: el bot solo publica el texto del premio y sortea ganadores, no posee ni garantiza el premio y no interviene en su entrega ni en disputas entre usuarios.
         </p>
       </div>
 
@@ -384,6 +388,7 @@
           <li>A purely virtual economy (coins earned via daily use, work, and games; shop, inventories, player-to-player trades, a <code>/bet</code> coin-flip, and openable items).</li>
           <li>XP, levels, and rank cards.</li>
           <li>Polls, reminders (delivered by DM or channel), birthdays, to-do lists, community counter, and movie-night proposals.</li>
+          <li>Giveaways (<code>/giveaway</code>): a host publishes a free-text prize and users enter with a button; the bot draws winners when the deadline passes. Hiraeth does not deliver or guarantee the prize.</li>
           <li>Weather, dollar, YouTube, and time lookups.</li>
           <li>Anonymous messages (<code>/anonimo</code>, whose author is visible to server moderators through a log channel).</li>
           <li>Moderation tools for server staff (ban, kick, timeout, and warn with reasons; channel lock, slowmode, automod with admin-defined banned words, server config, and an admin Q&amp;A knowledge base for the AI chatbot).</li>
@@ -467,6 +472,9 @@
         <p>
           <span class="num">7.8.</span> Daily Wordle: the daily result (whether it was solved, number of attempts, duration and score, together with the user, guild, channel and private-thread IDs) is retained indefinitely while the account exists; no message content and no guessed words are stored. It is removed with <code>/data delete</code> and is not purged when the bot leaves a server.
         </p>
+        <p>
+          <span class="num">7.9.</span> Giveaways: a giveaway document (host and participant user IDs, guild, channel and message IDs, the prize as free text written by the host, the required role ID if one was configured, and end, close and draw timestamps) is auto-purged 7 days after closing via a TTL index. Participants can leave before it closes; <code>/data delete</code> removes the user ID from the participant and winner lists and anonymizes the host ID, preserving the server's record. The prize is delivered by the host, not by Hiraeth: the bot only publishes the prize text and draws winners, does not own or guarantee the prize, and takes no part in its delivery or in disputes between users.
+        </p>
       </div>
 
       <div class="article">
@@ -545,7 +553,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-09-27 — Versión 1.6</p>
+      <p>Última actualización / Last updated: 2026-09-27 — Versión 1.7</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
