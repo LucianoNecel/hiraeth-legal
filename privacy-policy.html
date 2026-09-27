@@ -271,6 +271,11 @@
             <td>Indefinida mientras exista la cuenta. Las estadísticas están vinculadas a la cuenta del usuario (no por servidor) y se eliminan con <code>/data delete</code>.</td>
           </tr>
           <tr>
+            <td>Wordle diario (<code>/wordledaily</code>)</td>
+            <td>ID de usuario, ID de servidor/canal, ID del hilo privado y el resultado diario (si se resolvió, número de intentos, duración y puntuación). No se almacena contenido de mensajes ni las palabras intentadas.</td>
+            <td>Indefinida mientras exista la cuenta. Los resultados diarios están vinculados a la cuenta del usuario (no por servidor) y se eliminan con <code>/data delete</code>.</td>
+          </tr>
+          <tr>
             <td>Acciones moderadas programadas (desbaneo automático de bans temporales)</td>
             <td>ID de usuario, ID de moderador, motivo de texto libre (máx. 512), marcas de tiempo de ejecución.</td>
             <td>Eliminado en cuanto se ejecuta (el registro se elimina mediante un índice TTL en el momento en que se marca su marca de tiempo de ejecución). Si un desbaneo programado no puede completarse en un plazo de 30 días desde su hora de ejecución — por ejemplo, porque el servidor no es accesible—, se abandona sin ejecutarse: el registro se elimina, no se reintenta más, y el usuario sigue baneado hasta que un moderador actúe. Las acciones pendientes también se eliminan cuando el bot es retirado del servidor.</td>
@@ -367,6 +372,7 @@
         <li>Recordatorios: <code>/remind cancel</code></li>
         <li>Estado AFK: se elimina automáticamente con tu próximo mensaje, o con <code>/data delete</code></li>
         <li>Estadísticas de trivia: <code>/data delete</code></li>
+        <li>Resultados de Wordle diario: <code>/data delete</code></li>
         <li>Tareas: eliminación por tarea</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
       </ul>
@@ -406,7 +412,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.6<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.7<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -531,6 +537,11 @@
             <td>Indefinite while the account exists. Stats are tied to the user's account (not per-server) and are removed with <code>/data delete</code>.</td>
           </tr>
           <tr>
+            <td>Daily Wordle (<code>/wordledaily</code>)</td>
+            <td>User ID, guild/channel IDs, private-thread ID, and the day's result (whether it was solved, number of attempts, duration and score). No message content and no guessed words are stored.</td>
+            <td>Indefinite while the account exists. Daily results are tied to the user's account (not per-server) and are removed with <code>/data delete</code>.</td>
+          </tr>
+          <tr>
             <td>Scheduled moderation actions (auto-unban of temporary bans)</td>
             <td>User ID, moderator ID, free-text reason (max 512), execution timestamps.</td>
             <td>Deleted as soon as executed (the record is removed by a TTL index the moment its execution timestamp is set). If a scheduled unban cannot be completed within 30 days of its execution time — for example, because the guild is unreachable — it is abandoned without executing: the record is deleted, no further retries occur, and the user stays banned until a moderator acts. Pending actions are also deleted when the bot is removed from the server.</td>
@@ -622,6 +633,7 @@
         <li>Reminders: <code>/remind cancel</code></li>
         <li>AFK status: cleared automatically by your next message, or with <code>/data delete</code></li>
         <li>Trivia stats: <code>/data delete</code></li>
+        <li>Daily Wordle results: <code>/data delete</code></li>
         <li>Tasks: per-task delete</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
       </ul>
@@ -657,7 +669,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.6<br />
+        Última actualización / Last updated: 2026-09-27 — Versión 1.7<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>

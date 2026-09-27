@@ -174,7 +174,7 @@
           <span class="num">3.1.</span> Hiraeth es un bot de Discord de comandos «/» (slash commands) ofrecido de forma totalmente gratuita. Incluye, sin limitarse a:
         </p>
         <ul>
-          <li>Mini-juegos: Wordle (solo y PvP), Batalla Naval, Mar de Palabras, tatetí (tic-tac-toe), buscaminas, prueba de mecanografía, y trivia (<code>/trivia</code>).</li>
+          <li>Mini-juegos: Wordle (solo y PvP), Batalla Naval, Mar de Palabras, tatetí (tic-tac-toe), buscaminas, prueba de mecanografía, y trivia (<code>/trivia</code>); además, el Wordle diario global (<code>/wordledaily</code>) se juega en hilos privados con una clasificación agregada.</li>
           <li>Una economía puramente virtual (monedas obtenidas por uso diario, trabajo y juegos; tienda, inventarios, intercambios entre usuarios, un volteo de moneda <code>/bet</code> y objetos que se pueden abrir).</li>
           <li>XP, niveles y tarjetas de rango.</li>
           <li>Encuestas, recordatorios (por mensaje directo o canal), cumpleaños, listas de tareas, contador comunitario, propuestas de noche de película.</li>
@@ -257,6 +257,9 @@
         </p>
         <p>
           <span class="num">7.7.</span> Estado AFK: el estado AFK se elimina de inmediato cuando el usuario vuelve a escribir en ese servidor; en caso contrario, un índice TTL lo purga automáticamente 30 días después de haberse fijado. Los estados AFK de un servidor también se eliminan cuando el bot es retirado del servidor.
+        </p>
+        <p>
+          <span class="num">7.8.</span> Wordle diario: el resultado diario (si se resolvió, número de intentos, duración y puntuación, junto con los IDs de usuario, servidor, canal e hilo privado) se conserva de forma indefinida mientras exista la cuenta; no se almacena el contenido de los mensajes ni las palabras intentadas. Se elimina con <code>/data delete</code> y no se purga cuando el bot es retirado del servidor.
         </p>
       </div>
 
@@ -377,7 +380,7 @@
           <span class="num">3.1.</span> Hiraeth is a slash-command Discord bot offered entirely free of charge. It includes, without limitation:
         </p>
         <ul>
-          <li>Mini-games: Wordle (solo and PvP), Battleship, Sea of Words, tic-tac-toe, minesweeper, typing test, and trivia (<code>/trivia</code>).</li>
+          <li>Mini-games: Wordle (solo and PvP), Battleship, Sea of Words, tic-tac-toe, minesweeper, typing test, and trivia (<code>/trivia</code>); in addition, the global daily Wordle (<code>/wordledaily</code>) is played in private threads with an aggregated ranking.</li>
           <li>A purely virtual economy (coins earned via daily use, work, and games; shop, inventories, player-to-player trades, a <code>/bet</code> coin-flip, and openable items).</li>
           <li>XP, levels, and rank cards.</li>
           <li>Polls, reminders (delivered by DM or channel), birthdays, to-do lists, community counter, and movie-night proposals.</li>
@@ -461,6 +464,9 @@
         <p>
           <span class="num">7.7.</span> AFK status: the AFK status is deleted immediately when the user sends another message in that server; otherwise a TTL index auto-purges it 30 days after it was set. A server's AFK statuses are also deleted when the bot is removed from the server.
         </p>
+        <p>
+          <span class="num">7.8.</span> Daily Wordle: the daily result (whether it was solved, number of attempts, duration and score, together with the user, guild, channel and private-thread IDs) is retained indefinitely while the account exists; no message content and no guessed words are stored. It is removed with <code>/data delete</code> and is not purged when the bot leaves a server.
+        </p>
       </div>
 
       <div class="article">
@@ -539,7 +545,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-09-27 — Versión 1.5</p>
+      <p>Última actualización / Last updated: 2026-09-27 — Versión 1.6</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
