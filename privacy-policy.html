@@ -185,7 +185,11 @@
         <strong>temporalmente</strong> los mensajes en los servidores donde está presente con los
         siguientes fines: conteo de XP, escaneo de automoderación (palabras prohibidas, invitaciones,
         flood) y análisis del contador comunitario. La función opcional de chatbot con prefijo
-        <code>!</code> está <strong>temporalmente suspendida</strong> y no está procesando mensajes en este momento.
+        <code>!</code> está <strong>activa</strong> y tiene un alcance acotado: procesa
+        <strong>solo</strong> los mensajes que comienzan con <code>!</code> y
+        <strong>únicamente</strong> en el canal de chatbot que un administrador del servidor haya
+        configurado. El resto de los mensajes del servidor no se envía a ningún proveedor externo
+        ni se almacena.
       </p>
       <p>
         Solo persiste lo que indica la tabla de la sección 3. <strong>No</strong> registra ni almacena el
@@ -204,9 +208,9 @@
         </thead>
         <tbody>
           <tr>
-            <td>Chatbot IA (conversaciones) — <em>actualmente suspendido</em></td>
-            <td>La función de chatbot con prefijo <code>!</code> está temporalmente suspendida y no está procesando ni almacenando mensajes. Cuando se reactive, almacenará el texto literal del mensaje enviado con prefijo <code>!</code> en canales de chatbot y las respuestas del modelo, hasta 20 turnos de historial por usuario por servidor, acotado estrictamente por {servidor, usuario}; los historiales de distintos usuarios y distintos servidores nunca se mezclan.</td>
-            <td>Eliminación automática 30 días tras inactividad (TTL) — cuando la función esté activa. También se eliminan de forma inmediata cuando el bot es retirado del servidor.</td>
+            <td>Chatbot IA (conversaciones)</td>
+            <td>Procesa únicamente mensajes que comienzan con el prefijo <code>!</code> y solo en el canal de chatbot configurado por un administrador del servidor. Almacena el texto literal del mensaje completo (incluido el prefijo <code>!</code>) y la respuesta del modelo, hasta las últimas 20 entradas de historial por usuario por servidor (es decir, hasta 10 pares de mensaje y respuesta), acotado estrictamente por {servidor, usuario}; los historiales de distintos usuarios y distintos servidores nunca se mezclan. El documento se identifica además por el ID de usuario y el ID de servidor de Discord.</td>
+            <td>Eliminación automática 30 días tras inactividad (TTL). También se eliminan de forma inmediata cuando el bot es retirado del servidor, y el comando <code>/data delete</code> las borra.</td>
           </tr>
           <tr>
             <td>XP y niveles</td>
@@ -306,7 +310,7 @@
       <h2>4. Terceros</h2>
       <p>Flujos exactos de datos con terceros:</p>
       <ul>
-        <li><strong>Google Gemini (Google LLC):</strong> la función opcional de chatbot con prefijo <code>!</code> está <strong>temporalmente suspendida</strong> y no está procesando mensajes. Cuando se habilite en el futuro, se utilizará un proveedor de nivel pago (o equivalente) que no utiliza el contenido enviado para entrenar modelos. En ese caso, recibirá el texto del mensaje del chatbot (≤1500 caracteres), hasta 20 turnos previos, el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibirá IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional).</li>
+        <li><strong>Google (Google LLC) — modelo Gemma <code>gemma-4-26b-a4b-it</code>, accedido a través de la Gemini API / Google AI Studio en la <strong>cuota no pagada (gratis)</strong>:</strong> esta función <strong>no</strong> se ejecuta en un servicio de pago. Recibe el texto del mensaje del chatbot (≤1500 caracteres), hasta las últimas 20 entradas de historial previo (10 pares de mensaje y respuesta), el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibe IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional). <strong>Tratamiento por parte de Google:</strong> al tratarse de la cuota no pagada, según los Términos Adicionales del Gemini API (vigentes desde el 23 de marzo de 2026), Google puede utilizar el contenido enviado y las respuestas generadas para <em>proporcionar, mejorar y desarrollar</em> sus productos, servicios y tecnologías de aprendizaje automático, y <strong>revisores humanos pueden leer, anotar y procesar</strong> la entrada y la salida de la API. Ese tratamiento <strong>no</strong> se aplica a la cuota de pago. Quien use el chatbot con este modelo debe saber que su mensaje y la respuesta del modelo pueden ser utilizados por Google de esa manera. La búsqueda de las entradas de conocimiento es local (puntuación por palabras en el propio servidor) y no se envía a Google.</li>
         <li><strong>WeatherAPI:</strong> solo el nombre de la ciudad que escribió el usuario (comando de clima).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> solo el término de búsqueda escrito por el usuario.</li>
         <li><strong>Open Trivia DB (opentdb.com):</strong> el comando <code>/trivia</code> obtiene las preguntas de opentdb.com. No se envía ningún dato de usuario: la solicitud solo incluye la categoría y la dificultad elegidas. Las preguntas se publican bajo licencia CC BY-SA 4.0.</li>
@@ -418,7 +422,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.8<br />
+        Última actualización / Last updated: 2026-09-28 — Versión 1.9<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -457,8 +461,11 @@
       <p>
         The bot has Discord's <em>Message Content</em> privilege enabled. It temporarily processes messages
         in servers it is in for: XP counting, automod scanning (banned words, invites, flood), and community
-        counter parsing. The optional <code>!</code>-prefixed chatbot feature is <strong>temporarily suspended</strong>
-        and is not processing messages at this time.
+        counter parsing. The optional <code>!</code>-prefixed chatbot feature is
+        <strong>active</strong> and has a tightly bounded scope: it processes <strong>only</strong>
+        messages beginning with <code>!</code>, and <strong>only</strong> in the chatbot channel an
+        administrator has configured for the server. No other message in the server is sent to any
+        external provider or stored.
       </p>
       <p>
         It only persists what the table in section 3 lists. It does <strong>not</strong> log or store general chat.
@@ -476,9 +483,9 @@
         </thead>
         <tbody>
           <tr>
-            <td>AI Chatbot (conversations) — <em>currently suspended</em></td>
-            <td>The <code>!</code>-prefixed chatbot feature is temporarily suspended and is not processing or storing messages. When re-enabled, it will store the verbatim message text sent with the <code>!</code> prefix in chatbot channels plus model responses, up to 20 turns of history per user per server, scoped strictly per {server, user}; histories of different users and different servers never mix.</td>
-            <td>Auto-deleted 30 days after inactivity (TTL) — when the feature is active. Also deleted promptly when the bot is removed from the server.</td>
+            <td>AI Chatbot (conversations)</td>
+            <td>Processes only messages beginning with the <code>!</code> prefix, and only in the chatbot channel configured by a server administrator. It stores the verbatim full message text (including the <code>!</code> prefix) and the model response, up to the last 20 history entries per user per server (that is, up to 10 message/response pairs), scoped strictly per {server, user}; histories of different users and different servers never mix. The document is additionally identified by the user's and the server's Discord IDs.</td>
+            <td>Auto-deleted 30 days after inactivity (TTL). Also deleted promptly when the bot is removed from the server, and removed by the <code>/data delete</code> command.</td>
           </tr>
           <tr>
             <td>XP and levels</td>
@@ -578,7 +585,7 @@
       <h2>4. Third parties</h2>
       <p>Exact data flows with third parties:</p>
       <ul>
-        <li><strong>Google Gemini (Google LLC):</strong> the optional <code>!</code>-prefixed chatbot feature is <strong>temporarily suspended</strong> and is not processing messages. When re-enabled in the future, the provider will be a paid-tier (or equivalent) service that does not use submitted content for model training. In that case, it will receive the chatbot message text (≤1500 chars), up to 20 previous turns, the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It will <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer).</li>
+        <li><strong>Google (Google LLC) — Gemma model <code>gemma-4-26b-a4b-it</code>, accessed through the Gemini API / Google AI Studio on the <strong>unpaid (free) quota</strong>:</strong> this feature does <strong>not</strong> run on a paid service. It receives the chatbot message text (≤1500 chars), up to the last 20 previous history entries (10 message/response pairs), the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It will <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer). <strong>Google's handling of the data:</strong> because this is the unpaid quota, under the Gemini API Additional Terms of Service (in effect since 23 March 2026) Google may use the submitted content and the generated responses to <em>provide, improve and develop</em> its products, services and machine-learning technologies, and <strong>human reviewers may read, annotate and process</strong> the API input and output. That handling does <strong>not</strong> apply to the paid quota. Anyone using the chatbot with this model should know that their message and the model's reply may be used by Google in that way. The knowledge lookup is local (word-overlap scoring on the bot's own server) and is not sent to Google.</li>
         <li><strong>WeatherAPI:</strong> only the city name the user typed (weather lookup command).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> only the search term typed by the user.</li>
         <li><strong>Open Trivia DB (opentdb.com):</strong> the <code>/trivia</code> command fetches its questions from opentdb.com. No user data is sent: the request only includes the selected category and difficulty. Questions are published under the CC BY-SA 4.0 license.</li>
@@ -681,7 +688,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-27 — Versión 1.8<br />
+        Última actualización / Last updated: 2026-09-28 — Versión 1.9<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
