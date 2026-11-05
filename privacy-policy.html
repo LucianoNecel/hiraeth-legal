@@ -214,8 +214,18 @@
           </tr>
           <tr>
             <td>XP y niveles</td>
-            <td>ID de usuario, ID de servidor, cantidad de XP, nivel y marca de tiempo del último XP. No se almacena contenido de mensajes.</td>
-            <td>Indefinida mientras el bot esté en ese servidor; eliminada automáticamente cuando el bot es retirado del servidor.</td>
+            <td>ID de usuario, ID de servidor, XP acumulada, XP de la temporada en curso, nivel, marca de tiempo del último XP, totales por fuente (texto, voz, stream, juegos, eventos y calidad), rachas diarias y, para el control antifraude de la fuente «calidad», los IDs de los usuarios que reaccionaron o respondieron y los IDs de canales/hilos usados durante el día. No se almacena contenido de mensajes.</td>
+            <td>Indefinida mientras el bot esté en ese servidor; eliminada automáticamente cuando el bot es retirado del servidor y con <code>/data delete</code>.</td>
+          </tr>
+          <tr>
+            <td>Agregados diarios de XP</td>
+            <td>ID de usuario, ID de servidor, fecha UTC, XP desglosada por fuente (texto, voz, stream, juegos, eventos y calidad) y minutos de voz/stream. No se almacena contenido de mensajes.</td>
+            <td>Un índice TTL los purga automáticamente 400 días después de su creación; también se eliminan cuando el bot es retirado del servidor y con <code>/data delete</code>.</td>
+          </tr>
+          <tr>
+            <td>Temporadas y <code>/wrapped</code></td>
+            <td>ID de usuario, ID de servidor, identificador de temporada (año del aniversario del servidor), XP de la temporada, nivel, puesto en el ranking y marcas de tiempo de inicio y fin. Es el resumen permanente que usan el cierre de temporada, los roles de recompensa y <code>/wrapped</code>. No se almacena contenido de mensajes.</td>
+            <td>Indefinida mientras el bot esté en ese servidor; se elimina cuando el bot es retirado del servidor y con <code>/data delete</code>.</td>
           </tr>
           <tr>
             <td>Economía virtual</td>
@@ -339,7 +349,8 @@
         Cuando Hiraeth es retirado de un servidor, se purgan automáticamente los datos almacenados de ese
         servidor: las advertencias de moderación y las acciones moderadas programadas pendientes, las entradas
         de la base de conocimiento Q&amp;A del servidor, las encuestas, los recordatorios pendientes, el
-        historial de conteos y los registros de fallo del contador comunitario, los registros de XP, las
+        historial de conteos y los registros de fallo del contador comunitario, los registros de XP, los
+        agregados diarios de XP y los registros de temporada, las
         propuestas y votos de noches de película, las conversaciones del chatbot de IA y los datos de
         cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
@@ -381,6 +392,7 @@
         <li>Recordatorios: <code>/remind cancel</code></li>
         <li>Estado AFK: se elimina automáticamente con tu próximo mensaje, o con <code>/data delete</code></li>
         <li>Estadísticas de trivia: <code>/data delete</code></li>
+        <li>XP, temporadas y <code>/wrapped</code>: <code>/data delete</code></li>
         <li>Resultados de Wordle diario: <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
         <li>Tareas: eliminación por tarea</li>
@@ -489,8 +501,18 @@
           </tr>
           <tr>
             <td>XP and levels</td>
-            <td>User ID, guild ID, XP amount, level, and last-XP timestamp. No message content stored.</td>
-            <td>Indefinite while the bot is in that server; automatically deleted when the bot is removed from the server.</td>
+            <td>User ID, guild ID, lifetime XP, current-season XP, level, last-XP timestamp, per-source totals (text, voice, stream, games, events, and quality), daily streaks, and — for anti-abuse deduplication of the quality source — the IDs of users who reacted or replied and the channel/thread IDs used during the day. No message content is stored.</td>
+            <td>Indefinite while the bot is in that server; automatically deleted when the bot is removed from the server and by the <code>/data delete</code> command.</td>
+          </tr>
+          <tr>
+            <td>Daily XP aggregates</td>
+            <td>User ID, guild ID, UTC date, XP broken down by source (text, voice, stream, games, events, and quality), and voice/stream minutes. No message content is stored.</td>
+            <td>A TTL index auto-purges them 400 days after creation; they are also deleted when the bot is removed from the server and by <code>/data delete</code>.</td>
+          </tr>
+          <tr>
+            <td>Seasons and <code>/wrapped</code></td>
+            <td>User ID, guild ID, season identifier (the server's anniversary year), season XP, level, leaderboard rank, and start/end timestamps. This is the permanent summary used by season close, reward roles, and <code>/wrapped</code>. No message content is stored.</td>
+            <td>Indefinite while the bot is in that server; deleted when the bot is removed from the server and by <code>/data delete</code>.</td>
           </tr>
           <tr>
             <td>Virtual economy</td>
@@ -612,7 +634,7 @@
         When Hiraeth is removed from a server, the data stored for that server is purged automatically:
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, community counter count history and failure records, XP records,
-        movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
+        daily XP aggregates and season records, movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
         user's account across all servers — the virtual economy, game statistics, and personal tasks — is not
@@ -651,6 +673,7 @@
         <li>Reminders: <code>/remind cancel</code></li>
         <li>AFK status: cleared automatically by your next message, or with <code>/data delete</code></li>
         <li>Trivia stats: <code>/data delete</code></li>
+        <li>XP, seasons, and <code>/wrapped</code>: <code>/data delete</code></li>
         <li>Daily Wordle results: <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
         <li>Tasks: per-task delete</li>

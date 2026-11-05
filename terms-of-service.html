@@ -176,7 +176,7 @@
         <ul>
           <li>Mini-juegos: Wordle (solo y PvP), Batalla Naval, Mar de Palabras, tatetí (tic-tac-toe), buscaminas, prueba de mecanografía, y trivia (<code>/trivia</code>); además, el Wordle diario global (<code>/wordledaily</code>) se juega en hilos privados con una clasificación agregada.</li>
           <li>Una economía puramente virtual (monedas obtenidas por uso diario, trabajo y juegos; tienda, inventarios, intercambios entre usuarios, un volteo de moneda <code>/bet</code> y objetos que se pueden abrir).</li>
-          <li>XP, niveles y tarjetas de rango.</li>
+          <li>XP, niveles, tarjetas de rango, temporadas por aniversario del servidor y resúmenes de <code>/wrapped</code>.</li>
           <li>Encuestas, recordatorios (por mensaje directo o canal), cumpleaños, listas de tareas, contador comunitario, propuestas de noche de película.</li>
           <li>Sorteos (<code>/giveaway</code>): el anfitrión publica un premio en texto libre y los usuarios se inscriben con un botón; el bot sortea ganadores al vencer el plazo. Hiraeth no entrega el premio ni lo garantiza.</li>
           <li>Consultas de clima, dólar, YouTube y hora.</li>
@@ -264,6 +264,12 @@
         </p>
         <p>
           <span class="num">7.9.</span> Sorteos: el documento de un sorteo (IDs de usuario del anfitrión y de los participantes, IDs de servidor, canal y mensaje, el premio como texto libre escrito por el anfitrión, el ID del rol requerido si se configuró, y marcas de tiempo de finalización, cierre y sorteo) se purga automáticamente 7 días después del cierre mediante un índice TTL. Los participantes pueden retirar su participación antes del cierre; <code>/data delete</code> retira el ID del usuario de las listas de participantes y ganadores y anonimiza el ID del anfitrión, conservando el registro del servidor. El premio lo entrega el anfitrión, no Hiraeth: el bot solo publica el texto del premio y sortea ganadores, no posee ni garantiza el premio y no interviene en su entrega ni en disputas entre usuarios.
+        </p>
+        <p>
+          <span class="num">7.10.</span> Agregados diarios de XP: se almacenan el ID de usuario, el ID de servidor, la fecha UTC, la XP desglosada por fuente (texto, voz, stream, juegos, eventos y calidad) y los minutos de voz/stream, sin contenido de mensajes. Un índice TTL los purga automáticamente 400 días después de su creación; también se eliminan cuando el bot es retirado del servidor y con <code>/data delete</code>.
+        </p>
+        <p>
+          <span class="num">7.11.</span> Temporadas y <code>/wrapped</code>: al cerrar cada temporada (el aniversario del servidor) se conserva un registro permanente con el ID de usuario, el ID de servidor, el identificador de temporada, la XP de la temporada, el nivel, el puesto en el ranking y las marcas de tiempo de inicio y fin. Ese registro alimenta los roles de recompensa y los resúmenes de <code>/wrapped</code>; no contiene contenido de mensajes. Se conserva mientras el bot esté en el servidor y se elimina cuando el bot es retirado o con <code>/data delete</code>.
         </p>
       </div>
 
@@ -386,7 +392,7 @@
         <ul>
           <li>Mini-games: Wordle (solo and PvP), Battleship, Sea of Words, tic-tac-toe, minesweeper, typing test, and trivia (<code>/trivia</code>); in addition, the global daily Wordle (<code>/wordledaily</code>) is played in private threads with an aggregated ranking.</li>
           <li>A purely virtual economy (coins earned via daily use, work, and games; shop, inventories, player-to-player trades, a <code>/bet</code> coin-flip, and openable items).</li>
-          <li>XP, levels, and rank cards.</li>
+          <li>XP, levels, rank cards, server-anniversary seasons, and <code>/wrapped</code> summaries.</li>
           <li>Polls, reminders (delivered by DM or channel), birthdays, to-do lists, community counter, and movie-night proposals.</li>
           <li>Giveaways (<code>/giveaway</code>): a host publishes a free-text prize and users enter with a button; the bot draws winners when the deadline passes. Hiraeth does not deliver or guarantee the prize.</li>
           <li>Weather, dollar, YouTube, and time lookups.</li>
@@ -474,6 +480,12 @@
         </p>
         <p>
           <span class="num">7.9.</span> Giveaways: a giveaway document (host and participant user IDs, guild, channel and message IDs, the prize as free text written by the host, the required role ID if one was configured, and end, close and draw timestamps) is auto-purged 7 days after closing via a TTL index. Participants can leave before it closes; <code>/data delete</code> removes the user ID from the participant and winner lists and anonymizes the host ID, preserving the server's record. The prize is delivered by the host, not by Hiraeth: the bot only publishes the prize text and draws winners, does not own or guarantee the prize, and takes no part in its delivery or in disputes between users.
+        </p>
+        <p>
+          <span class="num">7.10.</span> Daily XP aggregates: user ID, guild ID, UTC date, XP broken down by source (text, voice, stream, games, events, and quality), and voice/stream minutes are stored without message content. A TTL index auto-purges them 400 days after creation; they are also deleted when the bot is removed from the server and by <code>/data delete</code>.
+        </p>
+        <p>
+          <span class="num">7.11.</span> Seasons and <code>/wrapped</code>: when a season closes (the server's anniversary), a permanent record is kept with the user ID, guild ID, season identifier, season XP, level, leaderboard rank, and start/end timestamps. That record drives reward roles and the <code>/wrapped</code> summaries and contains no message content. It is retained while the bot is in the server and is deleted when the bot is removed or by <code>/data delete</code>.
         </p>
       </div>
 
