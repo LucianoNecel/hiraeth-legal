@@ -182,6 +182,7 @@
           <li>Consultas de clima, dólar, YouTube y hora.</li>
           <li>Mensajes anónimos (<code>/anonimo</code>, cuya autoría es visible para los moderadores del servidor mediante un canal de registro).</li>
           <li>Herramientas de moderación para el personal del servidor (baneo, expulsión, silencio temporal y advertencia con motivo; cierre de canal, modo lento, automoderación con palabras prohibidas definidas por el administrador, configuración del servidor y una base de conocimientos de preguntas y respuestas para el chatbot de IA).</li>
+          <li>Tickets de soporte (<code>/ticket</code>): un panel publicado por el personal abre un canal privado por usuario, con asunto y descripción; el personal puede reclamarlo, cambiar su prioridad, renombrarlo y añadir participantes, y al cerrarlo el bot entrega una transcripción al canal de registro del servidor o, si no hay ninguno, al mensaje directo de quien lo abrió.</li>
           <li>Un chatbot de IA (Google Gemini) activado con mensajes que comienzan por <code>!</code> en canales con la opción habilitada — <strong>actualmente suspendido</strong> y no procesando mensajes.</li>
         </ul>
         <p>
@@ -274,6 +275,9 @@
         <p>
           <span class="num">7.12.</span> Analíticas de actividad: el bot registra estadísticas agregadas de actividad por servidor y por día UTC (cantidad de mensajes, minutos de voz, entradas, salidas, invocaciones de comandos y cantidad de miembros activos distintos). Para estas estadísticas no se almacena contenido de mensajes ni adjuntos. Un administrador del servidor puede desactivar la recolección desde <code>/config</code>; la retención es de 400 días para los contadores diarios y de 35 días para los marcadores por miembro.
         </p>
+        <p>
+          <span class="num">7.13.</span> Tickets de soporte: un ticket guarda el ID de servidor, el ID del canal privado, el ID de quien lo abrió, tipo, prioridad, estado, el asunto en texto libre escrito por el usuario (máx. 100 caracteres), el ID de quien lo reclamó, los IDs de los participantes añadidos y marcas de tiempo de creación, última actividad, cierre y entrega de la transcripción, además del ID de quien lo cerró y el motivo. El contenido de los mensajes del ticket y la descripción inicial <strong>no</strong> se almacenan. El canal privado se elimina automáticamente tras el cierre (la limpieza es horaria y deja 10 minutos de margen para reabrir el ticket) y el documento se purga automáticamente 30 días después del cierre mediante un índice TTL; los tickets de un servidor también se eliminan cuando el bot es retirado de ese servidor. La transcripción se genera al cerrar leyendo hasta 1000 mensajes del canal y se entrega como archivo de texto al canal de registro configurado por el servidor o, si no hay ninguno, al mensaje directo de quien abrió el ticket: Hiraeth no la almacena y queda bajo el control de ese servidor. <code>/data delete</code> borra los tickets cerrados cuyo canal ya no existe y anonimiza el ID del usuario en los que siguen vinculados a un canal.
+        </p>
       </div>
 
       <div class="article">
@@ -289,6 +293,9 @@
         </p>
         <p>
           <span class="num">8.4.</span> El Desarrollador puede eliminar los datos de un servidor en caso de abuso.
+        </p>
+        <p>
+          <span class="num">8.5.</span> Los tickets de soporte son canales privados, pero su contenido lo leen el personal que atiende el ticket y los administradores del servidor, y la transcripción entregada al canal de registro queda almacenada en el propio servidor. El servidor decide qué rol atiende los tickets y qué canal recibe las transcripciones; el Desarrollador no modera, revisa ni conserva el contenido de los tickets.
         </p>
       </div>
 
@@ -401,6 +408,7 @@
           <li>Weather, dollar, YouTube, and time lookups.</li>
           <li>Anonymous messages (<code>/anonimo</code>, whose author is visible to server moderators through a log channel).</li>
           <li>Moderation tools for server staff (ban, kick, timeout, and warn with reasons; channel lock, slowmode, automod with admin-defined banned words, server config, and an admin Q&amp;A knowledge base for the AI chatbot).</li>
+          <li>Support tickets (<code>/ticket</code>): a panel posted by staff opens one private channel per user, with a subject and a description; staff can claim it, change its priority, rename it and add participants, and on close the bot delivers a transcript to the server's log channel or, if none is set, to the opener's direct messages.</li>
           <li>An AI chatbot (Google Gemini) activated by messages starting with <code>!</code> in opt-in channels — <strong>currently suspended</strong> and not processing messages.</li>
         </ul>
         <p>
@@ -493,6 +501,9 @@
         <p>
           <span class="num">7.12.</span> Activity analytics: the bot records aggregate server activity statistics per UTC day (number of messages, voice minutes, joins, leaves, command invocations, and the number of distinct active members). No message content or attachments are stored for these statistics. A server administrator can disable collection from <code>/config</code>; retention is 400 days for the daily counters and 35 days for the per-member markers.
         </p>
+        <p>
+          <span class="num">7.13.</span> Support tickets: a ticket stores the guild ID, the private channel ID, the ID of whoever opened it, type, priority, status, a free-text subject written by the user (max 100 characters), the ID of whoever claimed it, the IDs of added participants, and timestamps for creation, last activity, close and transcript delivery, plus the ID of whoever closed it and the close reason. Message content inside the ticket and the initial description are <strong>not</strong> stored. The private channel is deleted automatically after closing (the cleanup runs hourly and allows a 10-minute window to reopen the ticket) and the document is auto-purged 30 days after closing by a TTL index; a server's tickets are also deleted when the bot is removed from that server. The transcript is generated on close by reading up to 1000 messages from the channel and is delivered as a text file to the log channel the server configured or, if none is set, to the opener's direct messages: Hiraeth does not store it, and it remains under that server's control. <code>/data delete</code> removes closed tickets whose channel no longer exists and anonymizes the user ID on those still linked to a channel.
+        </p>
       </div>
 
       <div class="article">
@@ -508,6 +519,9 @@
         </p>
         <p>
           <span class="num">8.4.</span> The Developer may remove a server's data in case of abuse.
+        </p>
+        <p>
+          <span class="num">8.5.</span> Support tickets are private channels, but their content is read by the staff handling the ticket and by the server's administrators, and the transcript delivered to the log channel is stored inside the server itself. The server decides which role handles tickets and which channel receives transcripts; the Developer does not moderate, review, or retain ticket content.
         </p>
       </div>
 
@@ -571,7 +585,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-11-17 — Versión 1.9</p>
+      <p>Última actualización / Last updated: 2026-11-17 — Versión 2.0</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 

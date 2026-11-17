@@ -197,6 +197,12 @@
         día: de cada mensaje solo se leen el servidor, el autor y la marca de tiempo, nunca el texto ni los
         adjuntos.
       </p>
+      <p>
+        Hay una excepción acotada y explícita: cuando se cierra un ticket de soporte, el bot lee los mensajes de
+        ese canal privado para generar la transcripción que entrega al servidor (ver sección 3). Esa lectura
+        ocurre una sola vez, en el momento del cierre, y la transcripción no se guarda en la base de datos del
+        bot.
+      </p>
 
       <h2>3. Qué se almacena</h2>
       <p>La siguiente tabla refleja los datos guardados por cada modelo de MongoDB del bot:</p>
@@ -313,7 +319,7 @@
           </tr>
           <tr>
             <td>Configuración del servidor (creada por admin)</td>
-            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, y el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>). Creado/eliminado por administradores del servidor.</td>
+            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>) y la configuración de tickets (IDs de categoría, de rol de soporte, de canal de registro y de canal/mensaje del panel, además de los días de inactividad). Creado/eliminado por administradores del servidor.</td>
             <td>Indefinida mientras esté configurada.</td>
           </tr>
           <tr>
@@ -326,8 +332,21 @@
             <td>El mensaje se publica sin autor visible en el canal, pero el tag y el ID del autor se registran en un canal de registro del servidor visible para los moderadores.</td>
             <td>Mientras el canal de registro lo retenga (hasta que el servidor lo elimine).</td>
           </tr>
+          <tr>
+            <td>Tickets de soporte (<code>/ticket</code>)</td>
+            <td>ID de servidor, ID del canal privado, ID del usuario que abrió el ticket, tipo, prioridad, estado, asunto en texto libre escrito por el usuario (máx. 100 caracteres), ID del miembro del personal que lo reclamó, IDs de los participantes añadidos y marcas de tiempo de creación, última actividad, aviso de inactividad, cierre y entrega de la transcripción; además, el ID de quien lo cerró y el motivo de cierre. <strong>No</strong> se almacena el contenido de los mensajes del ticket ni la descripción libre que el usuario escribe al abrirlo: ambos existen solo en el canal de Discord.</td>
+            <td>El canal privado se elimina automáticamente tras el cierre: la limpieza corre cada hora y respeta una ventana de 10 minutos en la que el ticket todavía puede reabrirse. El documento se purga automáticamente 30 días después del cierre mediante un índice TTL. Los tickets de un servidor también se eliminan cuando el bot es retirado de ese servidor. <code>/data delete</code> borra los tickets cerrados cuyo canal ya no existe y anonimiza el ID del usuario en los que siguen vinculados a un canal.</td>
+          </tr>
         </tbody>
       </table>
+      <p class="note">
+        <strong>Tickets de soporte:</strong> un ticket es un canal privado visible para quien lo abre, para el
+        personal con el rol de soporte configurado y para los administradores del servidor. Al cerrarlo, el bot
+        genera una transcripción leyendo hasta 1000 mensajes de ese canal (2 MB como máximo) y la entrega como
+        archivo de texto al canal de registro configurado por el servidor o, si no hay ninguno, al mensaje
+        directo de quien abrió el ticket. Hiraeth no guarda esa transcripción en su base de datos: queda
+        únicamente en el canal o el mensaje directo de Discord que la recibe, bajo el control de ese servidor.
+      </p>
 
       <h2>4. Terceros</h2>
       <p>Flujos exactos de datos con terceros:</p>
@@ -364,7 +383,8 @@
         registro agregado del contador comunitario y sus registros de fallo, los registros de XP, los
         agregados diarios de XP y los registros de temporada, los agregados diarios de actividad del servidor y
         los marcadores de miembro activo, las
-        propuestas y votos de noches de película, las conversaciones del chatbot de IA y los datos de
+        propuestas y votos de noches de película, los tickets de soporte de ese servidor,
+        las conversaciones del chatbot de IA y los datos de
         cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
         categoría no impide el borrado de las demás. Los datos vinculados a la cuenta de cada usuario a través
@@ -374,7 +394,7 @@
         eliminando o solicitando la supresión de todos sus datos en cualquier momento mediante
         <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
         los 30 días). Los dos TTL de analítica son de 400 días para los contadores diarios y de 35 días para
-        los marcadores de miembro activo.
+        los marcadores de miembro activo; el de los tickets de soporte es de 30 días desde el cierre.
       </p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -448,7 +468,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.1<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.2<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -497,6 +517,11 @@
         It only persists what the table in section 3 lists. It does <strong>not</strong> log or store general chat.
         Message events are additionally observed to count activity per server per day: only the server, the
         author and the timestamp are read — never the text or attachments.
+      </p>
+      <p>
+        There is one narrow, explicit exception: when a support ticket is closed, the bot reads that private
+        channel's messages to build the transcript it hands to the server (see section 3). That read happens
+        once, at close time, and the transcript is not stored in the bot's database.
       </p>
 
       <h2>3. What is stored</h2>
@@ -614,7 +639,7 @@
           </tr>
           <tr>
             <td>Server configuration (admin-authored)</td>
-            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, and the role automatically assigned to new members (<code>/autorole</code>). Created/removed by server admins.</td>
+            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, the role automatically assigned to new members (<code>/autorole</code>), and the ticket settings (category, support-role, log-channel and panel channel/message IDs, plus the inactivity days). Created/removed by server admins.</td>
             <td>Indefinite while configured.</td>
           </tr>
           <tr>
@@ -627,8 +652,21 @@
             <td>The message is posted without a visible author in the channel, but the author's tag and ID are logged to a server log channel visible to moderators.</td>
             <td>While the log channel retains it (until the server removes it).</td>
           </tr>
+          <tr>
+            <td>Support tickets (<code>/ticket</code>)</td>
+            <td>Guild ID, private channel ID, the ID of the user who opened the ticket, type, priority, status, a free-text subject written by the user (max 100 characters), the ID of the staff member who claimed it, the IDs of added participants, and timestamps for creation, last activity, inactivity warning, close and transcript delivery; plus the ID of whoever closed it and the close reason. Message content inside the ticket and the free-text description typed when opening it are <strong>not</strong> stored: both exist only in the Discord channel.</td>
+            <td>The private channel is deleted automatically after closing: the cleanup runs hourly and honours a 10-minute window in which the ticket can still be reopened. The document is auto-purged 30 days after closing by a TTL index. A server's tickets are also deleted when the bot is removed from that server. <code>/data delete</code> removes closed tickets whose channel no longer exists and anonymizes the user ID on those still linked to a channel.</td>
+          </tr>
         </tbody>
       </table>
+      <p class="note">
+        <strong>Support tickets:</strong> a ticket is a private channel visible to whoever opened it, to staff
+        holding the configured support role, and to the server's administrators. On close, the bot builds a
+        transcript by reading up to 1000 messages from that channel (2 MB at most) and delivers it as a text
+        file to the log channel the server configured or, if none is set, to the opener's direct messages.
+        Hiraeth does not store that transcript in its database: it lives only in the Discord channel or direct
+        message that received it, under that server's control.
+      </p>
 
       <h2>4. Third parties</h2>
       <p>Exact data flows with third parties:</p>
@@ -661,7 +699,8 @@
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
         daily XP aggregates and season records, server activity analytics aggregates and active-member
-        markers, movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
+        markers, movie-night proposals and votes, the server's support tickets, AI chatbot conversations, and
+        birthday data; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
         user's account across all servers — the virtual economy, game statistics, and personal tasks — is not
@@ -669,7 +708,7 @@
         also retained in case the bot is re-invited. Anyone can still delete or request erasure of all of
         their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
         response time: within 30 days). The two analytics TTLs are 400 days for the daily counters and 35 days
-        for the active-member markers.
+        for the active-member markers; the support-ticket TTL is 30 days after closing.
       </p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -739,7 +778,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.1<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.2<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
