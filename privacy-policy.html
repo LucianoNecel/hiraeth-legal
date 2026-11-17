@@ -193,7 +193,9 @@
       </p>
       <p>
         Solo persiste lo que indica la tabla de la sección 3. <strong>No</strong> registra ni almacena el
-        chat general.
+        chat general. Además, los eventos de mensajes se observan para contar la actividad por servidor y por
+        día: de cada mensaje solo se leen el servidor, el autor y la marca de tiempo, nunca el texto ni los
+        adjuntos.
       </p>
 
       <h2>3. Qué se almacena</h2>
@@ -221,6 +223,16 @@
             <td>Agregados diarios de XP</td>
             <td>ID de usuario, ID de servidor, fecha UTC, XP desglosada por fuente (texto, voz, stream, juegos, eventos y calidad) y minutos de voz/stream. No se almacena contenido de mensajes.</td>
             <td>Un índice TTL los purga automáticamente 400 días después de su creación; también se eliminan cuando el bot es retirado del servidor y con <code>/data delete</code>.</td>
+          </tr>
+          <tr>
+            <td>Analíticas de actividad del servidor (agregados diarios)</td>
+            <td>ID de servidor, fecha UTC y los conteos diarios de mensajes, minutos de voz, entradas, salidas e invocaciones de comandos, además del número de miembros activos distintos de ese día. Solo agregados: no se guarda contenido de mensajes, ni metadatos de adjuntos, ni contadores por usuario. La recolección está activada por defecto y un administrador del servidor puede desactivarla desde <code>/config</code>.</td>
+            <td>Un índice TTL los purga automáticamente 400 días después de su creación; las filas de analítica de ese servidor también se eliminan cuando el bot es retirado del servidor.</td>
+          </tr>
+          <tr>
+            <td>Analíticas de actividad del servidor (marcador de miembro activo)</td>
+            <td>ID de usuario, ID de servidor y fecha UTC, guardados solo para contar cuántos miembros distintos estuvieron activos ese día. No contiene contenido de mensajes ni contadores de actividad.</td>
+            <td>Un índice TTL los purga automáticamente 35 días después de su creación; se eliminan con <code>/data delete</code> y cuando el bot es retirado del servidor.</td>
           </tr>
           <tr>
             <td>Temporadas y <code>/wrapped</code></td>
@@ -350,7 +362,8 @@
         servidor: las advertencias de moderación y las acciones moderadas programadas pendientes, las entradas
         de la base de conocimiento Q&amp;A del servidor, las encuestas, los recordatorios pendientes, el
         registro agregado del contador comunitario y sus registros de fallo, los registros de XP, los
-        agregados diarios de XP y los registros de temporada, las
+        agregados diarios de XP y los registros de temporada, los agregados diarios de actividad del servidor y
+        los marcadores de miembro activo, las
         propuestas y votos de noches de película, las conversaciones del chatbot de IA y los datos de
         cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
@@ -360,7 +373,8 @@
         administradores también se conserva por si el bot vuelve a ser invitado. Cualquier persona puede seguir
         eliminando o solicitando la supresión de todos sus datos en cualquier momento mediante
         <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
-        los 30 días).
+        los 30 días). Los dos TTL de analítica son de 400 días para los contadores diarios y de 35 días para
+        los marcadores de miembro activo.
       </p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -434,7 +448,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.0<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.1<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -481,6 +495,8 @@
       </p>
       <p>
         It only persists what the table in section 3 lists. It does <strong>not</strong> log or store general chat.
+        Message events are additionally observed to count activity per server per day: only the server, the
+        author and the timestamp are read — never the text or attachments.
       </p>
 
       <h2>3. What is stored</h2>
@@ -508,6 +524,16 @@
             <td>Daily XP aggregates</td>
             <td>User ID, guild ID, UTC date, XP broken down by source (text, voice, stream, games, events, and quality), and voice/stream minutes. No message content is stored.</td>
             <td>A TTL index auto-purges them 400 days after creation; they are also deleted when the bot is removed from the server and by <code>/data delete</code>.</td>
+          </tr>
+          <tr>
+            <td>Server activity analytics (daily aggregates)</td>
+            <td>Guild ID, UTC date, and daily counts of messages, voice minutes, joins, leaves and command invocations, plus the number of distinct active members for that day. Aggregates only: no message content, no attachment metadata, and no per-user counters. Collection is on by default and can be disabled per server from <code>/config</code>.</td>
+            <td>A TTL index auto-purges them 400 days after creation; that server's analytics rows are also deleted when the bot is removed from the server.</td>
+          </tr>
+          <tr>
+            <td>Server activity analytics (active-member marker)</td>
+            <td>User ID, guild ID and UTC date, stored only to count how many distinct members were active that day. It holds no message content and no activity counters.</td>
+            <td>A TTL index auto-purges it 35 days after creation; it is deleted by <code>/data delete</code> and when the bot is removed from the server.</td>
           </tr>
           <tr>
             <td>Seasons and <code>/wrapped</code></td>
@@ -634,14 +660,16 @@
         When Hiraeth is removed from a server, the data stored for that server is purged automatically:
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
-        daily XP aggregates and season records, movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
+        daily XP aggregates and season records, server activity analytics aggregates and active-member
+        markers, movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
         user's account across all servers — the virtual economy, game statistics, and personal tasks — is not
         bound to a single server and is not removed by this purge; server configuration created by admins is
         also retained in case the bot is re-invited. Anyone can still delete or request erasure of all of
         their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
-        response time: within 30 days).
+        response time: within 30 days). The two analytics TTLs are 400 days for the daily counters and 35 days
+        for the active-member markers.
       </p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -711,7 +739,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.0<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.1<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>

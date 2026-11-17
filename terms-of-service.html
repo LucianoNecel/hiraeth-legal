@@ -271,6 +271,9 @@
         <p>
           <span class="num">7.11.</span> Temporadas y <code>/wrapped</code>: al cerrar cada temporada (el aniversario del servidor) se conserva un registro permanente con el ID de usuario, el ID de servidor, el identificador de temporada, la XP de la temporada, el nivel, el puesto en el ranking y las marcas de tiempo de inicio y fin. Ese registro alimenta los roles de recompensa y los resúmenes de <code>/wrapped</code>; no contiene contenido de mensajes. Se conserva mientras el bot esté en el servidor y se elimina cuando el bot es retirado o con <code>/data delete</code>.
         </p>
+        <p>
+          <span class="num">7.12.</span> Analíticas de actividad: el bot registra estadísticas agregadas de actividad por servidor y por día UTC (cantidad de mensajes, minutos de voz, entradas, salidas, invocaciones de comandos y cantidad de miembros activos distintos). Para estas estadísticas no se almacena contenido de mensajes ni adjuntos. Un administrador del servidor puede desactivar la recolección desde <code>/config</code>; la retención es de 400 días para los contadores diarios y de 35 días para los marcadores por miembro.
+        </p>
       </div>
 
       <div class="article">
@@ -487,6 +490,9 @@
         <p>
           <span class="num">7.11.</span> Seasons and <code>/wrapped</code>: when a season closes (the server's anniversary), a permanent record is kept with the user ID, guild ID, season identifier, season XP, level, leaderboard rank, and start/end timestamps. That record drives reward roles and the <code>/wrapped</code> summaries and contains no message content. It is retained while the bot is in the server and is deleted when the bot is removed or by <code>/data delete</code>.
         </p>
+        <p>
+          <span class="num">7.12.</span> Activity analytics: the bot records aggregate server activity statistics per UTC day (number of messages, voice minutes, joins, leaves, command invocations, and the number of distinct active members). No message content or attachments are stored for these statistics. A server administrator can disable collection from <code>/config</code>; retention is 400 days for the daily counters and 35 days for the per-member markers.
+        </p>
       </div>
 
       <div class="article">
@@ -565,7 +571,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-11-17 — Versión 1.8</p>
+      <p>Última actualización / Last updated: 2026-11-17 — Versión 1.9</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
