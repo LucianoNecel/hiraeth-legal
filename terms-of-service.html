@@ -245,7 +245,7 @@
           <span class="num">7.2.</span> Podés solicitar la eliminación de tus datos escribiendo a <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a> o, de forma autoservida, mediante el comando <code>/data</code>.
         </p>
         <p>
-          <span class="num">7.3.</span> Conservación del contador comunitario: el historial se auto-elimina 180 días tras cada conteo; los contadores de fallo por usuario se auto-eliminan tras 90 días.
+          <span class="num">7.3.</span> Conservación del contador comunitario: se guarda un único registro agregado por usuario y servidor (conteos correctos, fallos, número más alto y marcas de tiempo del primer y del último conteo) mientras el bot permanezca en el servidor; no se conserva el historial conteo por conteo. El registro operativo de fallos se auto-elimina 90 días después del último fallo.
         </p>
         <p>
           <span class="num">7.4.</span> Advertencias de moderación: la lista se limita a las 500 entradas más recientes por servidor; las entradas antiguas se podan automáticamente a medida que se añaden nuevas.
@@ -461,7 +461,7 @@
           <span class="num">7.2.</span> You may request deletion of your data by emailing <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a> or, via self-service, using the <code>/data</code> command.
         </p>
         <p>
-          <span class="num">7.3.</span> Community-counter retention: the history auto-deletes 180 days after each count; failure counters per user auto-delete after 90 days.
+          <span class="num">7.3.</span> Community-counter retention: one aggregate record per user and server (correct counts, failures, highest number, and first and last count timestamps) is kept while the bot remains in the server; no per-count history is retained. The operational failure record auto-deletes 90 days after the last failure.
         </p>
         <p>
           <span class="num">7.4.</span> Moderation warnings: the warning list is capped at the 500 most recent entries per server; older entries are automatically pruned as new warnings are added.
@@ -565,7 +565,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-09-27 — Versión 1.7</p>
+      <p>Última actualización / Last updated: 2026-11-17 — Versión 1.8</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 

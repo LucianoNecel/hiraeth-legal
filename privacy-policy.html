@@ -266,8 +266,8 @@
           </tr>
           <tr>
             <td>Contador comunitario</td>
-            <td>ID de usuario, el número contado y marca de tiempo de cada conteo (el historial se auto-elimina 180 días tras cada conteo); los contadores de fallo por usuario se auto-eliminan tras 90 días.</td>
-            <td>El historial se auto-elimina 180 días tras cada conteo; contadores de fallo: auto-eliminación a los 90 días. El historial de conteos y los registros de fallo de ese servidor se eliminan cuando el bot es retirado del servidor.</td>
+            <td>ID de usuario y un registro agregado por usuario y servidor: cantidad de conteos correctos, cantidad de fallos, número más alto alcanzado y marcas de tiempo del primer y del último conteo. No se almacena el historial conteo por conteo.</td>
+            <td>El registro agregado se conserva mientras el bot permanezca en ese servidor (es la estadística declarada de la función y no tiene TTL). El registro operativo de fallos, usado para los roles temporales, se auto-elimina 90 días después del último fallo. Ambos se eliminan cuando el bot es retirado del servidor o cuando el usuario solicita la supresión de sus datos.</td>
           </tr>
           <tr>
             <td>Noches de cine (película)</td>
@@ -349,7 +349,7 @@
         Cuando Hiraeth es retirado de un servidor, se purgan automáticamente los datos almacenados de ese
         servidor: las advertencias de moderación y las acciones moderadas programadas pendientes, las entradas
         de la base de conocimiento Q&amp;A del servidor, las encuestas, los recordatorios pendientes, el
-        historial de conteos y los registros de fallo del contador comunitario, los registros de XP, los
+        registro agregado del contador comunitario y sus registros de fallo, los registros de XP, los
         agregados diarios de XP y los registros de temporada, las
         propuestas y votos de noches de película, las conversaciones del chatbot de IA y los datos de
         cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
@@ -434,7 +434,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-28 — Versión 1.9<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.0<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -553,8 +553,8 @@
           </tr>
           <tr>
             <td>Community counter</td>
-            <td>User ID, the number counted and timestamp of each count (history auto-deletes 180 days after each count); failure counters per user auto-delete after 90 days.</td>
-            <td>History auto-deletes 180 days after each count; failure counters: auto-delete after 90 days. That server's count history and failure records are deleted when the bot is removed from the server.</td>
+            <td>User ID and one aggregate record per user and server: number of correct counts, number of failures, highest number reached, and the timestamps of the first and last count. No per-count history is stored.</td>
+            <td>The aggregate record is kept while the bot remains in that server (it is the feature's declared statistic and has no TTL). The operational failure record used for temporary roles auto-deletes 90 days after the last failure. Both are deleted when the bot is removed from the server or when the user requests erasure of their data.</td>
           </tr>
           <tr>
             <td>Movie nights (film)</td>
@@ -633,7 +633,7 @@
       <p>
         When Hiraeth is removed from a server, the data stored for that server is purged automatically:
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
-        entries, polls, pending reminders, community counter count history and failure records, XP records,
+        entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
         daily XP aggregates and season records, movie-night proposals and votes, AI chatbot conversations, and birthday data; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
@@ -711,7 +711,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-09-28 — Versión 1.9<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.0<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
