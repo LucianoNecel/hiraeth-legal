@@ -319,7 +319,7 @@
           </tr>
           <tr>
             <td>Configuración del servidor (creada por admin)</td>
-            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>) y la configuración de tickets (IDs de categoría, de rol de soporte, de canal de registro y de canal/mensaje del panel, además de los días de inactividad). Creado/eliminado por administradores del servidor.</td>
+            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>) y la configuración de tickets (IDs de categoría, de rol de soporte, de canal de registro y de canal/mensaje del panel, además de los días de inactividad), las opciones de roles autoasignables que ofrece el panel (IDs de rol, texto descriptivo escrito por administradores e IDs del canal y del mensaje del panel), los ajustes de starboard (canal, umbral, emoji y si está activo), los ajustes de sugerencias (canal y si está activo) y los ajustes de voz temporal (canal hub, categoría y límite por defecto). Creado/eliminado por administradores del servidor.</td>
             <td>Indefinida mientras esté configurada.</td>
           </tr>
           <tr>
@@ -336,6 +336,26 @@
             <td>Tickets de soporte (<code>/ticket</code>)</td>
             <td>ID de servidor, ID del canal privado, ID del usuario que abrió el ticket, tipo, prioridad, estado, asunto en texto libre escrito por el usuario (máx. 100 caracteres), ID del miembro del personal que lo reclamó, IDs de los participantes añadidos y marcas de tiempo de creación, última actividad, aviso de inactividad, cierre y entrega de la transcripción; además, el ID de quien lo cerró y el motivo de cierre. <strong>No</strong> se almacena el contenido de los mensajes del ticket ni la descripción libre que el usuario escribe al abrirlo: ambos existen solo en el canal de Discord.</td>
             <td>El canal privado se elimina automáticamente tras el cierre: la limpieza corre cada hora y respeta una ventana de 10 minutos en la que el ticket todavía puede reabrirse. El documento se purga automáticamente 30 días después del cierre mediante un índice TTL. Los tickets de un servidor también se eliminan cuando el bot es retirado de ese servidor. <code>/data delete</code> borra los tickets cerrados cuyo canal ya no existe y anonimiza el ID del usuario en los que siguen vinculados a un canal.</td>
+          </tr>
+          <tr>
+            <td>Sugerencias (<code>/suggest</code>)</td>
+            <td>IDs de servidor, de canal y de mensaje de la tarjeta, el número de la sugerencia, el ID del autor, el contenido en texto libre escrito por el miembro (máx. 1000 caracteres), el estado (abierta/aprobada/rechazada/implementada), el ID de quien la decidió, un motivo de decisión opcional en texto libre (máx. 300 caracteres) y los contadores de votos a favor y en contra. Los votos se guardan aparte: ID de la sugerencia, ID del votante y dirección del voto, con una fila por usuario y sugerencia.</td>
+            <td>Indefinida mientras el bot esté en ese servidor. Una sugerencia se elimina con <code>/suggest delete</code> (autor o personal). <code>/data delete</code> elimina los votos emitidos y las sugerencias escritas por el usuario, junto con las tarjetas que publicó el bot; las sugerencias y los votos de un servidor se eliminan cuando el bot es retirado de él.</td>
+          </tr>
+          <tr>
+            <td>Starboard (<code>/starboard</code>)</td>
+            <td>IDs de servidor, de canal y de mensaje de origen, el ID de quien escribió el mensaje destacado, los IDs del canal y del mensaje del starboard y el recuento actual de estrellas. El texto del mensaje no se guarda en la base de datos: el destacado existe como mensaje de Discord en el canal que el servidor configuró.</td>
+            <td>Se elimina automáticamente cuando el mensaje de origen se borra o cuando sus reacciones caen por debajo del umbral configurado. <code>/data delete</code> elimina los registros del usuario y las publicaciones que el bot hizo a partir de sus mensajes; los registros de un servidor se eliminan cuando el bot es retirado de él.</td>
+          </tr>
+          <tr>
+            <td>Canales de voz temporales (<code>/tempvoice</code>)</td>
+            <td>ID del servidor, ID del canal temporal, ID del dueño, ID del canal hub, si el canal está bloqueado, el límite de usuarios, el ID del mensaje del panel de control del bot y, cuando una operación en segundo plano falla, un código de error con su marca de tiempo. No se guarda audio, contenido de mensajes ni datos de presencia.</td>
+            <td>Se elimina cuando el canal queda vacío (tras 30 segundos de gracia), cuando el canal se borra o el dueño usa <code>/tempvoice delete</code>, y en la reconciliación de arranque entre la base de datos y Discord. <code>/data delete</code> elimina las filas donde el usuario es dueño y borra los canales que sigan existiendo. Las filas de un servidor se eliminan cuando el bot es retirado de él.</td>
+          </tr>
+          <tr>
+            <td>Canales de estadística (<code>/statchannel</code>)</td>
+            <td>IDs de servidor y de canal, qué contador refleja el canal, la plantilla de nombre (escrita por administradores, máx. 100 caracteres), el último nombre renderizado, la marca de tiempo del último renombrado y, en caso de fallo, un código de error con su marca de tiempo. No se guardan datos de usuarios.</td>
+            <td>Indefinida mientras esté configurada; se quita con <code>/statchannel remove</code>.</td>
           </tr>
         </tbody>
       </table>
@@ -383,7 +403,7 @@
         registro agregado del contador comunitario y sus registros de fallo, los registros de XP, los
         agregados diarios de XP y los registros de temporada, los agregados diarios de actividad del servidor y
         los marcadores de miembro activo, las
-        propuestas y votos de noches de película, los tickets de soporte de ese servidor,
+        propuestas y votos de noches de película, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard y las filas de los canales de voz temporales,
         las conversaciones del chatbot de IA y los datos de
         cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
@@ -395,7 +415,7 @@
         <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
         los 30 días). Los dos TTL de analítica son de 400 días para los contadores diarios y de 35 días para
         los marcadores de miembro activo; el de los tickets de soporte es de 30 días desde el cierre.
-      </p>
+       Cuando una persona pide la supresión de sus datos, el bot elimina además los mensajes de Discord que publicó en su nombre (sus tarjetas de sugerencia, sus destacados del starboard y sus canales de voz temporales), no solo las filas de la base de datos.</p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
       <p>
@@ -428,6 +448,9 @@
         <li>Estadísticas de trivia: <code>/data delete</code></li>
         <li>XP, temporadas y <code>/wrapped</code>: <code>/data delete</code></li>
         <li>Resultados de Wordle diario: <code>/data delete</code></li>
+        <li>Sugerencias: <code>/suggest delete</code> (autor o personal) o <code>/data delete</code></li>
+        <li>Destacados del starboard: se eliminan cuando se borra el mensaje original, o con <code>/data delete</code></li>
+        <li>Canales de voz temporales: se cierran cuando el canal queda vacío, con <code>/tempvoice delete</code> o con <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
         <li>Tareas: eliminación por tarea</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
@@ -468,7 +491,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.2<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.3<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -639,7 +662,7 @@
           </tr>
           <tr>
             <td>Server configuration (admin-authored)</td>
-            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, the role automatically assigned to new members (<code>/autorole</code>), and the ticket settings (category, support-role, log-channel and panel channel/message IDs, plus the inactivity days). Created/removed by server admins.</td>
+            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, the role automatically assigned to new members (<code>/autorole</code>), and the ticket settings (category, support-role, log-channel and panel channel/message IDs, plus the inactivity days), the self-assignable role options the panel offers (role IDs, admin-written description text and the panel channel and message IDs), the starboard settings (channel, threshold, emoji and whether it is enabled), the suggestions settings (channel and whether it is enabled) and the temp voice settings (hub channel, category and default user limit). Created/removed by server admins.</td>
             <td>Indefinite while configured.</td>
           </tr>
           <tr>
@@ -656,6 +679,26 @@
             <td>Support tickets (<code>/ticket</code>)</td>
             <td>Guild ID, private channel ID, the ID of the user who opened the ticket, type, priority, status, a free-text subject written by the user (max 100 characters), the ID of the staff member who claimed it, the IDs of added participants, and timestamps for creation, last activity, inactivity warning, close and transcript delivery; plus the ID of whoever closed it and the close reason. Message content inside the ticket and the free-text description typed when opening it are <strong>not</strong> stored: both exist only in the Discord channel.</td>
             <td>The private channel is deleted automatically after closing: the cleanup runs hourly and honours a 10-minute window in which the ticket can still be reopened. The document is auto-purged 30 days after closing by a TTL index. A server's tickets are also deleted when the bot is removed from that server. <code>/data delete</code> removes closed tickets whose channel no longer exists and anonymizes the user ID on those still linked to a channel.</td>
+          </tr>
+          <tr>
+            <td>Suggestions (<code>/suggest</code>)</td>
+            <td>Server, channel and card message IDs, the suggestion number, the author's user ID, the free-text content written by the member (max 1000 characters), the state (open/approved/rejected/implemented), the ID of whoever decided it, an optional free-text decision reason (max 300 characters), and the up/down vote counters. Votes are stored separately: the suggestion ID, the voter's user ID and the direction, one row per user per suggestion.</td>
+            <td>Indefinite while the bot is in that server. A suggestion is removed with <code>/suggest delete</code> (author or staff). <code>/data delete</code> removes the votes a user cast and the suggestions they authored, together with the cards the bot posted; a server's suggestions and votes are deleted when the bot is removed from it.</td>
+          </tr>
+          <tr>
+            <td>Starboard (<code>/starboard</code>)</td>
+            <td>Server, source channel and source message IDs, the ID of the member who wrote the highlighted message, the starboard channel and message IDs, and the current star count. The message text is not stored in the database: the highlight exists as a Discord message in the channel the server configured.</td>
+            <td>Removed automatically when the source message is deleted or its reactions fall below the configured threshold. <code>/data delete</code> removes the user's records and the posts the bot made from their messages; a server's records are deleted when the bot is removed from it.</td>
+          </tr>
+          <tr>
+            <td>Temporary voice channels (<code>/tempvoice</code>)</td>
+            <td>Server ID, temporary channel ID, owner user ID, hub channel ID, whether the channel is locked, the user limit, the ID of the bot's control-panel message and, when a background operation fails, an error code with its timestamp. No audio, message content or presence data is stored.</td>
+            <td>Removed when the channel is emptied (after a 30-second grace period), when the channel is deleted or the owner runs <code>/tempvoice delete</code>, and by the startup reconciliation between the database and Discord. <code>/data delete</code> removes the rows where the user is the owner and deletes the channels still alive. A server's rows are deleted when the bot is removed from it.</td>
+          </tr>
+          <tr>
+            <td>Stat channels (<code>/statchannel</code>)</td>
+            <td>Server and channel IDs, which counter the channel mirrors, the name template (admin-authored, max 100 characters), the last rendered name, the timestamp of the last rename and, on failure, an error code with its timestamp. No user data is stored.</td>
+            <td>Indefinite while configured; removed with <code>/statchannel remove</code>.</td>
           </tr>
         </tbody>
       </table>
@@ -699,7 +742,7 @@
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
         daily XP aggregates and season records, server activity analytics aggregates and active-member
-        markers, movie-night proposals and votes, the server's support tickets, AI chatbot conversations, and
+        markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records and its temporary voice channel rows, AI chatbot conversations, and
         birthday data; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
@@ -709,7 +752,7 @@
         their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
         response time: within 30 days). The two analytics TTLs are 400 days for the daily counters and 35 days
         for the active-member markers; the support-ticket TTL is 30 days after closing.
-      </p>
+       When a user requests erasure, the bot also deletes the Discord messages it posted on their behalf (their suggestion cards, their starboard highlights and their temporary voice channels), not only the database rows.</p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
       <p>
@@ -742,6 +785,9 @@
         <li>Trivia stats: <code>/data delete</code></li>
         <li>XP, seasons, and <code>/wrapped</code>: <code>/data delete</code></li>
         <li>Daily Wordle results: <code>/data delete</code></li>
+        <li>Suggestions: <code>/suggest delete</code> (author or staff) or <code>/data delete</code></li>
+        <li>Starboard highlights: removed when the original message is deleted, or with <code>/data delete</code></li>
+        <li>Temporary voice channels: closed when the channel is emptied, with <code>/tempvoice delete</code>, or with <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
         <li>Tasks: per-task delete</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
@@ -778,7 +824,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.2<br />
+        Última actualización / Last updated: 2026-11-17 — Versión 2.3<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
