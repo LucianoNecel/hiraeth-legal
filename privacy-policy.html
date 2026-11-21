@@ -374,7 +374,7 @@
           </tr>
           <tr>
             <td>Anuncios programados (<code>/announce</code>)</td>
-            <td>ID del servidor, número de espacio reservado (0 a 9), ID del canal de destino, hasta 5 mensajes de texto libre escritos por administradores (máx. 1500 caracteres cada uno), el horario (diario, semanal o por intervalo, con la zona horaria del servidor), el modo de mención (ninguna, rol o <code>@here</code>) con el ID del rol cuando corresponde, si el anuncio está en pausa y el motivo cuando la pausa la aplicó el propio bot, la marca del último envío y el ID del administrador que lo creó. Un servidor puede tener hasta 10 anuncios. No se almacena contenido escrito por miembros ni el texto de los mensajes a los que el bot responde.</td>
+            <td>ID del servidor, su número en <code>/announce list</code> (1 a 10), ID del canal de destino, hasta 5 mensajes de texto libre escritos por administradores (máx. 1500 caracteres cada uno), el horario (diario, semanal o por intervalo, con la zona horaria del servidor), el modo de mención (ninguna, rol o <code>@here</code>) con el ID del rol cuando corresponde, si el anuncio está en pausa y el motivo cuando la pausa la aplicó el propio bot, la marca del último envío y el ID del administrador que lo creó. Un servidor puede tener hasta 10 anuncios. No se almacena contenido escrito por miembros ni el texto de los mensajes a los que el bot responde.</td>
             <td>Indefinida mientras el servidor lo conserve: se elimina con <code>/announce remove</code> o cuando el bot es retirado del servidor. <code>/data delete</code> borra el ID de quien lo creó y conserva el anuncio, porque pertenece al servidor y no a la persona; <code>/data export</code> incluye los anuncios que creó el usuario.</td>
           </tr>
           <tr>
@@ -389,7 +389,7 @@
           </tr>
           <tr>
             <td>Trabajos programados (planificador interno)</td>
-            <td>Identificador estable del trabajo, ID del servidor, tipo de función, el horario (con la zona horaria del servidor) y la carga propia de esa función —por ejemplo el ID de usuario y de rol de un rol temporal, o el número de espacio de un anuncio—, además del próximo instante de ejecución, las marcas de la última ejecución y de la reserva en curso, y contadores de ejecuciones y fallos. No contiene contenido de mensajes.</td>
+            <td>Identificador estable del trabajo, ID del servidor, tipo de función, el horario (con la zona horaria del servidor) y la carga propia de esa función —por ejemplo el ID de usuario y de rol de un rol temporal, o el número interno de un anuncio—, además del próximo instante de ejecución, las marcas de la última ejecución y de la reserva en curso, y contadores de ejecuciones y fallos. No contiene contenido de mensajes.</td>
             <td>Un trabajo de una sola ejecución se elimina en cuanto se completa; los recurrentes (anuncios, aniversarios y la carrera semanal de XP) persisten mientras la función siga programada y se eliminan cuando se desregistra, cuando el servidor desactiva la función o cuando el bot es retirado del servidor. <code>/data delete</code> borra los trabajos cuya carga referencia al usuario.</td>
           </tr>
         </tbody>
@@ -759,7 +759,7 @@
           </tr>
           <tr>
             <td>Scheduled announcements (<code>/announce</code>)</td>
-            <td>Guild ID, reserved slot number (0 to 9), target channel ID, up to 5 free-text messages written by administrators (max 1500 characters each), the schedule (daily, weekly or interval, in the server's time zone), the ping mode (none, role or <code>@here</code>) with the role ID where applicable, whether the announcement is paused and the reason when the bot itself paused it, the timestamp of the last delivery, and the ID of the administrator who created it. A server can hold up to 10 announcements. No member-written content is stored, and neither is the text of the messages the bot replies to.</td>
+            <td>Guild ID, its number in <code>/announce list</code> (1 to 10), target channel ID, up to 5 free-text messages written by administrators (max 1500 characters each), the schedule (daily, weekly or interval, in the server's time zone), the ping mode (none, role or <code>@here</code>) with the role ID where applicable, whether the announcement is paused and the reason when the bot itself paused it, the timestamp of the last delivery, and the ID of the administrator who created it. A server can hold up to 10 announcements. No member-written content is stored, and neither is the text of the messages the bot replies to.</td>
             <td>Indefinite while the server keeps it: removed with <code>/announce remove</code> or when the bot is removed from the server. <code>/data delete</code> erases the creator's ID and keeps the announcement, because it belongs to the server and not to the person; <code>/data export</code> includes the announcements the user created.</td>
           </tr>
           <tr>
@@ -774,7 +774,7 @@
           </tr>
           <tr>
             <td>Scheduled jobs (internal scheduler)</td>
-            <td>Stable job ID, guild ID, feature type, the schedule (with the server's time zone) and the feature's own payload — for example the user ID and role ID of a temporary role, or the slot number of an announcement — plus the next run instant, the timestamps of the last run and of the claim in progress, and run and failure counters. No message content is stored.</td>
+            <td>Stable job ID, guild ID, feature type, the schedule (with the server's time zone) and the feature's own payload — for example the user ID and role ID of a temporary role, or an announcement's internal number — plus the next run instant, the timestamps of the last run and of the claim in progress, and run and failure counters. No message content is stored.</td>
             <td>A single-run job is deleted as soon as it completes; recurring ones (announcements, anniversaries and the weekly XP race) persist while the feature stays scheduled and are removed when it is unregistered, when the server switches the feature off, or when the bot is removed from the server. <code>/data delete</code> removes the jobs whose payload references the user.</td>
           </tr>
         </tbody>
