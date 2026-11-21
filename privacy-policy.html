@@ -319,7 +319,7 @@
           </tr>
           <tr>
             <td>Configuración del servidor (creada por admin)</td>
-            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>) y la configuración de tickets (IDs de categoría, de rol de soporte, de canal de registro y de canal/mensaje del panel, además de los días de inactividad), las opciones de roles autoasignables que ofrece el panel (IDs de rol, texto descriptivo escrito por administradores e IDs del canal y del mensaje del panel), los ajustes de starboard (canal, umbral, emoji y si está activo), los ajustes de sugerencias (canal y si está activo) y los ajustes de voz temporal (canal hub, categoría y límite por defecto). Creado/eliminado por administradores del servidor.</td>
+            <td>IDs de canal/rol, ajustes de automod incl. lista de palabras prohibidas, plantillas de mensajes de bienvenida/salida, texto de persona del chatbot, recompensas de subida de nivel, el rol asignado automáticamente a los nuevos miembros (<code>/autorole</code>) y la configuración de tickets (IDs de categoría, de rol de soporte, de canal de registro y de canal/mensaje del panel, además de los días de inactividad), las opciones de roles autoasignables que ofrece el panel (IDs de rol, texto descriptivo escrito por administradores e IDs del canal y del mensaje del panel), los ajustes de starboard (canal, umbral, emoji y si está activo), los ajustes de sugerencias (canal y si está activo) los ajustes de voz temporal (canal hub, categoría y límite por defecto), los respondedores automáticos por palabra clave de <code>/autoresponder</code> (disparador en texto libre de hasta 100 caracteres, respuesta en texto libre de hasta 500 caracteres, modo de coincidencia, canal opcional, espera entre respuestas y si están activados; hasta 25 por servidor), los roles que el servidor vende mediante <code>/shop</code> (ID de rol, precio en moneda virtual y etiqueta de hasta 40 caracteres), las reglas extendidas de automoderación (dominios permitidos, límite de adjuntos, límite y ventana de canales cruzados, edad mínima de la cuenta, lista de palabras para apodos con su política, y el canal trampa), la configuración de aniversarios de ingreso (activación, canal y rol), el fin de semana de XP doble y la carrera semanal de XP (activación y multiplicador) y la lista de módulos que el servidor desactivó. Creado/eliminado por administradores del servidor.</td>
             <td>Indefinida mientras esté configurada.</td>
           </tr>
           <tr>
@@ -372,6 +372,26 @@
             <td>Título, descripción, tienda, precios (original, final y descuento), nota de Metacritic y de Steam, miniatura, URL de la oferta y fechas de la promoción, además de una traducción al español del título y la descripción cuando la fuente la ofrece. Son datos de las tiendas: <strong>ninguna fila del catálogo lleva ID de usuario ni de servidor</strong>.</td>
             <td>Un índice TTL los purga automáticamente 90 días después de la fecha de vencimiento de la promoción que registra la fila.</td>
           </tr>
+          <tr>
+            <td>Anuncios programados (<code>/announce</code>)</td>
+            <td>ID del servidor, número de espacio reservado (0 a 9), ID del canal de destino, hasta 5 mensajes de texto libre escritos por administradores (máx. 1500 caracteres cada uno), el horario (diario, semanal o por intervalo, con la zona horaria del servidor), el modo de mención (ninguna, rol o <code>@here</code>) con el ID del rol cuando corresponde, si el anuncio está en pausa y el motivo cuando la pausa la aplicó el propio bot, la marca del último envío y el ID del administrador que lo creó. Un servidor puede tener hasta 10 anuncios. No se almacena contenido escrito por miembros ni el texto de los mensajes a los que el bot responde.</td>
+            <td>Indefinida mientras el servidor lo conserve: se elimina con <code>/announce remove</code> o cuando el bot es retirado del servidor. <code>/data delete</code> borra el ID de quien lo creó y conserva el anuncio, porque pertenece al servidor y no a la persona; <code>/data export</code> incluye los anuncios que creó el usuario.</td>
+          </tr>
+          <tr>
+            <td>Roles temporales (<code>/temprole</code>)</td>
+            <td>ID del servidor, ID del usuario, ID del rol, el instante de vencimiento y el ID del moderador que otorgó el rol. El trabajo programado que aplica el vencimiento guarda además el ID del usuario y del rol en su carga. No se almacena contenido de mensajes.</td>
+            <td>El registro se elimina cuando el vencimiento se ejecuta (el rol se retira y el trabajo se descarta), cuando un moderador lo revoca con <code>/temprole remove</code> y cuando el bot es retirado del servidor. <code>/data delete</code> borra el registro y el trabajo programado asociado; si eso ocurre, el rol puede quedar asignado en el miembro, porque el bot ya no conserva el registro que lo marcaba como temporal, y es un moderador quien debe retirarlo.</td>
+          </tr>
+          <tr>
+            <td>Aniversarios de ingreso (<code>/anniversary</code>)</td>
+            <td>La configuración por servidor (activación, ID del canal e ID del rol) forma parte de la configuración del servidor. Además, cada miembro que lo solicita deja una fila de exclusión con su ID de usuario y el ID del servidor, y el bot mantiene un marcador diario por servidor con la fecha local (<code>YYYY-MM-DD</code>) y el instante en que ese día quedó reservado. La fecha de ingreso <strong>no</strong> se almacena: se lee del miembro en Discord en el momento de anunciar, y el marcador no contiene datos de miembros.</td>
+            <td>La fila de exclusión se conserva hasta que el miembro la revierte con <code>/anniversary optin</code>, hasta que pide la supresión con <code>/data delete</code> o hasta que el bot es retirado del servidor. El marcador diario se auto-elimina 7 días después de la reserva mediante un índice TTL y también se borra cuando el bot es retirado del servidor.</td>
+          </tr>
+          <tr>
+            <td>Trabajos programados (planificador interno)</td>
+            <td>Identificador estable del trabajo, ID del servidor, tipo de función, el horario (con la zona horaria del servidor) y la carga propia de esa función —por ejemplo el ID de usuario y de rol de un rol temporal, o el número de espacio de un anuncio—, además del próximo instante de ejecución, las marcas de la última ejecución y de la reserva en curso, y contadores de ejecuciones y fallos. No contiene contenido de mensajes.</td>
+            <td>Un trabajo de una sola ejecución se elimina en cuanto se completa; los recurrentes (anuncios, aniversarios y la carrera semanal de XP) persisten mientras la función siga programada y se eliminan cuando se desregistra, cuando el servidor desactiva la función o cuando el bot es retirado del servidor. <code>/data delete</code> borra los trabajos cuya carga referencia al usuario.</td>
+          </tr>
         </tbody>
       </table>
       <p class="note">
@@ -420,8 +440,10 @@
         agregados diarios de XP y los registros de temporada, los agregados diarios de actividad del servidor y
         los marcadores de miembro activo, las
         propuestas y votos de noches de película, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard, las filas de los canales de voz temporales, las notificaciones de ofertas y sus registros de anuncios,
-        las conversaciones del chatbot de IA y los datos de
-        cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
+        las conversaciones del chatbot de IA, los datos de
+        cumpleaños, los anuncios programados, los roles temporales concedidos, las filas de exclusión y los
+        marcadores diarios de aniversarios y los trabajos programados de ese servidor; las sesiones de juego
+        activas de ese servidor se cierran automáticamente. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
         categoría no impide el borrado de las demás. Los datos vinculados a la cuenta de cada usuario a través
         de todos los servidores —la economía virtual, las estadísticas de juegos y las tareas personales— no
@@ -430,7 +452,8 @@
         eliminando o solicitando la supresión de todos sus datos en cualquier momento mediante
         <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
         los 30 días). Los dos TTL de analítica son de 400 días para los contadores diarios y de 35 días para
-        los marcadores de miembro activo; el de los tickets de soporte es de 30 días desde el cierre, y el
+        los marcadores de miembro activo; el de los tickets de soporte es de 30 días desde el cierre, el marcador
+        diario de aniversarios es de 7 días desde la reserva, y el
         catálogo de ofertas y el registro de anuncios se purgan a los 90 días —el primero desde que termina
         la promoción, el segundo desde la publicación—, mientras que las notificaciones de ofertas no vencen solas.
        Cuando una persona pide la supresión de sus datos, el bot elimina además los mensajes de Discord que publicó en su nombre (sus tarjetas de sugerencia, sus destacados del starboard y sus canales de voz temporales), no solo las filas de la base de datos.</p>
@@ -510,7 +533,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-20 — Versión 2.4<br />
+        Última actualización / Last updated: 2026-11-21 - Versión 2.5<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -681,7 +704,7 @@
           </tr>
           <tr>
             <td>Server configuration (admin-authored)</td>
-            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, the role automatically assigned to new members (<code>/autorole</code>), and the ticket settings (category, support-role, log-channel and panel channel/message IDs, plus the inactivity days), the self-assignable role options the panel offers (role IDs, admin-written description text and the panel channel and message IDs), the starboard settings (channel, threshold, emoji and whether it is enabled), the suggestions settings (channel and whether it is enabled) and the temp voice settings (hub channel, category and default user limit). Created/removed by server admins.</td>
+            <td>Channel/role IDs, automod settings incl. banned-word list, welcome/leave message templates, chatbot persona text, level-up rewards, the role automatically assigned to new members (<code>/autorole</code>), and the ticket settings (category, support-role, log-channel and panel channel/message IDs, plus the inactivity days), the self-assignable role options the panel offers (role IDs, admin-written description text and the panel channel and message IDs), the starboard settings (channel, threshold, emoji and whether it is enabled), the suggestions settings (channel and whether it is enabled), the temp voice settings (hub channel, category and default user limit), the keyword auto-responders configured with <code>/autoresponder</code> (a free-text trigger of up to 100 characters, a free-text response of up to 500 characters, the match mode, an optional channel, the cooldown between answers and whether each one is enabled; up to 25 per server), the roles the server sells through <code>/shop</code> (role ID, price in virtual coins and a label of up to 40 characters), the extended automod rules (allowed domains, attachment limit, cross-channel limit and window, minimum account age, the nickname word list with its policy, and the honeypot channel), the join-anniversary settings (enabled, channel and role), the double-XP weekend and the weekly XP race (enabled and multiplier) and the list of modules the server switched off. Created/removed by server admins.</td>
             <td>Indefinite while configured.</td>
           </tr>
           <tr>
@@ -734,6 +757,26 @@
             <td>Title, description, store, prices (original, final and discount), Metacritic and Steam scores, thumbnail, offer URL and promotion dates, plus a Spanish translation of the title and description when the source provides one. This is store data: <strong>no catalogue row carries a user or guild ID</strong>.</td>
             <td>A TTL index auto-purges them 90 days after the promotion end date recorded on the row.</td>
           </tr>
+          <tr>
+            <td>Scheduled announcements (<code>/announce</code>)</td>
+            <td>Guild ID, reserved slot number (0 to 9), target channel ID, up to 5 free-text messages written by administrators (max 1500 characters each), the schedule (daily, weekly or interval, in the server's time zone), the ping mode (none, role or <code>@here</code>) with the role ID where applicable, whether the announcement is paused and the reason when the bot itself paused it, the timestamp of the last delivery, and the ID of the administrator who created it. A server can hold up to 10 announcements. No member-written content is stored, and neither is the text of the messages the bot replies to.</td>
+            <td>Indefinite while the server keeps it: removed with <code>/announce remove</code> or when the bot is removed from the server. <code>/data delete</code> erases the creator's ID and keeps the announcement, because it belongs to the server and not to the person; <code>/data export</code> includes the announcements the user created.</td>
+          </tr>
+          <tr>
+            <td>Temporary roles (<code>/temprole</code>)</td>
+            <td>Guild ID, user ID, role ID, the expiry instant, and the ID of the moderator who granted the role. The scheduled job that enforces the expiry additionally carries the user ID and role ID in its payload. No message content is stored.</td>
+            <td>The record is removed when the expiry runs (the role is taken back and the job is disposed of), when a moderator revokes it with <code>/temprole remove</code>, and when the bot is removed from the server. <code>/data delete</code> removes the record and its scheduled job; when that happens the role may stay assigned on the member, because the bot no longer holds the record that marked it as temporary, and a moderator has to take it back.</td>
+          </tr>
+          <tr>
+            <td>Join anniversaries (<code>/anniversary</code>)</td>
+            <td>The per-server settings (enabled, channel ID and role ID) are part of the server configuration. In addition, each member who asks for it leaves an opt-out row with their user ID and the guild ID, and the bot keeps one daily run marker per server holding the local date (<code>YYYY-MM-DD</code>) and the instant that day was claimed. The join date itself is <strong>not</strong> stored: it is read from the member in Discord at announcement time, and the marker holds no member data.</td>
+            <td>The opt-out row is kept until the member reverses it with <code>/anniversary optin</code>, until they request erasure with <code>/data delete</code>, or until the bot is removed from the server. The daily marker auto-purges 7 days after it was claimed through a TTL index and is also deleted when the bot is removed from the server.</td>
+          </tr>
+          <tr>
+            <td>Scheduled jobs (internal scheduler)</td>
+            <td>Stable job ID, guild ID, feature type, the schedule (with the server's time zone) and the feature's own payload — for example the user ID and role ID of a temporary role, or the slot number of an announcement — plus the next run instant, the timestamps of the last run and of the claim in progress, and run and failure counters. No message content is stored.</td>
+            <td>A single-run job is deleted as soon as it completes; recurring ones (announcements, anniversaries and the weekly XP race) persist while the feature stays scheduled and are removed when it is unregistered, when the server switches the feature off, or when the bot is removed from the server. <code>/data delete</code> removes the jobs whose payload references the user.</td>
+          </tr>
         </tbody>
       </table>
       <p class="note">
@@ -777,8 +820,9 @@
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
         daily XP aggregates and season records, server activity analytics aggregates and active-member
-        markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records, its temporary voice channel rows, its deal notifications and their announcement records, AI chatbot conversations, and
-        birthday data; active game sessions in
+        markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records, its temporary voice channel rows, its deal notifications and their announcement records, AI chatbot conversations,
+        birthday data, scheduled announcements, granted temporary roles, anniversary opt-out rows and
+        daily markers, and that server's scheduled jobs; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
         user's account across all servers — the virtual economy, game statistics, and personal tasks — is not
@@ -786,7 +830,8 @@
         also retained in case the bot is re-invited. Anyone can still delete or request erasure of all of
         their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
         response time: within 30 days). The two analytics TTLs are 400 days for the daily counters and 35 days
-        for the active-member markers; the support-ticket TTL is 30 days after closing, and the deal
+        for the active-member markers; the support-ticket TTL is 30 days after closing, the anniversary daily
+        marker is 7 days after it was claimed, and the deal
         catalogue and the announcement records are purged at 90 days — the catalogue from the moment the
         promotion ends, the announcement records from the moment of posting — while deal notifications do
         not expire on their own.
@@ -863,7 +908,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-20 — Versión 2.4<br />
+        Última actualización / Last updated: 2026-11-21 - Versión 2.5<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>

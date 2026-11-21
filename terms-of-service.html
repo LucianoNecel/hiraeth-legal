@@ -184,6 +184,7 @@
           <li>Herramientas de moderación para el personal del servidor (baneo, expulsión, silencio temporal y advertencia con motivo; cierre de canal, modo lento, automoderación con palabras prohibidas definidas por el administrador, configuración del servidor y una base de conocimientos de preguntas y respuestas para el chatbot de IA).</li>
           <li>Tickets de soporte (<code>/ticket</code>): un panel publicado por el personal abre un canal privado por usuario, con asunto y descripción; el personal puede reclamarlo, cambiar su prioridad, renombrarlo y añadir participantes, y al cerrarlo el bot entrega una transcripción al canal de registro del servidor o, si no hay ninguno, al mensaje directo de quien lo abrió.</li>
           <li>Funciones comunitarias, todas configuradas por el personal del servidor: roles autoasignables desde un panel publicado, un tablero de sugerencias con votos a favor y en contra y decisiones del personal, un starboard que republica los mensajes más reaccionados de un canal, canales de contador que se renombran automáticamente y un hub de voz temporal que crea un canal privado para quien se une.</li>
+          <li>Herramientas de comunidad para el personal: anuncios programados (<code>/announce</code>, hasta 10 por servidor), respondedores automáticos por palabra clave (<code>/autoresponder</code>), roles temporales que el bot retira solo al vencer (<code>/temprole</code>), roles puestos a la venta por moneda virtual (<code>/shop roles</code>) y felicitaciones por aniversario de ingreso al servidor (<code>/anniversary</code>). Se suman una moderación ampliada (dominios permitidos, límite de adjuntos y de actividad entre canales, edad mínima de la cuenta, canal trampa y control de apodos), el fin de semana de XP doble, una carrera semanal de XP y la posibilidad de desactivar módulos completos desde <code>/config</code>, de modo que sus comandos dejan de responder.</li>
           <li>Un chatbot de IA (Google Gemini) activado con mensajes que comienzan por <code>!</code> en canales con la opción habilitada — <strong>actualmente suspendido</strong> y no procesando mensajes.</li>
         </ul>
         <p>
@@ -207,6 +208,9 @@
         </p>
         <p>
           <span class="num">4.3.</span> El Desarrollador puede ajustar o restablecer saldos virtuales en cualquier momento para corregir errores, abusos o desequilibrios del sistema. Estos ajustes no dan lugar a compensación alguna.
+        </p>
+        <p>
+          <span class="num">4.4.</span> Los roles que un servidor pone a la venta con <code>/shop roles</code> se pagan con la moneda virtual del bot y no tienen valor real ni pueden canjearse por dinero. El servidor decide qué roles ofrece, a qué precio y hasta cuándo; el Desarrollador no garantiza la permanencia de un rol comprado, no interviene en esa oferta y puede revertir una compra si detecta un abuso o un error de configuración.
         </p>
       </div>
 
@@ -291,13 +295,25 @@
         <p>
           <span class="num">7.17.</span> Canales de estadística: un registro guarda los IDs de servidor y de canal, el contador que refleja, una plantilla de nombre escrita por administradores (máx. 100 caracteres), el último nombre renderizado, la marca de tiempo del último renombrado y, en caso de fallo, un código de error con su marca de tiempo. No se guardan datos personales.
         </p>
+        <p>
+          <span class="num">7.18.</span> Roles temporales: un registro guarda el ID de servidor, el ID de usuario, el ID de rol, el instante de vencimiento y el ID del moderador que otorgó el rol; el trabajo programado que aplica el vencimiento guarda además ambos IDs en su carga. El registro se elimina cuando el vencimiento se ejecuta, cuando un moderador lo revoca con <code>/temprole remove</code> y cuando el bot es retirado del servidor. <code>/data delete</code> borra el registro y el trabajo asociado; si eso ocurre, el rol puede quedar asignado en el miembro y debe retirarlo un moderador, porque el bot ya no conserva el registro que lo marcaba como temporal.
+        </p>
+        <p>
+          <span class="num">7.19.</span> Anuncios programados: un servidor puede tener hasta 10. Cada anuncio guarda el ID de servidor, su número de espacio reservado, el ID del canal de destino, hasta 5 mensajes de texto libre escritos por administradores (máx. 1500 caracteres cada uno), el horario con la zona horaria del servidor, el modo de mención y el rol mencionado, si está en pausa y el motivo cuando la pausa la aplicó el bot, la marca del último envío y el ID de quien lo creó. Se conserva mientras el servidor lo mantenga, se elimina con <code>/announce remove</code> o cuando el bot es retirado del servidor, y <code>/data delete</code> borra el ID del creador y conserva el anuncio, porque pertenece al servidor.
+        </p>
+        <p>
+          <span class="num">7.20.</span> Aniversarios de ingreso: la configuración por servidor forma parte de la configuración del servidor. La fecha de ingreso <strong>no</strong> se almacena: se lee del miembro en Discord en el momento de anunciar. Cada miembro puede dejar una fila de exclusión (ID de usuario + ID de servidor) que se conserva hasta que la revierta con <code>/anniversary optin</code>, hasta que pida la supresión con <code>/data delete</code> o hasta que el bot sea retirado del servidor. El marcador diario por servidor (fecha local e instante de la reserva) no contiene datos de miembros y se auto-elimina 7 días después de la reserva mediante un índice TTL.
+        </p>
+        <p>
+          <span class="num">7.21.</span> Trabajos programados: el planificador interno guarda, por trabajo, un identificador estable, el ID de servidor, el tipo de función, el horario con la zona horaria, la carga propia de la función (por ejemplo los IDs de usuario y de rol de un rol temporal o el espacio de un anuncio), el próximo instante de ejecución, las marcas de la última ejecución y de la reserva en curso, y contadores de ejecuciones y fallos. Un trabajo de una sola ejecución se elimina al completarse; los recurrentes persisten mientras la función siga programada y se eliminan cuando se desregistra, cuando el servidor desactiva la función o cuando el bot es retirado del servidor. <code>/data delete</code> borra los trabajos que referencian al usuario.
+        </p>
 
       </div>
 
       <div class="article">
         <h2>8. Responsabilidad del administrador del servidor</h2>
         <p>
-          <span class="num">8.1.</span> Los administradores instalan, eliminan y configuran el bot. El contenido configurado por el administrador (plantillas de bienvenida, base de conocimientos, personalidad del chatbot, listas de palabras prohibidas) es responsabilidad del propio administrador.
+          <span class="num">8.1.</span> Los administradores instalan, eliminan y configuran el bot. El contenido configurado por el administrador (plantillas de bienvenida, base de conocimientos, personalidad del chatbot, listas de palabras prohibidas, disparadores y respuestas de los respondedores automáticos, textos y horarios de los anuncios programados, etiquetas de los roles en venta y dominios permitidos) es responsabilidad del propio administrador.
         </p>
         <p>
           <span class="num">8.2.</span> Los administradores no deben insertar datos personales de terceros en los campos almacenados por el bot.
@@ -310,6 +326,9 @@
         </p>
         <p>
           <span class="num">8.5.</span> Los tickets de soporte son canales privados, pero su contenido lo leen el personal que atiende el ticket y los administradores del servidor, y la transcripción entregada al canal de registro queda almacenada en el propio servidor. El servidor decide qué rol atiende los tickets y qué canal recibe las transcripciones; el Desarrollador no modera, revisa ni conserva el contenido de los tickets.
+        </p>
+        <p>
+          <span class="num">8.6.</span> Los roles temporales, los anuncios programados, los respondedores automáticos y los roles en venta dependen de la configuración y de los permisos del servidor. Si un administrador elimina el registro de un rol temporal, o si un miembro pide la supresión de sus datos, el rol puede quedar asignado en el miembro y es el servidor quien debe retirarlo.
         </p>
       </div>
 
@@ -424,6 +443,7 @@
           <li>Moderation tools for server staff (ban, kick, timeout, and warn with reasons; channel lock, slowmode, automod with admin-defined banned words, server config, and an admin Q&amp;A knowledge base for the AI chatbot).</li>
           <li>Support tickets (<code>/ticket</code>): a panel posted by staff opens one private channel per user, with a subject and a description; staff can claim it, change its priority, rename it and add participants, and on close the bot delivers a transcript to the server's log channel or, if none is set, to the opener's direct messages.</li>
           <li>Community features, all configured by server staff: self-assignable roles from a posted panel, a suggestion board with up/down votes and staff decisions, a starboard that republishes the most-reacted messages of a channel, automatically renamed counter channels, and a temporary voice hub that creates a private channel for whoever joins it.</li>
+          <li>Community tools for staff: scheduled announcements (<code>/announce</code>, up to 10 per server), keyword auto-responders (<code>/autoresponder</code>), temporary roles the bot takes back on its own when they expire (<code>/temprole</code>), roles sold for virtual coins (<code>/shop roles</code>), and join-anniversary congratulations (<code>/anniversary</code>). Alongside them: extended automod (allowed domains, attachment and cross-channel limits, minimum account age, a honeypot channel and nickname screening), a double-XP weekend, a weekly XP race, and the ability to switch whole modules off from <code>/config</code>, so their commands stop responding.</li>
           <li>An AI chatbot (Google Gemini) activated by messages starting with <code>!</code> in opt-in channels — <strong>currently suspended</strong> and not processing messages.</li>
         </ul>
         <p>
@@ -447,6 +467,9 @@
         </p>
         <p>
           <span class="num">4.3.</span> The Developer may adjust or reset virtual balances at any time to fix bugs, abuse, or system imbalances. Such adjustments give no entitlement to compensation.
+        </p>
+        <p>
+          <span class="num">4.4.</span> Roles a server puts up for sale with <code>/shop roles</code> are paid for with the bot's virtual coins and have no real-world value; they cannot be cashed out. The server decides which roles it offers, at what price and for how long; the Developer does not guarantee that a purchased role stays available, does not take part in that offer, and may reverse a purchase if abuse or a configuration error is detected.
         </p>
       </div>
 
@@ -531,13 +554,25 @@
         <p>
           <span class="num">7.17.</span> Stat channels: a record stores the server and channel IDs, the mirrored counter, an admin-authored name template (max 100 characters), the last rendered name, the last rename timestamp and, on failure, an error code with its timestamp. No personal data is stored.
         </p>
+        <p>
+          <span class="num">7.18.</span> Temporary roles: a record stores the guild ID, user ID, role ID, the expiry instant and the ID of the moderator who granted the role; the scheduled job that enforces the expiry additionally carries both IDs in its payload. The record is removed when the expiry runs, when a moderator revokes it with <code>/temprole remove</code>, and when the bot is removed from the server. <code>/data delete</code> removes the record and its job; when that happens the role may stay assigned on the member and a moderator has to take it back, because the bot no longer holds the record that marked it as temporary.
+        </p>
+        <p>
+          <span class="num">7.19.</span> Scheduled announcements: a server can hold up to 10. Each announcement stores the guild ID, its reserved slot number, the target channel ID, up to 5 free-text messages written by administrators (max 1500 characters each), the schedule in the server's time zone, the ping mode and the mentioned role, whether it is paused with the reason when the bot paused it, the last delivery timestamp and the ID of whoever created it. It is kept while the server keeps it, removed with <code>/announce remove</code> or when the bot is removed from the server, and <code>/data delete</code> erases the creator's ID while keeping the announcement, because it belongs to the server.
+        </p>
+        <p>
+          <span class="num">7.20.</span> Join anniversaries: the per-server settings are part of the server configuration. The join date itself is <strong>not</strong> stored: it is read from the member in Discord at announcement time. Each member may leave an opt-out row (user ID + guild ID) that is kept until they reverse it with <code>/anniversary optin</code>, until they request erasure with <code>/data delete</code>, or until the bot is removed from the server. The per-server daily marker (local date and the claim instant) holds no member data and auto-purges 7 days after the claim through a TTL index.
+        </p>
+        <p>
+          <span class="num">7.21.</span> Scheduled jobs: the internal scheduler stores, per job, a stable identifier, the guild ID, the feature type, the schedule with its time zone, the feature's own payload (for example the user and role IDs of a temporary role, or an announcement's slot), the next run instant, the timestamps of the last run and of the claim in progress, and run and failure counters. A single-run job is deleted when it completes; recurring ones persist while the feature stays scheduled and are removed when it is unregistered, when the server switches the feature off, or when the bot is removed from the server. <code>/data delete</code> removes the jobs whose payload references the user.
+        </p>
 
       </div>
 
       <div class="article">
         <h2>8. Server administrator responsibility</h2>
         <p>
-          <span class="num">8.1.</span> Administrators install, remove, and configure the bot. Admin-configured content (welcome templates, knowledge base, chatbot persona, banned-word lists) is the administrator's responsibility.
+          <span class="num">8.1.</span> Administrators install, remove, and configure the bot. Admin-configured content (welcome templates, knowledge base, chatbot persona, banned-word lists, auto-responder triggers and responses, announcement texts and schedules, labels of the roles on sale and allowed domains) is the administrator's responsibility.
         </p>
         <p>
           <span class="num">8.2.</span> Administrators must not insert other people's personal data into bot-stored fields.
@@ -550,6 +585,9 @@
         </p>
         <p>
           <span class="num">8.5.</span> Support tickets are private channels, but their content is read by the staff handling the ticket and by the server's administrators, and the transcript delivered to the log channel is stored inside the server itself. The server decides which role handles tickets and which channel receives transcripts; the Developer does not moderate, review, or retain ticket content.
+        </p>
+        <p>
+          <span class="num">8.6.</span> Temporary roles, scheduled announcements, keyword auto-responders and roles on sale depend on the server's configuration and permissions. If an administrator removes a temporary role's record, or a member requests erasure of their data, the role may stay assigned on the member and the server has to take it back.
         </p>
       </div>
 
@@ -613,7 +651,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-11-17 — Versión 2.1</p>
+      <p>Última actualización / Last updated: 2026-11-21 - Versión 2.2</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
