@@ -357,6 +357,21 @@
             <td>IDs de servidor y de canal, qué contador refleja el canal, la plantilla de nombre (escrita por administradores, máx. 100 caracteres), el último nombre renderizado, la marca de tiempo del último renombrado y, en caso de fallo, un código de error con su marca de tiempo. No se guardan datos de usuarios.</td>
             <td>Indefinida mientras esté configurada; se quita con <code>/statchannel remove</code>.</td>
           </tr>
+          <tr>
+            <td>Notificaciones de ofertas y juegos gratis (<code>/deals</code>)</td>
+            <td>ID del servidor, clave de la notificación, preset, ID del canal de anuncios elegido, si está activada y el <strong>ID de usuario del administrador que la creó</strong>, junto con sus ajustes: filtros (tiendas, descuento mínimo, precio original mínimo, nota mínima de Metacritic y de Steam, inclusión de juegos gratis para siempre), tema visual, imágenes, si abre un hilo, si anuncia ofertas próximas, si publica y reacciona de forma automática y el rol al que se menciona, con su ID. Un servidor puede tener hasta seis notificaciones. La función es <strong>opcional por servidor</strong> y la configura un administrador con <code>/deals</code>; el bot solo publica en el canal que el servidor eligió. No se guardan nombres de miembros ni contenido de mensajes.</td>
+            <td>Indefinida: la notificación no tiene TTL y se conserva hasta que el servidor la elimina desde <code>/deals</code> o hasta que el bot es retirado del servidor. <code>/data delete</code> borra el ID de quien la creó y conserva la notificación, porque pertenece al servidor y no a la persona; <code>/data export</code> incluye las notificaciones que creó el usuario.</td>
+          </tr>
+          <tr>
+            <td>Registro de anuncios de ofertas</td>
+            <td>ID del servidor, ID de la notificación, ID de la oferta, ID del canal, los IDs del mensaje publicado y del hilo creado cuando corresponde, el estado del envío y las marcas de tiempo del intento de envío y de la publicación. Es el registro que impide avisar dos veces de la misma oferta al mismo servidor. No contiene contenido de mensajes.</td>
+            <td>Un índice TTL los purga automáticamente 90 días después de la publicación (<code>postedAt</code>); un registro que nunca llegó a publicarse no tiene esa marca y no vence solo, y todos los registros de un servidor se eliminan cuando el bot es retirado de él.</td>
+          </tr>
+          <tr>
+            <td>Catálogo de ofertas</td>
+            <td>Título, descripción, tienda, precios (original, final y descuento), nota de Metacritic y de Steam, miniatura, URL de la oferta y fechas de la promoción, además de una traducción al español del título y la descripción cuando la fuente la ofrece. Son datos de las tiendas: <strong>ninguna fila del catálogo lleva ID de usuario ni de servidor</strong>.</td>
+            <td>Un índice TTL los purga automáticamente 90 días después de la fecha de vencimiento de la promoción que registra la fila.</td>
+          </tr>
         </tbody>
       </table>
       <p class="note">
@@ -376,6 +391,7 @@
         <li><strong>YouTube Data API v3 (Google):</strong> solo el término de búsqueda escrito por el usuario.</li>
         <li><strong>Open Trivia DB (opentdb.com):</strong> el comando <code>/trivia</code> obtiene las preguntas de opentdb.com. No se envía ningún dato de usuario: la solicitud solo incluye la categoría y la dificultad elegidas. Las preguntas se publican bajo licencia CC BY-SA 4.0.</li>
         <li><strong>dolarapi.com:</strong> ningún dato de usuario (cotizaciones públicas).</li>
+        <li><strong>Epic Games Store (Epic Games, Inc.) y CheapShark (cheapshark.com):</strong> las notificaciones de ofertas consultan cada 15 minutos el catálogo público de promociones de Epic (<code>store-site-backend-static.ak.epicgames.com</code>) y la API de CheapShark (<code>www.cheapshark.com</code>, un agregador de varias tiendas). Son lecturas de catálogo sin autenticación: Hiraeth <strong>no</strong> envía datos de miembros, ni el ID del servidor, ni identificador alguno en esas solicitudes.</li>
         <li><strong>Discord (Discord Inc.):</strong> plataforma que aloja inherentemente todos los IDs/contenidos.</li>
         <li><strong>Base de datos:</strong> MongoDB utilizada por el bot; el acceso está restringido al operador. Sin cookies, sin analítica web, sin publicidad, sin venta de datos.</li>
       </ul>
@@ -403,7 +419,7 @@
         registro agregado del contador comunitario y sus registros de fallo, los registros de XP, los
         agregados diarios de XP y los registros de temporada, los agregados diarios de actividad del servidor y
         los marcadores de miembro activo, las
-        propuestas y votos de noches de película, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard y las filas de los canales de voz temporales,
+        propuestas y votos de noches de película, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard, las filas de los canales de voz temporales, las notificaciones de ofertas y sus registros de anuncios,
         las conversaciones del chatbot de IA y los datos de
         cumpleaños; las sesiones de juego activas de ese servidor se cierran automáticamente. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
@@ -414,7 +430,9 @@
         eliminando o solicitando la supresión de todos sus datos en cualquier momento mediante
         <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
         los 30 días). Los dos TTL de analítica son de 400 días para los contadores diarios y de 35 días para
-        los marcadores de miembro activo; el de los tickets de soporte es de 30 días desde el cierre.
+        los marcadores de miembro activo; el de los tickets de soporte es de 30 días desde el cierre, y el
+        catálogo de ofertas y el registro de anuncios se purgan a los 90 días —el primero desde que termina
+        la promoción, el segundo desde la publicación—, mientras que las notificaciones de ofertas no vencen solas.
        Cuando una persona pide la supresión de sus datos, el bot elimina además los mensajes de Discord que publicó en su nombre (sus tarjetas de sugerencia, sus destacados del starboard y sus canales de voz temporales), no solo las filas de la base de datos.</p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -453,6 +471,7 @@
         <li>Canales de voz temporales: se cierran cuando el canal queda vacío, con <code>/tempvoice delete</code> o con <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
         <li>Tareas: eliminación por tarea</li>
+        <li>Notificaciones de ofertas: el servidor las elimina desde <code>/deals</code>; <code>/data delete</code> borra el ID del administrador que las creó</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
       </ul>
       <p>
@@ -491,7 +510,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.3<br />
+        Última actualización / Last updated: 2026-11-20 — Versión 2.4<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -700,6 +719,21 @@
             <td>Server and channel IDs, which counter the channel mirrors, the name template (admin-authored, max 100 characters), the last rendered name, the timestamp of the last rename and, on failure, an error code with its timestamp. No user data is stored.</td>
             <td>Indefinite while configured; removed with <code>/statchannel remove</code>.</td>
           </tr>
+          <tr>
+            <td>Deal and free-game notifications (<code>/deals</code>)</td>
+            <td>Guild ID, notification key, preset, the ID of the configured announcement channel, whether it is enabled, and the <strong>user ID of the administrator who created it</strong>, together with its settings: filters (stores, minimum discount, minimum original price, minimum Metacritic and Steam score, whether permanently free games are included), visual theme, images, whether it opens a thread, whether it announces upcoming offers, whether it publishes and reacts automatically, and the role to mention with its ID. A server can hold up to six notifications. The feature is <strong>opt-in per server</strong> and is configured by an administrator with <code>/deals</code>; the bot only posts into the channel the server chose. No member names and no message content are stored.</td>
+            <td>Indefinite: a notification has no TTL and is kept until the server removes it from <code>/deals</code> or until the bot is removed from the server. <code>/data delete</code> erases the creator's ID and keeps the notification, because it belongs to the server and not to the person; <code>/data export</code> includes the notifications the user created.</td>
+          </tr>
+          <tr>
+            <td>Deal announcement claim records</td>
+            <td>Guild ID, notification ID, deal ID, channel ID, the IDs of the message the bot posted and of the thread it created where applicable, the send status, and the timestamps of the send attempt and of the post. This is the record that prevents a server from being notified twice about the same offer. It holds no message content.</td>
+            <td>A TTL index auto-purges them 90 days after the post (<code>postedAt</code>); a record that was never posted carries no such timestamp and therefore does not expire on its own, and all of a server's records are deleted when the bot is removed from it.</td>
+          </tr>
+          <tr>
+            <td>Deal catalogue</td>
+            <td>Title, description, store, prices (original, final and discount), Metacritic and Steam scores, thumbnail, offer URL and promotion dates, plus a Spanish translation of the title and description when the source provides one. This is store data: <strong>no catalogue row carries a user or guild ID</strong>.</td>
+            <td>A TTL index auto-purges them 90 days after the promotion end date recorded on the row.</td>
+          </tr>
         </tbody>
       </table>
       <p class="note">
@@ -719,6 +753,7 @@
         <li><strong>YouTube Data API v3 (Google):</strong> only the search term typed by the user.</li>
         <li><strong>Open Trivia DB (opentdb.com):</strong> the <code>/trivia</code> command fetches its questions from opentdb.com. No user data is sent: the request only includes the selected category and difficulty. Questions are published under the CC BY-SA 4.0 license.</li>
         <li><strong>dolarapi.com:</strong> no user data at all (public rates).</li>
+        <li><strong>Epic Games Store (Epic Games, Inc.) and CheapShark (cheapshark.com):</strong> the deal notifications query Epic's public promotions catalogue (<code>store-site-backend-static.ak.epicgames.com</code>) and the CheapShark API (<code>www.cheapshark.com</code>, an aggregator over several stores) every 15 minutes. These are unauthenticated catalogue reads: Hiraeth sends <strong>no</strong> member data, <strong>no</strong> guild ID and <strong>no</strong> identifier of any kind in those requests.</li>
         <li><strong>Discord (Discord Inc.):</strong> the platform inherently hosting all IDs/content.</li>
         <li><strong>Database:</strong> MongoDB used by the bot; access restricted to the operator. No cookies, no web analytics, no advertising, no selling of data.</li>
       </ul>
@@ -742,7 +777,7 @@
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
         daily XP aggregates and season records, server activity analytics aggregates and active-member
-        markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records and its temporary voice channel rows, AI chatbot conversations, and
+        markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records, its temporary voice channel rows, its deal notifications and their announcement records, AI chatbot conversations, and
         birthday data; active game sessions in
         that server are automatically ended. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
@@ -751,7 +786,10 @@
         also retained in case the bot is re-invited. Anyone can still delete or request erasure of all of
         their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
         response time: within 30 days). The two analytics TTLs are 400 days for the daily counters and 35 days
-        for the active-member markers; the support-ticket TTL is 30 days after closing.
+        for the active-member markers; the support-ticket TTL is 30 days after closing, and the deal
+        catalogue and the announcement records are purged at 90 days — the catalogue from the moment the
+        promotion ends, the announcement records from the moment of posting — while deal notifications do
+        not expire on their own.
        When a user requests erasure, the bot also deletes the Discord messages it posted on their behalf (their suggestion cards, their starboard highlights and their temporary voice channels), not only the database rows.</p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -790,6 +828,7 @@
         <li>Temporary voice channels: closed when the channel is emptied, with <code>/tempvoice delete</code>, or with <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
         <li>Tasks: per-task delete</li>
+        <li>Deal notifications: the server removes them from <code>/deals</code>; <code>/data delete</code> erases the ID of the administrator who created them</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
       </ul>
       <p>
@@ -824,7 +863,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-17 — Versión 2.3<br />
+        Última actualización / Last updated: 2026-11-20 — Versión 2.4<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
