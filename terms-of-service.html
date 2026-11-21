@@ -185,7 +185,7 @@
           <li>Tickets de soporte (<code>/ticket</code>): un panel publicado por el personal abre un canal privado por usuario, con asunto y descripción; el personal puede reclamarlo, cambiar su prioridad, renombrarlo y añadir participantes, y al cerrarlo el bot entrega una transcripción al canal de registro del servidor o, si no hay ninguno, al mensaje directo de quien lo abrió.</li>
           <li>Funciones comunitarias, todas configuradas por el personal del servidor: roles autoasignables desde un panel publicado, un tablero de sugerencias con votos a favor y en contra y decisiones del personal, un starboard que republica los mensajes más reaccionados de un canal, canales de contador que se renombran automáticamente y un hub de voz temporal que crea un canal privado para quien se une.</li>
           <li>Herramientas de comunidad para el personal: anuncios programados (<code>/announce</code>, hasta 10 por servidor), respondedores automáticos por palabra clave (<code>/autoresponder</code>), roles temporales que el bot retira solo al vencer (<code>/temprole</code>), roles puestos a la venta por moneda virtual (<code>/shop roles</code>) y felicitaciones por aniversario de ingreso al servidor (<code>/anniversary</code>). Se suman una moderación ampliada (dominios permitidos, límite de adjuntos y de actividad entre canales, edad mínima de la cuenta, canal trampa y control de apodos), el fin de semana de XP doble, una carrera semanal de XP y la posibilidad de desactivar módulos completos desde <code>/config</code>, de modo que sus comandos dejan de responder.</li>
-          <li>Un chatbot de IA (Google Gemini) activado con mensajes que comienzan por <code>!</code> en canales con la opción habilitada — <strong>actualmente suspendido</strong> y no procesando mensajes.</li>
+          <li>Un chatbot de IA (Google Gemini, modelo Gemma en la cuota no pagada) activado con mensajes que comienzan por <code>!</code> en canales con la opción habilitada; la sección 5 detalla cómo se trata ese contenido.</li>
         </ul>
         <p>
           <span class="num">3.2.</span> El Servicio se ofrece sin costo y de forma «best-effort» (mejor esfuerzo). No se garantiza disponibilidad, continuidad ni tiempo de actividad (uptime).
@@ -217,10 +217,10 @@
       <div class="article">
         <h2>5. Contenido generado por IA</h2>
         <p>
-          <span class="num">5.1.</span> La función de chatbot de IA (prefijo <code>!</code>) está temporalmente suspendida y no está procesando mensajes. Cuando se reactive, las respuestas serán generadas por máquina mediante un proveedor de nivel pago que no utiliza el contenido enviado para entrenar modelos, y podrán ser inexactas, incompletas u ofensivas. Se proporcionan sin garantía de ningún tipo.
+          <span class="num">5.1.</span> La función de chatbot de IA (prefijo <code>!</code>) está <strong>activa</strong> y se apoya en el modelo Gemma <code>gemma-4-26b-a4b-it</code> de Google, accedido a través de la Gemini API / Google AI Studio en la <strong>cuota no pagada (gratuita)</strong>. En esa modalidad, Google puede utilizar el texto enviado y las respuestas generadas para proporcionar, mejorar y desarrollar sus productos y tecnologías de aprendizaje automático, y revisores humanos pueden leer, anotar y procesar la entrada y la salida de la API. El detalle completo figura en la <a class="inline" href="privacy-policy.html">Política de Privacidad</a>. Las respuestas se generan de forma automática y pueden ser inexactas, incompletas u ofensivas; se proporcionan sin garantía de ningún tipo.
         </p>
         <p>
-          <span class="num">5.2.</span> Cuando la función esté activa, el usuario será responsable del contenido que envíe al chatbot. No envíes datos personales sensibles (salud, finanzas, documentos de identidad), ya que el texto se enviará a un proveedor externo.
+          <span class="num">5.2.</span> El usuario es responsable del contenido que envía al chatbot. No envíes datos personales sensibles (salud, finanzas, documentos de identidad), porque el texto se envía a un proveedor externo y, en la cuota gratuita, puede ser tratado como se describe en el párrafo anterior.
         </p>
         <p>
           <span class="num">5.3.</span> Para funcionar (XP, automoderación y contador), el bot requiere el permiso de «Message Content» de Discord.
@@ -444,7 +444,7 @@
           <li>Support tickets (<code>/ticket</code>): a panel posted by staff opens one private channel per user, with a subject and a description; staff can claim it, change its priority, rename it and add participants, and on close the bot delivers a transcript to the server's log channel or, if none is set, to the opener's direct messages.</li>
           <li>Community features, all configured by server staff: self-assignable roles from a posted panel, a suggestion board with up/down votes and staff decisions, a starboard that republishes the most-reacted messages of a channel, automatically renamed counter channels, and a temporary voice hub that creates a private channel for whoever joins it.</li>
           <li>Community tools for staff: scheduled announcements (<code>/announce</code>, up to 10 per server), keyword auto-responders (<code>/autoresponder</code>), temporary roles the bot takes back on its own when they expire (<code>/temprole</code>), roles sold for virtual coins (<code>/shop roles</code>), and join-anniversary congratulations (<code>/anniversary</code>). Alongside them: extended automod (allowed domains, attachment and cross-channel limits, minimum account age, a honeypot channel and nickname screening), a double-XP weekend, a weekly XP race, and the ability to switch whole modules off from <code>/config</code>, so their commands stop responding.</li>
-          <li>An AI chatbot (Google Gemini) activated by messages starting with <code>!</code> in opt-in channels — <strong>currently suspended</strong> and not processing messages.</li>
+          <li>An AI chatbot (Google Gemini, Gemma model on the free unpaid quota) activated by messages starting with <code>!</code> in opt-in channels; see section 5 for how that content is handled.</li>
         </ul>
         <p>
           <span class="num">3.2.</span> The Service is provided free of charge and on a best-effort basis. Availability, continuity, and uptime are not guaranteed.
@@ -476,10 +476,10 @@
       <div class="article">
         <h2>5. AI-generated content</h2>
         <p>
-          <span class="num">5.1.</span> The AI chatbot feature (<code>!</code> prefix) is temporarily suspended and is not processing messages. When re-enabled, responses will be machine-generated via a paid-tier provider that does not use submitted content for model training, and may be inaccurate, incomplete, or offensive. They are provided without any warranty.
+          <span class="num">5.1.</span> The AI chatbot feature (<code>!</code> prefix) is <strong>active</strong> and runs on Google's Gemma model <code>gemma-4-26b-a4b-it</code>, accessed through the Gemini API / Google AI Studio on the <strong>unpaid (free) quota</strong>. Under that arrangement Google may use the submitted text and the generated responses to provide, improve and develop its products and machine-learning technologies, and human reviewers may read, annotate and process the API input and output. The full detail is in the <a class="inline" href="privacy-policy.html">Privacy Policy</a>. Responses are machine-generated and may be inaccurate, incomplete, or offensive; they are provided without any warranty.
         </p>
         <p>
-          <span class="num">5.2.</span> When the feature is active, the user is responsible for what they send to the chatbot. Do not submit sensitive personal data (health, financial, ID numbers), because the text will be sent to an external provider.
+          <span class="num">5.2.</span> The user is responsible for what they send to the chatbot. Do not submit sensitive personal data (health, financial, ID numbers), because the text is sent to an external provider and, on the free quota, may be handled as described above.
         </p>
         <p>
           <span class="num">5.3.</span> To function (XP, automod, and counter), the bot requires Discord's Message Content intent.
@@ -651,7 +651,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-11-21 - Versión 2.2</p>
+      <p>Última actualización / Last updated: 2026-11-21 - Versión 2.3</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
