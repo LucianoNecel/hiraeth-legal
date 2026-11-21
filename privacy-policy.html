@@ -323,6 +323,11 @@
             <td>Indefinida mientras esté configurada.</td>
           </tr>
           <tr>
+            <td>Acceso pago a módulos opcionales (registro de activación)</td>
+            <td>Un único registro por servidor y por habilitación o renovación: qué módulos opcionales incluye (chatbot de IA, base de conocimientos de IA y notificaciones de ofertas), la fecha de inicio y la fecha de fin del período, un valor de origen fijo y una nota operativa opcional que no identifica a nadie. <strong>No contiene datos personales ni información de pago</strong>, porque ningún dato de pago llega al bot: no se guardan importes, monedas ni números de factura. Los administradores del servidor ven en el bot el estado del acceso, los módulos incluidos, la fecha de fin y el tiempo restante.</td>
+            <td>Se conserva mientras exista el servidor y se elimina con la purga de datos de ese servidor; no tiene un vencimiento propio.</td>
+          </tr>
+          <tr>
             <td>Base de conocimiento del servidor (Q&amp;A de admin, máx. 50 entradas/servidor)</td>
             <td>Preguntas y respuestas almacenadas indefinidamente hasta eliminarse con <code>/knowledge remove</code>. Se envían al proveedor de IA como contexto.</td>
             <td>Indefinida hasta su eliminación con <code>/knowledge remove</code> o hasta que el bot es retirado del servidor.</td>
@@ -406,7 +411,7 @@
       <h2>4. Terceros</h2>
       <p>Flujos exactos de datos con terceros:</p>
       <ul>
-        <li><strong>Google (Google LLC) — modelo Gemma <code>gemma-4-26b-a4b-it</code>, accedido a través de la Gemini API / Google AI Studio en la <strong>cuota no pagada (gratis)</strong>:</strong> esta función <strong>no</strong> se ejecuta en un servicio de pago. Recibe el texto del mensaje del chatbot (≤1500 caracteres), hasta las últimas 20 entradas de historial previo (10 pares de mensaje y respuesta), el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibe IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional). <strong>Tratamiento por parte de Google:</strong> al tratarse de la cuota no pagada, según los Términos Adicionales del Gemini API (vigentes desde el 23 de marzo de 2026), Google puede utilizar el contenido enviado y las respuestas generadas para <em>proporcionar, mejorar y desarrollar</em> sus productos, servicios y tecnologías de aprendizaje automático, y <strong>revisores humanos pueden leer, anotar y procesar</strong> la entrada y la salida de la API. Ese tratamiento <strong>no</strong> se aplica a la cuota de pago. Quien use el chatbot con este modelo debe saber que su mensaje y la respuesta del modelo pueden ser utilizados por Google de esa manera. La búsqueda de las entradas de conocimiento es local (puntuación por palabras en el propio servidor) y no se envía a Google.</li>
+        <li><strong>Google (Google LLC) — modelo Gemma <code>gemma-4-26b-a4b-it</code>, accedido a través de la Gemini API / Google AI Studio en la <strong>cuota no pagada (gratis)</strong>:</strong> esta función <strong>no</strong> se ejecuta en la cuota de pago de Google. Recibe el texto del mensaje del chatbot (≤1500 caracteres), hasta las últimas 20 entradas de historial previo (10 pares de mensaje y respuesta), el texto de persona configurado por el admin del servidor y hasta 3 entradas de conocimiento Q&amp;A del admin que coincidan. <strong>No</strong> recibe IDs de usuario de Discord, IDs de servidor, nombres de usuario ni avatares. El procesamiento puede ocurrir en servidores fuera de Argentina (transferencia internacional). <strong>Tratamiento por parte de Google:</strong> al tratarse de la cuota no pagada, según los Términos Adicionales del Gemini API (vigentes desde el 23 de marzo de 2026), Google puede utilizar el contenido enviado y las respuestas generadas para <em>proporcionar, mejorar y desarrollar</em> sus productos, servicios y tecnologías de aprendizaje automático, y <strong>revisores humanos pueden leer, anotar y procesar</strong> la entrada y la salida de la API. Ese tratamiento <strong>no</strong> se aplica a la cuota de pago. Quien use el chatbot con este modelo debe saber que su mensaje y la respuesta del modelo pueden ser utilizados por Google de esa manera. La búsqueda de las entradas de conocimiento es local (puntuación por palabras en el propio servidor) y no se envía a Google.</li>
         <li><strong>WeatherAPI:</strong> solo el nombre de la ciudad que escribió el usuario (comando de clima).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> solo el término de búsqueda escrito por el usuario.</li>
         <li><strong>Open Trivia DB (opentdb.com):</strong> el comando <code>/trivia</code> obtiene las preguntas de opentdb.com. No se envía ningún dato de usuario: la solicitud solo incluye la categoría y la dificultad elegidas. Las preguntas se publican bajo licencia CC BY-SA 4.0.</li>
@@ -456,6 +461,8 @@
         diario de aniversarios es de 7 días desde la reserva, y el
         catálogo de ofertas y el registro de anuncios se purgan a los 90 días —el primero desde que termina
         la promoción, el segundo desde la publicación—, mientras que las notificaciones de ofertas no vencen solas.
+        El registro de activación de módulos opcionales se conserva mientras exista el servidor y se elimina con
+        la purga de datos de ese servidor, sin un vencimiento propio.
        Cuando una persona pide la supresión de sus datos, el bot elimina además los mensajes de Discord que publicó en su nombre (sus tarjetas de sugerencia, sus destacados del starboard y sus canales de voz temporales), no solo las filas de la base de datos.</p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -533,7 +540,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-21 - Versión 2.5<br />
+        Última actualización / Last updated: 2026-11-21 - Versión 2.6<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -708,6 +715,11 @@
             <td>Indefinite while configured.</td>
           </tr>
           <tr>
+            <td>Paid access to optional modules (activation record)</td>
+            <td>A single record per server and per grant or renewal: which optional modules it covers (AI chatbot, AI knowledge base and deals notifications), the period's start and end dates, a fixed source value and an optional operator note that does not identify anyone. It <strong>contains no personal data and no payment information</strong>, because no payment data reaches the bot: no amounts, currencies or invoice numbers are stored. The server's administrators can see the access state, the modules included, the end date and the time left in the bot.</td>
+            <td>Kept while the server exists and deleted with that server's data purge; it has no expiry of its own.</td>
+          </tr>
+          <tr>
             <td>Server knowledge base (admin Q&amp;A, max 50 entries/guild)</td>
             <td>Stored indefinitely until removed with <code>/knowledge remove</code>. Sent to the AI provider as context.</td>
             <td>Indefinite until removed via <code>/knowledge remove</code> or until the bot is removed from the server.</td>
@@ -791,7 +803,7 @@
       <h2>4. Third parties</h2>
       <p>Exact data flows with third parties:</p>
       <ul>
-        <li><strong>Google (Google LLC) — Gemma model <code>gemma-4-26b-a4b-it</code>, accessed through the Gemini API / Google AI Studio on the <strong>unpaid (free) quota</strong>:</strong> this feature does <strong>not</strong> run on a paid service. It receives the chatbot message text (≤1500 chars), up to the last 20 previous history entries (10 message/response pairs), the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It will <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer). <strong>Google's handling of the data:</strong> because this is the unpaid quota, under the Gemini API Additional Terms of Service (in effect since 23 March 2026) Google may use the submitted content and the generated responses to <em>provide, improve and develop</em> its products, services and machine-learning technologies, and <strong>human reviewers may read, annotate and process</strong> the API input and output. That handling does <strong>not</strong> apply to the paid quota. Anyone using the chatbot with this model should know that their message and the model's reply may be used by Google in that way. The knowledge lookup is local (word-overlap scoring on the bot's own server) and is not sent to Google.</li>
+        <li><strong>Google (Google LLC) — Gemma model <code>gemma-4-26b-a4b-it</code>, accessed through the Gemini API / Google AI Studio on the <strong>unpaid (free) quota</strong>:</strong> this feature does <strong>not</strong> run on Google's paid quota. It receives the chatbot message text (≤1500 chars), up to the last 20 previous history entries (10 message/response pairs), the server's admin-configured persona text, and up to 3 matching admin Q&amp;A knowledge entries. It will <strong>not</strong> receive Discord user IDs, guild IDs, usernames, or avatars. Processing may occur on servers outside Argentina (international transfer). <strong>Google's handling of the data:</strong> because this is the unpaid quota, under the Gemini API Additional Terms of Service (in effect since 23 March 2026) Google may use the submitted content and the generated responses to <em>provide, improve and develop</em> its products, services and machine-learning technologies, and <strong>human reviewers may read, annotate and process</strong> the API input and output. That handling does <strong>not</strong> apply to the paid quota. Anyone using the chatbot with this model should know that their message and the model's reply may be used by Google in that way. The knowledge lookup is local (word-overlap scoring on the bot's own server) and is not sent to Google.</li>
         <li><strong>WeatherAPI:</strong> only the city name the user typed (weather lookup command).</li>
         <li><strong>YouTube Data API v3 (Google):</strong> only the search term typed by the user.</li>
         <li><strong>Open Trivia DB (opentdb.com):</strong> the <code>/trivia</code> command fetches its questions from opentdb.com. No user data is sent: the request only includes the selected category and difficulty. Questions are published under the CC BY-SA 4.0 license.</li>
@@ -834,7 +846,8 @@
         marker is 7 days after it was claimed, and the deal
         catalogue and the announcement records are purged at 90 days — the catalogue from the moment the
         promotion ends, the announcement records from the moment of posting — while deal notifications do
-        not expire on their own.
+        not expire on their own. The activation record for optional modules is kept while the server exists
+        and is deleted with that server's data purge, with no expiry of its own.
        When a user requests erasure, the bot also deletes the Discord messages it posted on their behalf (their suggestion cards, their starboard highlights and their temporary voice channels), not only the database rows.</p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -908,7 +921,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-21 - Versión 2.5<br />
+        Última actualización / Last updated: 2026-11-21 - Versión 2.6<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
