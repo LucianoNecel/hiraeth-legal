@@ -385,16 +385,16 @@
       <div class="article">
         <h2>14. Acceso pago a módulos opcionales</h2>
         <p>
-          <span class="num">14.1.</span> El servicio principal de Hiraeth es gratuito. Además, el Desarrollador puede ofrecer acceso pago a módulos opcionales por servidor: el chatbot de IA, la base de conocimientos de IA y las notificaciones de ofertas. El acceso se vende por servidor, por un período con fecha de fin indicada, o sin fecha de fin.
+          <span class="num">14.1.</span> El servicio principal de Hiraeth es gratuito. Además, el Desarrollador puede ofrecer acceso pago a módulos opcionales por servidor: el chatbot de IA (ofrecido como <strong>Asistente del servidor</strong> / <strong>Server Assistant</strong>), la base de conocimientos de IA y las notificaciones de ofertas. El acceso se vende por servidor, por un período con fecha de fin indicada, o sin fecha de fin.
         </p>
         <p>
-          <span class="num">14.2.</span> La compra se hace fuera de Discord, escribiendo a <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a>. No hay una tienda dentro del bot, ni un proceso de pago automático, ni un precio publicado en el producto: las condiciones se acuerdan con el Desarrollador.
+          <span class="num">14.2.</span> Cuando hay un checkout autoservicio disponible para un servidor, la compra se hace desde el propio bot: <code>/premium</code> muestra las duraciones ofrecidas para ese servidor y abre la página de pago del proveedor de pago. El importe y la moneda que muestra esa página de pago son el importe y la moneda que se cobran, y son el único precio que aplica; un precio de referencia en otra moneda es informativo. Cuando no hay un checkout configurado, la compra se acuerda con el Desarrollador escribiendo a <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a>.
         </p>
         <p>
-          <span class="num">14.3.</span> El bot no procesa, recibe ni almacena datos de pago. No guarda números de tarjeta, datos bancarios, facturas, identificadores de transacción, ni el nombre, el correo o el usuario de quien paga. El pago se arregla entre quien paga y el Desarrollador, fuera del bot.
+          <span class="num">14.3.</span> El bot no procesa ni recibe números de tarjeta, datos bancarios ni credenciales de cuenta: el pago lo procesa el proveedor de pago en su propia página, y ese proveedor conserva el nombre, el correo, la identificación y el medio de pago de quien paga bajo sus propios términos y su política de privacidad. Lo que llega al bot es el resultado del pago, no el medio de pago.
         </p>
         <p>
-          <span class="num">14.4.</span> Por cada habilitación o renovación, el bot guarda un único registro de activación de ese servidor: qué módulos incluye, las fechas de inicio y de fin, un valor de origen fijo y una nota operativa opcional que no identifica a nadie. Ese registro no contiene datos personales ni importes, monedas o números de factura. Se elimina cuando se eliminan los datos del servidor.
+          <span class="num">14.4.</span> Por cada habilitación o renovación, el bot guarda un único registro de activación de ese servidor: qué módulos incluye, las fechas de inicio y de fin, un valor de origen fijo y una nota operativa opcional que no identifica a nadie. Ese registro no contiene datos personales ni importes, monedas o números de factura, y se elimina cuando se eliminan los datos del servidor. Por separado, por cada compra el bot guarda un pedido de compra de ese servidor: la duración comprada, el importe y la moneda cobrados, el proveedor usado, los identificadores que ese proveedor asigna a la transacción y el estado del pedido. El pedido no contiene nombre, correo, número de tarjeta, dato bancario ni identificación de quien pagó, y el bot no emite ninguna factura.
         </p>
         <p>
           <span class="num">14.5.</span> Los administradores del servidor pueden ver en el bot el estado del acceso, los módulos incluidos, la fecha de fin y el tiempo restante.
@@ -403,10 +403,10 @@
           <span class="num">14.6.</span> Cuando un período termina, los módulos dejan de responder a partir de esa fecha. No se borra nada: la configuración del servidor, la base de conocimientos, los datos de los juegos y el registro del período siguen guardados.
         </p>
         <p>
-          <span class="num">14.7.</span> La renovación es manual y se acuerda con el Desarrollador. Una renovación empieza un período nuevo desde el día en que se concede; un período que ya venció no se completa de forma retroactiva.
+          <span class="num">14.7.</span> La renovación se hace igual que la primera compra: desde <code>/premium</code> cuando hay un checkout disponible para ese servidor, o con el Desarrollador cuando no lo hay. Una renovación comprada antes de que termine el período actual lo extiende, así que el período nuevo empieza donde termina el actual; una renovación comprada después de que el período venció empieza el día en que se concede, y los días intermedios no se restituyen.
         </p>
         <p>
-          <span class="num">14.8.</span> Una vez que el período pago empezó, no se hacen reembolsos, con dos excepciones: (a) un error de cobro, o (b) que el servicio haya estado completamente indisponible, de forma continua, durante una parte sustancial del período pago. Para pedir un reembolso, escribí a <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a>, la misma dirección que se usa para la compra.
+          <span class="num">14.8.</span> Podés cancelar una compra por cualquier motivo dentro de los <strong>7 días</strong> posteriores al pago y recibir el reembolso completo, en cualquier plan. Pasados esos 7 días el período corre hasta su fecha de fin y no se otorga reembolso, con dos excepciones: (a) un error de cobro, o (b) que el servicio haya estado completamente indisponible, de forma continua, durante una parte sustancial del período pago. Para pedir un reembolso, escribí a <a class="inline" href="mailto:neceldev@gmail.com">neceldev@gmail.com</a>; los reembolsos se devuelven por el mismo medio de pago usado para pagar, y el tiempo que tardan en acreditarse depende del proveedor de pago. Nada en esta sección limita ningún derecho que te corresponda bajo la ley de defensa del consumidor que te aplique, que puede ser más amplia que esta política.
         </p>
       </div>
 
@@ -707,7 +707,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-11-21 - Versión 2.5</p>
+      <p>Última actualización / Last updated: 2026-11-22 - Versión 2.6</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 
