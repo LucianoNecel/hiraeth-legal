@@ -324,8 +324,13 @@
           </tr>
           <tr>
             <td>Acceso pago a módulos opcionales (registro de activación)</td>
-            <td>Un único registro por servidor y por habilitación o renovación: qué módulos opcionales incluye (chatbot de IA, base de conocimientos de IA y notificaciones de ofertas), la fecha de inicio y la fecha de fin del período, un valor de origen fijo y una nota operativa opcional que no identifica a nadie. <strong>No contiene datos personales ni información de pago</strong>, porque ningún dato de pago llega al bot: no se guardan importes, monedas ni números de factura. Los administradores del servidor ven en el bot el estado del acceso, los módulos incluidos, la fecha de fin y el tiempo restante.</td>
+            <td>Un único registro por servidor y por habilitación o renovación: qué módulos opcionales incluye (chatbot de IA, base de conocimientos de IA y notificaciones de ofertas), la fecha de inicio y la fecha de fin del período, un valor de origen fijo y una nota operativa opcional que no identifica a nadie. <strong>No contiene datos personales ni información de pago</strong>: los importes, las monedas y los números de factura viven solo en la fila del pedido de compra que figura a continuación. Los administradores del servidor ven en el bot el estado del acceso, los módulos incluidos, la fecha de fin y el tiempo restante.</td>
             <td>Se conserva mientras exista el servidor y se elimina con la purga de datos de ese servidor; no tiene un vencimiento propio.</td>
+          </tr>
+          <tr>
+            <td>Pedido de compra (checkout autoservicio)</td>
+            <td>Una fila por intento de compra o de renovación: el ID del servidor, la duración comprada, el importe y la moneda cobrados, el proveedor de pago usado, los identificadores que ese proveedor asigna a la transacción, el estado del pedido (pendiente, pagado, rechazado, cancelado, reembolsado), el instante del pago, el vínculo con el registro de activación que produjo y una nota operativa opcional de hasta 200 caracteres. <strong>No guarda nombre, correo, número de tarjeta, dato bancario, identificador fiscal ni ningún otro identificador de quien pagó</strong>: eso queda en el proveedor de pago, bajo sus propios términos y su política de privacidad, y el bot solo recibe el resultado del pago.</td>
+            <td>Los pedidos se conservan como registro de facturación: <strong>no</strong> los borra la purga que corre al retirar el bot de un servidor, para que un pago, una renovación o un reembolso se puedan verificar después. No contienen datos de miembros. <code>/data</code> actúa sobre los datos personales de quien lo ejecuta, así que no elimina los pedidos de un servidor; un administrador de ese servidor puede pedir su supresión escribiendo a <code>neceldev@gmail.com</code>.</td>
           </tr>
           <tr>
             <td>Base de conocimiento del servidor (Q&amp;A de admin, máx. 50 entradas/servidor)</td>
@@ -417,6 +422,7 @@
         <li><strong>Open Trivia DB (opentdb.com):</strong> el comando <code>/trivia</code> obtiene las preguntas de opentdb.com. No se envía ningún dato de usuario: la solicitud solo incluye la categoría y la dificultad elegidas. Las preguntas se publican bajo licencia CC BY-SA 4.0.</li>
         <li><strong>dolarapi.com:</strong> ningún dato de usuario (cotizaciones públicas).</li>
         <li><strong>Epic Games Store (Epic Games, Inc.) y CheapShark (cheapshark.com):</strong> las notificaciones de ofertas consultan cada 15 minutos el catálogo público de promociones de Epic (<code>store-site-backend-static.ak.epicgames.com</code>) y la API de CheapShark (<code>www.cheapshark.com</code>, un agregador de varias tiendas). Son lecturas de catálogo sin autenticación: Hiraeth <strong>no</strong> envía datos de miembros, ni el ID del servidor, ni identificador alguno en esas solicitudes.</li>
+        <li><strong>Mercado Pago (Mercado Libre S.R.L.):</strong> el proveedor de pago detrás del checkout autoservicio de los módulos opcionales. Cuando un administrador del servidor compra un plan, la página de pago la aloja el proveedor y es el proveedor quien recibe el nombre, el correo, la identificación y el medio de pago de quien paga, junto con el importe, bajo sus propios términos y su política de privacidad. Lo que recibe el bot es el resultado del pago —si fue aprobado, su importe y su moneda, y los identificadores que el proveedor asigna a la transacción—, nunca el medio de pago ni la identidad de quien pagó. Con esa solicitud no se envía ningún dato de los miembros del servidor.</li>
         <li><strong>Discord (Discord Inc.):</strong> plataforma que aloja inherentemente todos los IDs/contenidos.</li>
         <li><strong>Base de datos:</strong> MongoDB utilizada por el bot; el acceso está restringido al operador. Sin cookies, sin analítica web, sin publicidad, sin venta de datos.</li>
       </ul>
@@ -447,13 +453,17 @@
         propuestas y votos de noches de película, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard, las filas de los canales de voz temporales, las notificaciones de ofertas y sus registros de anuncios,
         las conversaciones del chatbot de IA, los datos de
         cumpleaños, los anuncios programados, los roles temporales concedidos, las filas de exclusión y los
-        marcadores diarios de aniversarios y los trabajos programados de ese servidor; las sesiones de juego
-        activas de ese servidor se cierran automáticamente. La purga es por
+        marcadores diarios de aniversarios, los trabajos programados de ese servidor, la configuración que
+        escribieron sus administradores, su configuración de canales de estadísticas, sus citas guardadas y su
+        numeración de citas, su numeración de sugerencias y sus partidas de ruleta; las sesiones de juego
+        activas de ese servidor se cierran automáticamente, y las monedas apostadas en sus partidas de ruleta
+        sin terminar se devuelven antes de que esas partidas se borren. La purga es por
         mejor esfuerzo y se ejecuta de forma independiente por categoría de datos, de modo que un fallo en una
         categoría no impide el borrado de las demás. Los datos vinculados a la cuenta de cada usuario a través
         de todos los servidores —la economía virtual, las estadísticas de juegos y las tareas personales— no
-        dependen de un solo servidor y no se eliminan con esta purga; la configuración del servidor creada por
-        administradores también se conserva por si el bot vuelve a ser invitado. Cualquier persona puede seguir
+        dependen de un solo servidor y no se eliminan con esta purga. Como la configuración del servidor también
+        se borra, un servidor que vuelve a invitar a Hiraeth arranca con una configuración limpia. Cualquier
+        persona puede seguir
         eliminando o solicitando la supresión de todos sus datos en cualquier momento mediante
         <code>/data</code> o escribiendo a <code>neceldev@gmail.com</code> (objetivo de respuesta: dentro de
         los 30 días). Los dos TTL de analítica son de 400 días para los contadores diarios y de 35 días para
@@ -462,7 +472,8 @@
         catálogo de ofertas y el registro de anuncios se purgan a los 90 días —el primero desde que termina
         la promoción, el segundo desde la publicación—, mientras que las notificaciones de ofertas no vencen solas.
         El registro de activación de módulos opcionales se conserva mientras exista el servidor y se elimina con
-        la purga de datos de ese servidor, sin un vencimiento propio.
+        la purga de datos de ese servidor, sin un vencimiento propio; el pedido de compra de un plan pago se
+        conserva después de esa purga, como registro de facturación, y no contiene datos de miembros.
        Cuando una persona pide la supresión de sus datos, el bot elimina además los mensajes de Discord que publicó en su nombre (sus tarjetas de sugerencia, sus destacados del starboard y sus canales de voz temporales), no solo las filas de la base de datos.</p>
 
       <h2>6. Tus derechos (Ley argentina 25.326)</h2>
@@ -540,7 +551,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-21 - Versión 2.8<br />
+        Última actualización / Last updated: 2026-11-22 - Versión 2.9<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -930,7 +941,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-21 - Versión 2.8<br />
+        Última actualización / Last updated: 2026-11-22 - Versión 2.9<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
