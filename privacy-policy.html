@@ -540,7 +540,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-21 - Versión 2.7<br />
+        Última actualización / Last updated: 2026-11-21 - Versión 2.8<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -716,8 +716,13 @@
           </tr>
           <tr>
             <td>Paid access to optional modules (activation record)</td>
-            <td>A single record per server and per grant or renewal: which optional modules it covers (AI chatbot, AI knowledge base and deals notifications), the period's start and end dates, a fixed source value and an optional operator note that does not identify anyone. It <strong>contains no personal data and no payment information</strong>, because no payment data reaches the bot: no amounts, currencies or invoice numbers are stored. The server's administrators can see the access state, the modules included, the end date and the time left in the bot.</td>
+            <td>A single record per server and per grant or renewal: which optional modules it covers (AI chatbot, AI knowledge base and deals notifications), the period's start and end dates, a fixed source value and an optional operator note that does not identify anyone. It <strong>contains no personal data and no payment information</strong>: it holds no amounts, currencies or invoice numbers, which live only on the purchase order row below. The server's administrators can see the access state, the modules included, the end date and the time left in the bot.</td>
             <td>Kept while the server exists and deleted with that server's data purge; it has no expiry of its own.</td>
+          </tr>
+          <tr>
+            <td>Purchase order (self-serve checkout)</td>
+            <td>One row per purchase or renewal attempt: the server's ID, the duration bought, the amount and currency charged, the payment provider used, that provider's own identifiers for the transaction, the order's state (pending, paid, rejected, cancelled, refunded), the payment instant, the link to the activation record it produced and an optional operator note of up to 200 characters. It <strong>holds no name, e-mail, card number, bank detail, tax identifier or any other identifier of whoever paid</strong>: the provider holds those, under its own terms and privacy policy, and the bot only receives the outcome of the payment.</td>
+            <td>Orders are kept as a billing record: they are <strong>not</strong> deleted by the purge that runs when the bot is removed from a server, so a payment, renewal or refund can still be verified afterwards. They contain no member data. <code>/data</code> acts on the personal data of the user who runs it, so it does not remove a server's orders; a server's administrator can ask for them to be erased by writing to <code>neceldev@gmail.com</code>.</td>
           </tr>
           <tr>
             <td>Server knowledge base (admin Q&amp;A, max 50 entries/guild)</td>
@@ -809,6 +814,7 @@
         <li><strong>Open Trivia DB (opentdb.com):</strong> the <code>/trivia</code> command fetches its questions from opentdb.com. No user data is sent: the request only includes the selected category and difficulty. Questions are published under the CC BY-SA 4.0 license.</li>
         <li><strong>dolarapi.com:</strong> no user data at all (public rates).</li>
         <li><strong>Epic Games Store (Epic Games, Inc.) and CheapShark (cheapshark.com):</strong> the deal notifications query Epic's public promotions catalogue (<code>store-site-backend-static.ak.epicgames.com</code>) and the CheapShark API (<code>www.cheapshark.com</code>, an aggregator over several stores) every 15 minutes. These are unauthenticated catalogue reads: Hiraeth sends <strong>no</strong> member data, <strong>no</strong> guild ID and <strong>no</strong> identifier of any kind in those requests.</li>
+        <li><strong>Mercado Pago (Mercado Libre S.R.L.):</strong> the payment provider behind the self-serve checkout for optional paid modules. When a server's administrator buys a plan, the payment page is hosted by the provider and it is the provider that receives the payer's name, e-mail, identification and payment instrument, together with the amount, under its own terms and privacy policy. What the bot receives is the outcome — whether the payment was approved, its amount and currency, and the provider's identifiers for the transaction — never the payment instrument or the payer's identity. No member data of the server is sent with that request.</li>
         <li><strong>Discord (Discord Inc.):</strong> the platform inherently hosting all IDs/content.</li>
         <li><strong>Database:</strong> MongoDB used by the bot; access restricted to the operator. No cookies, no web analytics, no advertising, no selling of data.</li>
       </ul>
@@ -834,12 +840,14 @@
         daily XP aggregates and season records, server activity analytics aggregates and active-member
         markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records, its temporary voice channel rows, its deal notifications and their announcement records, AI chatbot conversations,
         birthday data, scheduled announcements, granted temporary roles, anniversary opt-out rows and
-        daily markers, and that server's scheduled jobs; active game sessions in
-        that server are automatically ended. The purge is best-effort and runs independently per data
+        daily markers, that server's scheduled jobs, the configuration its administrators wrote, its
+        stat-channel configuration, its saved quotes and quote numbering, its suggestion numbering, and its
+        roulette matches; active game sessions in that server are automatically ended, and any coins staked
+        in its unfinished roulette matches are refunded before those matches are deleted. The purge is best-effort and runs independently per data
         category, so a failure in one category does not prevent the others from being deleted. Data tied to a
         user's account across all servers — the virtual economy, game statistics, and personal tasks — is not
-        bound to a single server and is not removed by this purge; server configuration created by admins is
-        also retained in case the bot is re-invited. Anyone can still delete or request erasure of all of
+        bound to a single server and is not removed by this purge. Because the server's configuration is
+        deleted as well, a server that invites Hiraeth again starts from a clean configuration. Anyone can still delete or request erasure of all of
         their data at any time via <code>/data</code> or by emailing <code>neceldev@gmail.com</code> (target
         response time: within 30 days). The two analytics TTLs are 400 days for the daily counters and 35 days
         for the active-member markers; the support-ticket TTL is 30 days after closing, the anniversary daily
@@ -847,7 +855,8 @@
         catalogue and the announcement records are purged at 90 days — the catalogue from the moment the
         promotion ends, the announcement records from the moment of posting — while deal notifications do
         not expire on their own. The activation record for optional modules is kept while the server exists
-        and is deleted with that server's data purge, with no expiry of its own.
+        and is deleted with that server's data purge, with no expiry of its own; the purchase order for a paid
+        plan is kept after that purge, as a billing record, and it contains no member data.
        When a user requests erasure, the bot also deletes the Discord messages it posted on their behalf (their suggestion cards, their starboard highlights and their temporary voice channels), not only the database rows.</p>
 
       <h2>6. Your rights (Argentine Law 25.326)</h2>
@@ -921,7 +930,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-21 - Versión 2.7<br />
+        Última actualización / Last updated: 2026-11-21 - Versión 2.8<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
