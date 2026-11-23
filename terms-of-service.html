@@ -177,7 +177,7 @@
           <li>Mini-juegos: Wordle (solo y PvP), Batalla Naval, Mar de Palabras, tatetí (tic-tac-toe), buscaminas, prueba de mecanografía, y trivia (<code>/trivia</code>); además, el Wordle diario global (<code>/wordledaily</code>) se juega en hilos privados con una clasificación agregada.</li>
           <li>Una economía puramente virtual (monedas obtenidas por uso diario, trabajo y juegos; tienda, inventarios, intercambios entre usuarios, un volteo de moneda <code>/bet</code> y objetos que se pueden abrir).</li>
           <li>XP, niveles, tarjetas de rango, temporadas por aniversario del servidor y resúmenes de <code>/wrapped</code>.</li>
-          <li>Encuestas, recordatorios (por mensaje directo o canal), cumpleaños, listas de tareas, contador comunitario, propuestas de noche de película.</li>
+          <li>Encuestas, recordatorios (por mensaje directo o canal), cumpleaños, listas de tareas, contador comunitario, propuestas de noche de película y, en los servidores con acceso pago, reseñas escritas sobre cada película.</li>
           <li>Sorteos (<code>/giveaway</code>): el anfitrión publica un premio en texto libre y los usuarios se inscriben con un botón; el bot sortea ganadores al vencer el plazo. Hiraeth no entrega el premio ni lo garantiza.</li>
           <li>Consultas de clima, dólar, YouTube y hora.</li>
           <li>Mensajes anónimos (<code>/anonimo</code>, cuya autoría es visible para los moderadores del servidor mediante un canal de registro).</li>
@@ -306,6 +306,8 @@
         </p>
         <p>
           <span class="num">7.21.</span> Trabajos programados: el planificador interno guarda, por trabajo, un identificador estable, el ID de servidor, el tipo de función, el horario con la zona horaria, la carga propia de la función (por ejemplo los IDs de usuario y de rol de un rol temporal o el espacio de un anuncio), el próximo instante de ejecución, las marcas de la última ejecución y de la reserva en curso, y contadores de ejecuciones y fallos. Un trabajo de una sola ejecución se elimina al completarse; los recurrentes persisten mientras la función siga programada y se eliminan cuando se desregistra, cuando el servidor desactiva la función o cuando el bot es retirado del servidor. <code>/data delete</code> borra los trabajos que referencian al usuario.
+        <p>
+          <span class="num">7.22.</span> Noches de cine: cada película guarda su título, fecha, hora y sinopsis (texto libre), los datos del proponente (ID, nombre de usuario y URL de avatar), sus propuestas pendientes y, por cada votante, el ID y la puntuación en estrellas. En los servidores con acceso pago, el votante puede además dejar una reseña escrita opcional de hasta 1.000 caracteres: se guarda dentro de su propio voto junto con el nombre visible que tenía al enviarla y la marca de tiempo del envío, y se muestra en el mensaje de eco que el bot mantiene para ese votante en el hilo de la película, de modo que queda visible para quien pueda leer ese hilo. Una reseña nunca se publica como mensaje suelto en el canal. Retención: mientras el bot permanezca en el servidor; todo se elimina cuando el bot es retirado, <code>/data delete</code> retira los votos del usuario con su reseña y <code>/data export</code> entrega únicamente los votos del propio solicitante.
         </p>
 
       </div>
@@ -464,7 +466,7 @@
           <li>Mini-games: Wordle (solo and PvP), Battleship, Sea of Words, tic-tac-toe, minesweeper, typing test, and trivia (<code>/trivia</code>); in addition, the global daily Wordle (<code>/wordledaily</code>) is played in private threads with an aggregated ranking.</li>
           <li>A purely virtual economy (coins earned via daily use, work, and games; shop, inventories, player-to-player trades, a <code>/bet</code> coin-flip, and openable items).</li>
           <li>XP, levels, rank cards, server-anniversary seasons, and <code>/wrapped</code> summaries.</li>
-          <li>Polls, reminders (delivered by DM or channel), birthdays, to-do lists, community counter, and movie-night proposals.</li>
+          <li>Polls, reminders (delivered by DM or channel), birthdays, to-do lists, community counter, and movie-night proposals, plus written reviews on each movie on servers with paid access.</li>
           <li>Giveaways (<code>/giveaway</code>): a host publishes a free-text prize and users enter with a button; the bot draws winners when the deadline passes. Hiraeth does not deliver or guarantee the prize.</li>
           <li>Weather, dollar, YouTube, and time lookups.</li>
           <li>Anonymous messages (<code>/anonimo</code>, whose author is visible to server moderators through a log channel).</li>
@@ -593,6 +595,8 @@
         </p>
         <p>
           <span class="num">7.21.</span> Scheduled jobs: the internal scheduler stores, per job, a stable identifier, the guild ID, the feature type, the schedule with its time zone, the feature's own payload (for example the user and role IDs of a temporary role, or an announcement's slot), the next run instant, the timestamps of the last run and of the claim in progress, and run and failure counters. A single-run job is deleted when it completes; recurring ones persist while the feature stays scheduled and are removed when it is unregistered, when the server switches the feature off, or when the bot is removed from the server. <code>/data delete</code> removes the jobs whose payload references the user.
+        <p>
+          <span class="num">7.22.</span> Movie nights: each movie stores its title, date, time and plot synopsis (free text), the proposer's details (ID, username and avatar URL), its pending proposals, and each voter's ID and star score. On servers with paid access, a voter may also leave an optional written review of up to 1,000 characters: it is stored inside that voter's own vote together with the display name they had when submitting it and the submission timestamp, and it is rendered in the echo message the bot keeps for that voter in the movie's thread, so it is visible to anyone who can read that thread. A review is never posted as a standalone message in the channel. Retention: while the bot remains in the server; everything is deleted when the bot is removed, <code>/data delete</code> removes the user's votes together with their reviews, and <code>/data export</code> returns only the requester's own votes.
         </p>
 
       </div>
@@ -707,7 +711,7 @@
 
     <!-- ============ FOOTER ============ -->
     <footer>
-      <p>Última actualización / Last updated: 2026-11-22 - Versión 2.6</p>
+      <p>Última actualización / Last updated: 2026-11-22 - Versión 2.7</p>
       <p>Contacto / Contact: <a href="mailto:neceldev@gmail.com">neceldev@gmail.com</a></p>
     </footer>
 

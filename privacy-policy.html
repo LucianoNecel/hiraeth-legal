@@ -289,8 +289,8 @@
           </tr>
           <tr>
             <td>Noches de cine (película)</td>
-            <td>Título/fecha/hora/sinopsis de trama (texto libre, autor del usuario), tag de Discord del proponente, URL de avatar e ID, IDs de votantes y puntuaciones.</td>
-            <td>Indefinida mientras el bot esté en ese servidor; las propuestas y votos de ese servidor se eliminan cuando el bot es retirado del servidor.</td>
+            <td>Título/fecha/hora/sinopsis de trama (texto libre, autor del usuario), tag de Discord del proponente, URL de avatar e ID, IDs de votantes y puntuaciones. En los servidores con acceso pago, cada votante puede sumar además una <strong>reseña escrita</strong>: texto libre de hasta 1.000 caracteres, firmado con el nombre visible que tenía al enviarla y con la marca de tiempo del envío. La reseña aparece en el mensaje de eco que el bot mantiene para ese votante en el hilo de la película, de modo que queda visible para quien pueda leer ese hilo; nunca se publica como mensaje suelto en el canal.</td>
+            <td>Indefinida mientras el bot esté en ese servidor; las propuestas, los votos y las reseñas de ese servidor se eliminan cuando el bot es retirado del servidor. <code>/data delete</code> retira los votos del usuario con su reseña, y <code>/data export</code> entrega únicamente los votos del propio solicitante.</td>
           </tr>
           <tr>
             <td>Partidas de juegos (Wordle/Battleship/Sea of Words/Tres en línea/Buscaminas/Mecanografía)</td>
@@ -450,7 +450,7 @@
         registro agregado del contador comunitario y sus registros de fallo, los registros de XP, los
         agregados diarios de XP y los registros de temporada, los agregados diarios de actividad del servidor y
         los marcadores de miembro activo, las
-        propuestas y votos de noches de película, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard, las filas de los canales de voz temporales, las notificaciones de ofertas y sus registros de anuncios,
+        propuestas y votos de noches de película junto con sus reseñas escritas, los tickets de soporte de ese servidor, las sugerencias y sus votos, los registros de starboard, las filas de los canales de voz temporales, las notificaciones de ofertas y sus registros de anuncios,
         las conversaciones del chatbot de IA, los datos de
         cumpleaños, los anuncios programados, los roles temporales concedidos, las filas de exclusión y los
         marcadores diarios de aniversarios, los trabajos programados de ese servidor, la configuración que
@@ -511,6 +511,7 @@
         <li>Destacados del starboard: se eliminan cuando se borra el mensaje original, o con <code>/data delete</code></li>
         <li>Canales de voz temporales: se cierran cuando el canal queda vacío, con <code>/tempvoice delete</code> o con <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
+        <li>Noches de cine: <code>/data delete</code> retira tus votos y, con ellos, la reseña escrita que hayas dejado</li>
         <li>Tareas: eliminación por tarea</li>
         <li>Notificaciones de ofertas: el servidor las elimina desde <code>/deals</code>; <code>/data delete</code> borra el ID del administrador que las creó</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
@@ -551,7 +552,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-22 - Versión 2.9<br />
+        Última actualización / Last updated: 2026-11-22 - Versión 2.10<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -692,8 +693,8 @@
           </tr>
           <tr>
             <td>Movie nights (film)</td>
-            <td>Proposal title/date/time/plot synopsis (free text, user-authored), proposer's Discord tag, avatar URL and ID, voter IDs and scores.</td>
-            <td>Indefinite while the bot is in that server; that server's proposals and votes are deleted when the bot is removed from the server.</td>
+            <td>Proposal title/date/time/plot synopsis (free text, user-authored), proposer's Discord tag, avatar URL and ID, voter IDs and scores. On servers with paid access, each voter may also add a <strong>written review</strong>: free text of up to 1,000 characters, signed with the display name they had when submitting it and stamped with the submission time. The review is rendered in the echo message the bot keeps for that voter in the movie's thread, so it is visible to anyone who can read that thread; it is never posted as a standalone message in the channel.</td>
+            <td>Indefinite while the bot is in that server; that server's proposals, votes and their reviews are deleted when the bot is removed from the server. <code>/data delete</code> removes the user's votes together with their reviews, and <code>/data export</code> returns only the requester's own votes.</td>
           </tr>
           <tr>
             <td>Game sessions (Wordle/Battleship/Sea of Words/Tic-Tac-Toe/Minesweeper/Typing)</td>
@@ -849,7 +850,7 @@
         moderation warnings and pending scheduled moderation actions, the server's Q&amp;A knowledge base
         entries, polls, pending reminders, the community-counter aggregate record and its failure records, XP records,
         daily XP aggregates and season records, server activity analytics aggregates and active-member
-        markers, movie-night proposals and votes, the server's support tickets, its suggestions and their votes, its starboard records, its temporary voice channel rows, its deal notifications and their announcement records, AI chatbot conversations,
+        markers, movie-night proposals and votes together with their written reviews, the server's support tickets, its suggestions and their votes, its starboard records, its temporary voice channel rows, its deal notifications and their announcement records, AI chatbot conversations,
         birthday data, scheduled announcements, granted temporary roles, anniversary opt-out rows and
         daily markers, that server's scheduled jobs, the configuration its administrators wrote, its
         stat-channel configuration, its saved quotes and quote numbering, its suggestion numbering, and its
@@ -905,6 +906,7 @@
         <li>Starboard highlights: removed when the original message is deleted, or with <code>/data delete</code></li>
         <li>Temporary voice channels: closed when the channel is emptied, with <code>/tempvoice delete</code>, or with <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
+        <li>Movie nights: <code>/data delete</code> removes your votes and, with them, any written review you left</li>
         <li>Tasks: per-task delete</li>
         <li>Deal notifications: the server removes them from <code>/deals</code>; <code>/data delete</code> erases the ID of the administrator who created them</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
@@ -941,7 +943,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-22 - Versión 2.9<br />
+        Última actualización / Last updated: 2026-11-22 - Versión 2.10<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
