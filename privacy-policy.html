@@ -171,7 +171,11 @@
         El bot solo maneja <strong>identificadores de Discord</strong>: las "snowflakes" (identificadores
         numéricos) de usuario, servidor, canal y mensaje, junto con nombres de usuario y URL de avatares
         que muestra Discord. <strong>Nunca</strong> solicita ni almacena correo electrónico, teléfono,
-        dirección IP, domicilio físico o nombre real.
+        domicilio físico o nombre real.
+      </p>
+      <p>
+        La dirección IP es la única excepción y no se guarda: el sitio web la mantiene en memoria durante un
+        minuto para limitar cuántas solicitudes puede hacer una misma conexión (ver la sección 8).
       </p>
       <p>
         Los identificadores de usuario de Discord son <strong>pseudónimos</strong>. Si un usuario escribe a
@@ -535,24 +539,41 @@
         estas medidas.
       </p>
 
-      <h2>8. Cambios a esta política</h2>
+      <h2>8. El sitio web</h2>
+      <p>
+        Hiraeth tiene una página pública (la portada del bot, la guía de comandos y las páginas de error) servida
+        desde el mismo servidor que el bot. El sitio <strong>no</strong> usa cookies, ni <code>localStorage</code>,
+        ni analítica web, ni publicidad, ni formularios, ni cuentas de visitante. Todas sus fuentes, hojas de estilo
+        e imágenes se sirven desde ese mismo servidor: la página no carga ningún recurso de terceros y no ejecuta
+        JavaScript, así que quien la visita no es rastreado ni perfilado.
+      </p>
+      <p>
+        Lo único que el sitio procesa de quien lo visita es la dirección IP de la conexión, y solo durante un minuto:
+        se guarda <strong>en memoria</strong> para limitar cuántas solicitudes puede hacer una misma dirección en ese
+        lapso y así evitar que un flood tumbe al bot. No se escribe en disco ni en la base de datos, no se asocia a
+        ningún usuario de Discord y se descarta al vencer la ventana. El registro operativo de cada solicitud anota
+        el método, la ruta, el código de respuesta y la duración, <strong>nunca</strong> la dirección IP. El sitio no
+        lee, no muestra y no almacena datos de ningún servidor de Discord.
+      </p>
+
+      <h2>9. Cambios a esta política</h2>
       <p>
         Si cambiamos esta política, actualizaremos la fecha de vigencia en esta misma página. Te recomendamos
         revisarla periódicamente.
       </p>
 
-      <h2>9. Enlaces</h2>
+      <h2>10. Enlaces</h2>
       <p>
         Consulta también los <a class="inline" href="terms-of-service.html">Términos del Servicio</a>.
       </p>
 
-      <h2>10. Contacto</h2>
+      <h2>11. Contacto</h2>
       <p>
         Responsable: Hiraeth — proyecto desarrollado por Necel. Correo: <code>neceldev@gmail.com</code>.
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-22 - Versión 2.10<br />
+        Última actualización / Last updated: 2026-11-23 - Versión 2.11<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -580,6 +601,10 @@
         The bot only handles <strong>Discord identifiers</strong>: user, guild, channel, and message ID
         snowflakes, along with usernames and avatar URLs shown by Discord. It <strong>never</strong> asks for
         or stores email, phone number, IP address, physical address, or real names.
+      </p>
+      <p>
+        The IP address is the one exception, and it is not stored: the website holds it in memory for one minute to
+        cap how many requests a single connection may make (see section 8).
       </p>
       <p>
         Discord user IDs are <strong>pseudonymous</strong>. If a user writes to <code>neceldev@gmail.com</code>
@@ -927,23 +952,40 @@
         to users. We make no claims beyond these measures.
       </p>
 
-      <h2>8. Changes to this policy</h2>
+      <h2>8. The website</h2>
+      <p>
+        Hiraeth has a public site — the bot's landing page, the command guide and the error pages — served from the
+        same server as the bot. The site uses <strong>no</strong> cookies, no <code>localStorage</code>, no web
+        analytics, no advertising, no forms and no visitor accounts. Its fonts, stylesheet and images are all served
+        from that same server: the page loads no third-party resource and runs no JavaScript, so a visitor is neither
+        tracked nor profiled.
+      </p>
+      <p>
+        The only thing the site processes about a visitor is the connection's IP address, and only for one minute: it
+        is held <strong>in memory</strong> to cap how many requests one address may make in that window, so a flood
+        cannot take the bot down. It is never written to disk or to the database, it is not linked to any Discord
+        user, and it is discarded when the window expires. The operational log entry for each request records the
+        method, the path, the response code and the duration — <strong>never</strong> the IP address. The site does
+        not read, display or store data from any Discord server.
+      </p>
+
+      <h2>9. Changes to this policy</h2>
       <p>
         If we change this policy, we will update the effective date on this page. We recommend reviewing it periodically.
       </p>
 
-      <h2>9. Links</h2>
+      <h2>10. Links</h2>
       <p>
         Also see the <a class="inline" href="terms-of-service.html">Terms of Service</a>.
       </p>
 
-      <h2>10. Contact</h2>
+      <h2>11. Contact</h2>
       <p>
         Controller: Hiraeth — a project developed by Necel. Email: <code>neceldev@gmail.com</code>.
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-22 - Versión 2.10<br />
+        Última actualización / Last updated: 2026-11-23 - Versión 2.11<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
