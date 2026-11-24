@@ -293,8 +293,8 @@
           </tr>
           <tr>
             <td>Noches de cine (película)</td>
-            <td>Título/fecha/hora/sinopsis de trama (texto libre, autor del usuario), tag de Discord del proponente, URL de avatar e ID, IDs de votantes y puntuaciones. En los servidores con acceso pago, cada votante puede sumar además una <strong>reseña escrita</strong>: texto libre de hasta 1.000 caracteres, firmado con el nombre visible que tenía al enviarla y con la marca de tiempo del envío. La reseña aparece en el mensaje de eco que el bot mantiene para ese votante en el hilo de la película, de modo que queda visible para quien pueda leer ese hilo; nunca se publica como mensaje suelto en el canal.</td>
-            <td>Indefinida mientras el bot esté en ese servidor; las propuestas, los votos y las reseñas de ese servidor se eliminan cuando el bot es retirado del servidor. <code>/data delete</code> retira los votos del usuario con su reseña, y <code>/data export</code> entrega únicamente los votos del propio solicitante.</td>
+            <td>Título/fecha/hora/sinopsis de trama (texto libre, autor del usuario), tag de Discord del proponente, URL de avatar e ID, IDs de votantes y puntuaciones. Cuando un miembro edita o cancela una propuesta pendiente, la fila guarda además el ID de usuario, el tag de Discord y la URL de avatar de quien hizo la edición o la cancelación, junto con la marca de tiempo de la acción; quien la realiza puede ser un miembro distinto del proponente. En los servidores con acceso pago, cada votante puede sumar además una <strong>reseña escrita</strong>: texto libre de hasta 1.000 caracteres, firmado con el nombre visible que tenía al enviarla y con la marca de tiempo del envío. La reseña aparece en el mensaje de eco que el bot mantiene para ese votante en el hilo de la película, de modo que queda visible para quien pueda leer ese hilo; nunca se publica como mensaje suelto en el canal.</td>
+            <td>Indefinida mientras el bot esté en ese servidor; las propuestas, los votos, las reseñas y los registros de edición y cancelación de ese servidor se eliminan cuando el bot es retirado del servidor. <code>/data delete</code> retira los votos del usuario con su reseña y anonimiza al usuario en toda fila donde figure como proponente, autor de una cancelación o autor de una edición: el nombre visible pasa a ser <code>Deleted user</code> y el ID y la URL de avatar se dejan en nulo. <code>/data export</code> entrega las filas donde el usuario figura como proponente, autor de una cancelación, autor de una edición o votante, con únicamente sus propios votos.</td>
           </tr>
           <tr>
             <td>Partidas de juegos (Wordle/Battleship/Sea of Words/Tres en línea/Buscaminas/Mecanografía)</td>
@@ -515,7 +515,7 @@
         <li>Destacados del starboard: se eliminan cuando se borra el mensaje original, o con <code>/data delete</code></li>
         <li>Canales de voz temporales: se cierran cuando el canal queda vacío, con <code>/tempvoice delete</code> o con <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
-        <li>Noches de cine: <code>/data delete</code> retira tus votos y, con ellos, la reseña escrita que hayas dejado</li>
+        <li>Noches de cine: <code>/data delete</code> retira tus votos y, con ellos, la reseña escrita que hayas dejado, y te anonimiza en las propuestas que propusiste, cancelaste o editaste</li>
         <li>Tareas: eliminación por tarea</li>
         <li>Notificaciones de ofertas: el servidor las elimina desde <code>/deals</code>; <code>/data delete</code> borra el ID del administrador que las creó</li>
         <li>Administradores de servidor: pueden eliminar las advertencias de su servidor (<code>/warns remove</code>), entradas de conocimiento y configuración.</li>
@@ -573,7 +573,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-23 - Versión 2.11<br />
+        Última actualización / Last updated: 2026-11-23 - Versión 2.12<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -718,8 +718,8 @@
           </tr>
           <tr>
             <td>Movie nights (film)</td>
-            <td>Proposal title/date/time/plot synopsis (free text, user-authored), proposer's Discord tag, avatar URL and ID, voter IDs and scores. On servers with paid access, each voter may also add a <strong>written review</strong>: free text of up to 1,000 characters, signed with the display name they had when submitting it and stamped with the submission time. The review is rendered in the echo message the bot keeps for that voter in the movie's thread, so it is visible to anyone who can read that thread; it is never posted as a standalone message in the channel.</td>
-            <td>Indefinite while the bot is in that server; that server's proposals, votes and their reviews are deleted when the bot is removed from the server. <code>/data delete</code> removes the user's votes together with their reviews, and <code>/data export</code> returns only the requester's own votes.</td>
+            <td>Proposal title/date/time/plot synopsis (free text, user-authored), proposer's Discord tag, avatar URL and ID, voter IDs and scores. When a member edits or cancels a pending proposal, the row also stores that member's user ID, Discord tag and avatar URL, together with the timestamp of the action; the member who acts may be someone other than the proposer. On servers with paid access, each voter may also add a <strong>written review</strong>: free text of up to 1,000 characters, signed with the display name they had when submitting it and stamped with the submission time. The review is rendered in the echo message the bot keeps for that voter in the movie's thread, so it is visible to anyone who can read that thread; it is never posted as a standalone message in the channel.</td>
+            <td>Indefinite while the bot is in that server; that server's proposals, votes, reviews and edit and cancellation records are deleted when the bot is removed from the server. <code>/data delete</code> removes the user's votes together with their reviews and anonymizes the user in every row where they appear as proposer, canceller or editor: the display name becomes <code>Deleted user</code> and the user ID and avatar URL are set to null. <code>/data export</code> returns the rows where the user appears as proposer, canceller, editor or voter, with only their own votes included.</td>
           </tr>
           <tr>
             <td>Game sessions (Wordle/Battleship/Sea of Words/Tic-Tac-Toe/Minesweeper/Typing)</td>
@@ -931,7 +931,7 @@
         <li>Starboard highlights: removed when the original message is deleted, or with <code>/data delete</code></li>
         <li>Temporary voice channels: closed when the channel is emptied, with <code>/tempvoice delete</code>, or with <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
-        <li>Movie nights: <code>/data delete</code> removes your votes and, with them, any written review you left</li>
+        <li>Movie nights: <code>/data delete</code> removes your votes and, with them, any written review you left, and anonymizes you in the proposals you proposed, cancelled or edited</li>
         <li>Tasks: per-task delete</li>
         <li>Deal notifications: the server removes them from <code>/deals</code>; <code>/data delete</code> erases the ID of the administrator who created them</li>
         <li>Server admins: can remove their server's warnings (<code>/warns remove</code>), knowledge entries, and config.</li>
@@ -985,7 +985,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-23 - Versión 2.11<br />
+        Última actualización / Last updated: 2026-11-23 - Versión 2.12<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
