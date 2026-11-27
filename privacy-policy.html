@@ -302,6 +302,11 @@
             <td>Mientras dura la sesión; estadísticas indefinidas. Las sesiones de juego activas de un servidor se cierran automáticamente cuando el bot es retirado de ese servidor; las estadísticas de juego están vinculadas a la cuenta del usuario (no por servidor) y no se borran con esa purga.</td>
           </tr>
           <tr>
+            <td>Ruleta rusa (<code>/roulette</code>)</td>
+            <td>IDs de servidor, canal y mensaje de la mesa, ID del anfitrión, la apuesta por jugador (de 100 a 5000 monedas virtuales), la fase de la partida, el ID del ganador cuando lo hay, el estado del pago del premio y, por cada jugador, su ID de usuario con marcas internas de ingreso, pago, eliminación y reembolso; además el índice de turno, la posición del cargador, la ronda, el pozo acumulado y el instante de cierre del vestíbulo. No se guarda contenido de mensajes.</td>
+            <td>Sin TTL: la fila se elimina al terminar o cancelarse la partida y en el barrido de mesas abandonadas, y las mesas de un servidor se borran cuando el bot es retirado de él. <code>/data delete</code> cancela y reembolsa las partidas del usuario que todavía puedan deber monedas —la apuesta del propio usuario se pierde, porque su monedero se elimina en la misma operación, mientras que la de los demás jugadores se devuelve— y solo borra la fila cuando ninguna butaca pueda seguir debiendo un reembolso. <code>/data export</code> entrega únicamente la participación del usuario: la apuesta, la fase, si era anfitrión, jugador o ganador, y la fecha.</td>
+          </tr>
+          <tr>
             <td>Estadísticas de trivia (<code>/trivia</code>)</td>
             <td>ID de usuario y estadísticas numéricas (respuestas correctas, partidas jugadas, racha actual, mejor racha y fecha del último juego). No se almacena contenido de mensajes ni texto de las preguntas o respuestas.</td>
             <td>Indefinida mientras exista la cuenta. Las estadísticas están vinculadas a la cuenta del usuario (no por servidor) y se eliminan con <code>/data delete</code>.</td>
@@ -315,6 +320,11 @@
             <td>Sorteos (<code>/giveaway</code>)</td>
             <td>ID de usuario del anfitrión y de los participantes, IDs de servidor, canal y mensaje, el premio como texto libre escrito por el anfitrión (máx. 250 caracteres), el ID del rol requerido si se configuró, y marcas de tiempo de finalización, cierre y sorteo.</td>
             <td>Se purga automáticamente 7 días después del cierre mediante un índice TTL. Los participantes pueden retirar su participación antes del cierre; <code>/data delete</code> retira el ID del usuario de las listas de participantes y ganadores y anonimiza el ID del anfitrión, conservando el registro del servidor. El premio lo entrega el anfitrión, no Hiraeth.</td>
+          </tr>
+          <tr>
+            <td>Citas guardadas (<code>/quote</code>)</td>
+            <td>ID de servidor, el número de la cita dentro de ese servidor, el texto en sí —escrito por el miembro que la guarda, de 1 a 500 caracteres— y dos referencias de usuario: el ID de la persona a la que se atribuye la frase (por defecto, quien la guarda) y el ID de quien la guardó, que puede ser otra persona. Es contenido escrito por miembros y publicado a pedido de ellos; Hiraeth no lo genera.</td>
+            <td>Indefinida mientras el bot esté en ese servidor: se elimina con <code>/quote remove</code> y se purga junto con la numeración del servidor cuando el bot es retirado. <code>/data delete</code> <strong>anonimiza</strong> las dos referencias del usuario y conserva la fila y el texto, porque la cita pertenece a la conversación del servidor y no a una persona: la autoría pasa a mostrarse como «un miembro que eliminó su cuenta». <code>/data export</code> entrega el número, el texto y en qué papel figura el usuario (a quién se atribuye o quién la guardó), nunca el ID de la otra persona.</td>
           </tr>
           <tr>
             <td>Acciones moderadas programadas (desbaneo automático de bans temporales)</td>
@@ -515,6 +525,7 @@
         <li>Destacados del starboard: se eliminan cuando se borra el mensaje original, o con <code>/data delete</code></li>
         <li>Canales de voz temporales: se cierran cuando el canal queda vacío, con <code>/tempvoice delete</code> o con <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
+        <li>Citas guardadas: <code>/quote remove</code>, o <code>/data delete</code>, que anonimiza tu autoría y conserva el texto y la numeración del servidor</li>
         <li>Noches de cine: <code>/data delete</code> retira tus votos y, con ellos, la reseña escrita que hayas dejado, y te anonimiza en las propuestas que propusiste, cancelaste o editaste</li>
         <li>Tareas: eliminación por tarea</li>
         <li>Notificaciones de ofertas: el servidor las elimina desde <code>/deals</code>; <code>/data delete</code> borra el ID del administrador que las creó</li>
@@ -555,6 +566,12 @@
         el método, la ruta, el código de respuesta y la duración, <strong>nunca</strong> la dirección IP. El sitio no
         lee, no muestra y no almacena datos de ningún servidor de Discord.
       </p>
+      <p>
+        Antes de contar, esa dirección se reduce a su prefijo de red: si la conexión llega por IPv6, el límite se
+        aplica al bloque <code>/64</code> del que procede, de modo que una misma conexión no puede multiplicar su
+        cuota rotando los últimos bits de su dirección. Hiraeth no intenta identificar a nadie con ella ni la
+        conserva más allá de esa ventana de un minuto.
+      </p>
 
       <h2>9. Cambios a esta política</h2>
       <p>
@@ -573,7 +590,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-23 - Versión 2.12<br />
+        Última actualización / Last updated: 2026-11-27 - Versión 2.13<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -727,6 +744,11 @@
             <td>While the session lasts; stats indefinite. A server's active game sessions are automatically ended when the bot is removed from that server; game stats are tied to the user's account (not per-server) and are not deleted by that purge.</td>
           </tr>
           <tr>
+            <td>Russian roulette (<code>/roulette</code>)</td>
+            <td>Guild, channel and table message IDs, the host's user ID, each player's bet (100 to 5000 virtual coins), the match phase, the winner's ID when there is one, the prize payout state and, for each player, their user ID with internal join, payment, elimination and refund marks; plus the turn index, the chamber position, the round, the accumulated pot and the lobby close instant. No message content is stored.</td>
+            <td>No TTL: the row is removed when the match ends or is cancelled and by the abandoned-table sweep, and a server's tables are deleted when the bot is removed from it. <code>/data delete</code> cancels and refunds the user's matches that may still owe coins — the user's own bet is forfeited, because their wallet is deleted in the same operation, while every other player's bet is returned — and only deletes the row once no seat can still owe a refund. <code>/data export</code> returns the user's own participation only: the bet, the phase, whether they were host, player or winner, and the date.</td>
+          </tr>
+          <tr>
             <td>Trivia stats (<code>/trivia</code>)</td>
             <td>User ID and numeric stats (correct answers, games played, current streak, best streak, and last-played date). No message content and no question or answer text is stored.</td>
             <td>Indefinite while the account exists. Stats are tied to the user's account (not per-server) and are removed with <code>/data delete</code>.</td>
@@ -740,6 +762,11 @@
             <td>Giveaways (<code>/giveaway</code>)</td>
             <td>User ID of the host and of the participants, guild, channel and message IDs, the prize as free text written by the host (max 250 characters), the required role ID if one was configured, and end, close and draw timestamps.</td>
             <td>Auto-purged 7 days after closing via a TTL index. Participants can leave before it closes; <code>/data delete</code> removes the user ID from the participant and winner lists and anonymizes the host ID while preserving the server's record. The prize is delivered by the host, not by Hiraeth.</td>
+          </tr>
+          <tr>
+            <td>Saved quotes (<code>/quote</code>)</td>
+            <td>Guild ID, the quote's number within that server, the quote text itself — written by the member saving it, 1 to 500 characters — and two user references: the ID of the person the line is attributed to (whoever saves it, by default) and the ID of whoever saved it, who may be somebody else. It is member-written content published at their request; Hiraeth does not generate it.</td>
+            <td>Indefinite while the bot is in that server: removed with <code>/quote remove</code> and purged together with the server's numbering when the bot is removed. <code>/data delete</code> <strong>anonymizes</strong> the user's two references and keeps the row and its text, because a quote belongs to the server's conversation and not to a person: the attribution is then shown as "a member who deleted their account". <code>/data export</code> returns the number, the text and which role the user held (attributed author or saver), never the other person's ID.</td>
           </tr>
           <tr>
             <td>Scheduled moderation actions (auto-unban of temporary bans)</td>
@@ -931,6 +958,7 @@
         <li>Starboard highlights: removed when the original message is deleted, or with <code>/data delete</code></li>
         <li>Temporary voice channels: closed when the channel is emptied, with <code>/tempvoice delete</code>, or with <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
+        <li>Saved quotes: <code>/quote remove</code>, or <code>/data delete</code>, which anonymizes your attribution and keeps the text and the server's numbering</li>
         <li>Movie nights: <code>/data delete</code> removes your votes and, with them, any written review you left, and anonymizes you in the proposals you proposed, cancelled or edited</li>
         <li>Tasks: per-task delete</li>
         <li>Deal notifications: the server removes them from <code>/deals</code>; <code>/data delete</code> erases the ID of the administrator who created them</li>
@@ -968,6 +996,12 @@
         method, the path, the response code and the duration — <strong>never</strong> the IP address. The site does
         not read, display or store data from any Discord server.
       </p>
+      <p>
+        Before counting, that address is reduced to its network prefix: when the connection arrives over IPv6, the
+        cap applies to the <code>/64</code> block it comes from, so one connection cannot multiply its quota by
+        rotating the low bits of its address. Hiraeth does not try to identify anyone with it and keeps it no
+        longer than that one-minute window.
+      </p>
 
       <h2>9. Changes to this policy</h2>
       <p>
@@ -985,7 +1019,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-23 - Versión 2.12<br />
+        Última actualización / Last updated: 2026-11-27 - Versión 2.13<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
