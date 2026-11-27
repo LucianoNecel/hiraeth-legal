@@ -267,7 +267,7 @@
           <tr>
             <td>Encuestas</td>
             <td>ID del autor, texto libre de pregunta y opciones, y qué ID de usuario votó qué.</td>
-            <td>Las encuestas cerradas se auto-eliminan 7 días después (TTL); todas las encuestas del servidor se eliminan cuando el bot es retirado del servidor.</td>
+            <td>Las encuestas cerradas se auto-eliminan 7 días después (TTL); todas las encuestas del servidor se eliminan cuando el bot es retirado del servidor. <code>/data delete</code> retira el ID del usuario de los votos y anonimiza la autoría de las encuestas que creó, conservando la pregunta, las opciones y el registro del servidor.</td>
           </tr>
           <tr>
             <td>Recordatorios</td>
@@ -525,6 +525,7 @@
         <li>Destacados del starboard: se eliminan cuando se borra el mensaje original, o con <code>/data delete</code></li>
         <li>Canales de voz temporales: se cierran cuando el canal queda vacío, con <code>/tempvoice delete</code> o con <code>/data delete</code></li>
         <li>Sorteos: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code></li>
+        <li>Encuestas: se purgan automáticamente 7 días después del cierre, o con <code>/data delete</code>, que retira tus votos y anonimiza la autoría de las encuestas que creaste</li>
         <li>Citas guardadas: <code>/quote remove</code>, o <code>/data delete</code>, que anonimiza tu autoría y conserva el texto y la numeración del servidor</li>
         <li>Noches de cine: <code>/data delete</code> retira tus votos y, con ellos, la reseña escrita que hayas dejado, y te anonimiza en las propuestas que propusiste, cancelaste o editaste</li>
         <li>Tareas: eliminación por tarea</li>
@@ -590,7 +591,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-27 - Versión 2.13<br />
+        Última actualización / Last updated: 2026-11-27 - Versión 2.14<br />
         Contacto: neceldev@gmail.com
       </footer>
     </section>
@@ -709,7 +710,7 @@
           <tr>
             <td>Polls</td>
             <td>Author ID, question and option free text, and which user ID voted what.</td>
-            <td>Closed polls auto-delete 7 days later (TTL); all of the server's polls are deleted when the bot is removed from the server.</td>
+            <td>Closed polls auto-delete 7 days later (TTL); all of the server's polls are deleted when the bot is removed from the server. <code>/data delete</code> removes the user ID from the votes and anonymizes the author ID of the polls they created, keeping the question, the options and the server's record.</td>
           </tr>
           <tr>
             <td>Reminders</td>
@@ -958,6 +959,7 @@
         <li>Starboard highlights: removed when the original message is deleted, or with <code>/data delete</code></li>
         <li>Temporary voice channels: closed when the channel is emptied, with <code>/tempvoice delete</code>, or with <code>/data delete</code></li>
         <li>Giveaways: auto-purged 7 days after closing, or with <code>/data delete</code></li>
+        <li>Polls: auto-purged 7 days after closing, or with <code>/data delete</code>, which removes your votes and anonymizes the authorship of the polls you created</li>
         <li>Saved quotes: <code>/quote remove</code>, or <code>/data delete</code>, which anonymizes your attribution and keeps the text and the server's numbering</li>
         <li>Movie nights: <code>/data delete</code> removes your votes and, with them, any written review you left, and anonymizes you in the proposals you proposed, cancelled or edited</li>
         <li>Tasks: per-task delete</li>
@@ -1019,7 +1021,7 @@
       </p>
 
       <footer>
-        Última actualización / Last updated: 2026-11-27 - Versión 2.13<br />
+        Última actualización / Last updated: 2026-11-27 - Versión 2.14<br />
         Contact: neceldev@gmail.com
       </footer>
     </section>
